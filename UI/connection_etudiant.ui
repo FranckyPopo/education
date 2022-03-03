@@ -39,8 +39,8 @@ border-radius: 10px;</string>
     <widget class="QLineEdit" name="lineEdit">
      <property name="geometry">
       <rect>
-       <x>110</x>
-       <y>100</y>
+       <x>120</x>
+       <y>60</y>
        <width>291</width>
        <height>31</height>
       </rect>
@@ -66,8 +66,8 @@ font-size: 18px;</string>
     <widget class="QLineEdit" name="lineEdit_2">
      <property name="geometry">
       <rect>
-       <x>110</x>
-       <y>160</y>
+       <x>120</x>
+       <y>120</y>
        <width>291</width>
        <height>31</height>
       </rect>
@@ -90,8 +90,8 @@ border-top: 0px;</string>
     <widget class="QPushButton" name="bnt_connection">
      <property name="geometry">
       <rect>
-       <x>110</x>
-       <y>240</y>
+       <x>120</x>
+       <y>200</y>
        <width>291</width>
        <height>32</height>
       </rect>
@@ -119,8 +119,8 @@ QPushButton:hover {
     <widget class="QLabel" name="label">
      <property name="geometry">
       <rect>
-       <x>110</x>
-       <y>210</y>
+       <x>120</x>
+       <y>170</y>
        <width>101</width>
        <height>16</height>
       </rect>
@@ -131,6 +131,35 @@ font-size: 14px;</string>
      </property>
      <property name="text">
       <string>Erreur inconnu</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="bnt_connection_2">
+     <property name="geometry">
+      <rect>
+       <x>120</x>
+       <y>240</y>
+       <width>291</width>
+       <height>32</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+	background-color: #03ad39;
+	color: white;
+	font-size: 18px;
+}
+
+QPushButton:hover {
+	background-color: #02d648;
+}
+
+</string>
+     </property>
+     <property name="text">
+      <string>S'inscrire</string>
+     </property>
+     <property name="autoDefault">
+      <bool>false</bool>
      </property>
     </widget>
    </widget>
