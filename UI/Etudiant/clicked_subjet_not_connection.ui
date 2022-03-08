@@ -30,7 +30,7 @@ font-size: 14px;
       <x>23</x>
       <y>10</y>
       <width>731</width>
-      <height>61</height>
+      <height>71</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -52,28 +52,12 @@ QLabel#logo{
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QLabel" name="logo">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>14</y>
-       <width>131</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true"/>
-     </property>
-     <property name="text">
-      <string>Popo school</string>
-     </property>
-    </widget>
     <widget class="QPushButton" name="pushButton">
      <property name="geometry">
       <rect>
-       <x>610</x>
+       <x>600</x>
        <y>5</y>
-       <width>121</width>
+       <width>131</width>
        <height>41</height>
       </rect>
      </property>
@@ -95,12 +79,31 @@ background-color: blue;
       <string>Se connecter</string>
      </property>
     </widget>
+    <widget class="QLabel" name="label_5">
+     <property name="geometry">
+      <rect>
+       <x>8</x>
+       <y>5</y>
+       <width>60</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>../../img/bulle-de-chat.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
    </widget>
    <widget class="QFrame" name="frame_5">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>90</y>
+      <y>100</y>
       <width>731</width>
       <height>31</height>
      </rect>
@@ -135,7 +138,7 @@ border-radius: 5px;
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>140</y>
+      <y>150</y>
       <width>211</width>
       <height>16</height>
      </rect>
@@ -151,9 +154,9 @@ border-radius: 5px;
     <property name="geometry">
      <rect>
       <x>25</x>
-      <y>160</y>
+      <y>180</y>
       <width>734</width>
-      <height>391</height>
+      <height>371</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -294,7 +297,7 @@ background-color: rgb(13, 209, 30);
      <x>0</x>
      <y>0</y>
      <width>775</width>
-     <height>21</height>
+     <height>24</height>
     </rect>
    </property>
   </widget>

@@ -71,9 +71,9 @@ QLabel#logo{
     <widget class="QPushButton" name="pushButton">
      <property name="geometry">
       <rect>
-       <x>600</x>
+       <x>590</x>
        <y>5</y>
-       <width>121</width>
+       <width>131</width>
        <height>41</height>
       </rect>
      </property>
@@ -483,7 +483,7 @@ border-radius: 5px;
      <x>0</x>
      <y>0</y>
      <width>775</width>
-     <height>21</height>
+     <height>24</height>
     </rect>
    </property>
   </widget>
