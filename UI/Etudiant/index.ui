@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>957</width>
-    <height>669</height>
+    <width>969</width>
+    <height>685</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,6 +25,9 @@
     </property>
     <property name="styleSheet">
      <string notr="true"/>
+    </property>
+    <property name="currentIndex">
+     <number>1</number>
     </property>
     <widget class="QWidget" name="page_index">
      <widget class="QFrame" name="frame_logo">
@@ -70,13 +73,13 @@ border-right: 0px;
        <property name="styleSheet">
         <string notr="true">QPushButton#bnt_connection {
 background-color: rgb(255, 255, 255);
-border: 2px solid rgb(0, 0, 255);
+border: 2px solid rgb(0, 0, 255, 180);
 border-radius: 5px;
 color: rgb(0, 0, 255);
 }
 
 QPushButton#bnt_connection::hover {
-background-color: rgb(0, 0, 255);
+background-color: rgb(0, 0, 255, 180);
 color: rgb(255, 255, 255);
 } </string>
        </property>
@@ -101,6 +104,39 @@ color: rgb(255, 255, 255);
        </property>
        <property name="scaledContents">
         <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="bnt_subcription">
+       <property name="geometry">
+        <rect>
+         <x>622</x>
+         <y>35</y>
+         <width>151</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton#bnt_subcription {
+background-color: rgb(255, 255, 255);
+border: 2px solid rgb(2, 163, 0);
+border-radius: 5px;
+color: rgb(2, 163, 0);
+}
+
+QPushButton#bnt_subcription::hover {
+background-color: rgb(2, 163, 0);
+color: rgb(255, 255, 255);
+} </string>
+       </property>
+       <property name="text">
+        <string>S'inscrir</string>
        </property>
       </widget>
      </widget>
@@ -677,7 +713,430 @@ background-color: rgb(204, 204, 204);
       </widget>
      </widget>
     </widget>
-    <widget class="QWidget" name="page_4"/>
+    <widget class="QWidget" name="page_subcription">
+     <widget class="QFrame" name="frame_logo_2">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>0</y>
+        <width>961</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QFrame#frame_logo_2{
+background-color: rgb(255, 255, 255);
+border: 1px solid rgb(126, 126, 126);
+border-top: 0px;
+border-left: 0px;
+border-right: 0px;
+}</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QLabel" name="logo_app_2">
+       <property name="geometry">
+        <rect>
+         <x>41</x>
+         <y>14</y>
+         <width>71</width>
+         <height>71</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap>../../img/bulle-de-chat.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QFrame" name="frame_subcription_left">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>101</y>
+        <width>461</width>
+        <height>561</height>
+       </rect>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>468</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>5</pointsize>
+       </font>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="toolTip">
+       <string/>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QFrame#frame_subcription_left{
+background-color: rgb(255, 255, 255);
+}
+
+</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QLabel" name="label_subcription">
+       <property name="geometry">
+        <rect>
+         <x>150</x>
+         <y>30</y>
+         <width>171</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>24</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Inscription</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="enter_last_name">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>100</y>
+         <width>291</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLineEdit#enter_last_name{
+padding: 10px;
+border-top: 1px solid rgb(236, 236, 236);
+border-left: 1px solid rgb(236, 236, 236);
+border-right: 1px solid rgb(236, 236, 236);
+border-bottom: 1px solid black;
+border-radius: 5px;
+}
+
+QLineEdit#enter_last_name::hover {
+border-bottom: 2px solid rgb(0, 0, 255);
+}
+
+</string>
+       </property>
+       <property name="placeholderText">
+        <string>Nom</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="enter_first_name">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>160</y>
+         <width>291</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLineEdit#enter_first_name{
+padding: 10px;
+border-top: 1px solid rgb(236, 236, 236);
+border-left: 1px solid rgb(236, 236, 236);
+border-right: 1px solid rgb(236, 236, 236);
+border-bottom: 1px solid black;
+border-radius: 5px;
+}
+
+QLineEdit#enter_first_name::hover {
+border-bottom: 2px solid rgb(0, 0, 255);
+}
+
+</string>
+       </property>
+       <property name="placeholderText">
+        <string>Prénom</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="enter_email">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>220</y>
+         <width>291</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLineEdit#enter_email{
+padding: 10px;
+border-top: 1px solid rgb(236, 236, 236);
+border-left: 1px solid rgb(236, 236, 236);
+border-right: 1px solid rgb(236, 236, 236);
+border-bottom: 1px solid black;
+border-radius: 5px;
+}
+
+QLineEdit#enter_email::hover {
+border-bottom: 2px solid rgb(0, 0, 255);
+}
+
+</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="placeholderText">
+        <string>Email</string>
+       </property>
+       <property name="cursorMoveStyle">
+        <enum>Qt::VisualMoveStyle</enum>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="enter_password_1">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>330</y>
+         <width>291</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLineEdit#enter_password_1{
+padding: 10px;
+border-top: 1px solid rgb(236, 236, 236);
+border-left: 1px solid rgb(236, 236, 236);
+border-right: 1px solid rgb(236, 236, 236);
+border-bottom: 1px solid black;
+border-radius: 5px;
+}
+
+QLineEdit#enter_password_1::hover {
+border-bottom: 2px solid rgb(0, 0, 255);
+}
+
+</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="placeholderText">
+        <string>Mot de passe</string>
+       </property>
+       <property name="cursorMoveStyle">
+        <enum>Qt::VisualMoveStyle</enum>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="enter_password_2">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>390</y>
+         <width>291</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLineEdit#enter_password_2{
+padding: 10px;
+border-top: 1px solid rgb(236, 236, 236);
+border-left: 1px solid rgb(236, 236, 236);
+border-right: 1px solid rgb(236, 236, 236);
+border-bottom: 1px solid black;
+border-radius: 5px;
+}
+
+QLineEdit#enter_password_2::hover {
+border-bottom: 2px solid rgb(0, 0, 255);
+}
+
+</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="placeholderText">
+        <string>Confirmer mot de passe</string>
+       </property>
+       <property name="cursorMoveStyle">
+        <enum>Qt::VisualMoveStyle</enum>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="choice_sex">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>280</y>
+         <width>291</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QComboBox#choice_sex {
+background-color: rgb(255, 255, 255);
+border-top: 1px solid rgb(236, 236, 236);
+border-left: 1px solid rgb(236, 236, 236);
+border-right: 1px solid rgb(236, 236, 236);
+border-bottom: 1px solid black;
+}
+
+QComboBox#choice_sex;;hover {
+border-bottom: 1px solid rgb(0, 0, 255);
+
+}</string>
+       </property>
+       <property name="editable">
+        <bool>false</bool>
+       </property>
+       <property name="currentText">
+        <string/>
+       </property>
+       <property name="maxVisibleItems">
+        <number>13</number>
+       </property>
+       <property name="duplicatesEnabled">
+        <bool>false</bool>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="bnt_subcription_2">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>470</y>
+         <width>291</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton#bnt_subcription_2 {
+background-color: rgb(255, 255, 255);
+border: 2px solid rgb(0, 0, 255, 180);
+border-radius: 5px;
+color: rgb(0, 0, 255);
+}
+
+QPushButton#bnt_subcription_2::hover {
+background-color: rgba(0, 0, 255, 180);
+color: rgb(255, 255, 255);
+} </string>
+       </property>
+       <property name="text">
+        <string>S'inscrir</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QFrame" name="frame_subcription_right">
+      <property name="geometry">
+       <rect>
+        <x>472</x>
+        <y>102</y>
+        <width>501</width>
+        <height>561</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QFrame#frame_subcription_right{
+background-color:rgba(0, 0, 255, 180);
+}
+
+</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QLabel" name="label_motivation">
+       <property name="geometry">
+        <rect>
+         <x>190</x>
+         <y>240</y>
+         <width>181</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>20</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLabel#label_motivation {
+color: rgb(255, 255, 255);
+}</string>
+       </property>
+       <property name="text">
+        <string>Texte a jouter</string>
+       </property>
+      </widget>
+     </widget>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -685,7 +1144,7 @@ background-color: rgb(204, 204, 204);
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>957</width>
+     <width>969</width>
      <height>21</height>
     </rect>
    </property>
