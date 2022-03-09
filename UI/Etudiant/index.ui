@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>969</width>
+    <width>984</width>
     <height>685</height>
    </rect>
   </property>
@@ -19,7 +19,7 @@
      <rect>
       <x>-10</x>
       <y>0</y>
-      <width>971</width>
+      <width>1001</width>
       <height>681</height>
      </rect>
     </property>
@@ -35,7 +35,7 @@
        <rect>
         <x>10</x>
         <y>-1</y>
-        <width>961</width>
+        <width>991</width>
         <height>101</height>
        </rect>
       </property>
@@ -144,8 +144,8 @@ color: rgb(255, 255, 255);
       <property name="geometry">
        <rect>
         <x>30</x>
-        <y>104</y>
-        <width>919</width>
+        <y>101</y>
+        <width>941</width>
         <height>541</height>
        </rect>
       </property>
@@ -719,7 +719,7 @@ background-color: rgb(204, 204, 204);
        <rect>
         <x>10</x>
         <y>0</y>
-        <width>961</width>
+        <width>981</width>
         <height>101</height>
        </rect>
       </property>
@@ -1092,7 +1092,7 @@ color: rgb(255, 255, 255);
        <rect>
         <x>472</x>
         <y>102</y>
-        <width>501</width>
+        <width>521</width>
         <height>561</height>
        </rect>
       </property>
@@ -1137,6 +1137,265 @@ color: rgb(255, 255, 255);
       </widget>
      </widget>
     </widget>
+    <widget class="QWidget" name="pag_connection">
+     <widget class="QFrame" name="frame_connection_left">
+      <property name="geometry">
+       <rect>
+        <x>8</x>
+        <y>100</y>
+        <width>461</width>
+        <height>561</height>
+       </rect>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>468</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>5</pointsize>
+       </font>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="toolTip">
+       <string/>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QFrame#frame_connection_left{
+background-color: rgb(255, 255, 255);
+}
+
+</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QLabel" name="label_connection">
+       <property name="geometry">
+        <rect>
+         <x>150</x>
+         <y>130</y>
+         <width>181</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>24</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Connection</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="enter_email_connection">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>200</y>
+         <width>291</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLineEdit#enter_email_connection{
+padding: 10px;
+border-top: 1px solid rgb(236, 236, 236);
+border-left: 1px solid rgb(236, 236, 236);
+border-right: 1px solid rgb(236, 236, 236);
+border-bottom: 1px solid black;
+border-radius: 5px;
+}
+
+QLineEdit#enter_email_connection::hover {
+border-bottom: 2px solid rgb(0, 0, 255);
+}
+
+</string>
+       </property>
+       <property name="placeholderText">
+        <string>Email</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="enter_password_connection">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>260</y>
+         <width>291</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLineEdit#enter_password_connection{
+padding: 10px;
+border-top: 1px solid rgb(236, 236, 236);
+border-left: 1px solid rgb(236, 236, 236);
+border-right: 1px solid rgb(236, 236, 236);
+border-bottom: 1px solid black;
+border-radius: 5px;
+}
+
+QLineEdit#enter_password_connection::hover {
+border-bottom: 2px solid rgb(0, 0, 255);
+}
+
+</string>
+       </property>
+       <property name="placeholderText">
+        <string>Mot de passe</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="bnt_connection_2">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>340</y>
+         <width>291</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton#bnt_connection_2 {
+background-color: rgb(255, 255, 255);
+border: 2px solid rgb(0, 0, 255, 180);
+border-radius: 5px;
+color: rgb(0, 0, 255);
+}
+
+QPushButton#bnt_connection_2::hover {
+background-color: rgba(0, 0, 255, 180);
+color: rgb(255, 255, 255);
+} </string>
+       </property>
+       <property name="text">
+        <string>Connection</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QFrame" name="frame_logo_3">
+      <property name="geometry">
+       <rect>
+        <x>8</x>
+        <y>0</y>
+        <width>991</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QFrame#frame_logo_3{
+background-color: rgb(255, 255, 255);
+border: 1px solid rgb(126, 126, 126);
+border-top: 0px;
+border-left: 0px;
+border-right: 0px;
+}</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QLabel" name="logo_app_3">
+       <property name="geometry">
+        <rect>
+         <x>41</x>
+         <y>14</y>
+         <width>71</width>
+         <height>71</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap>../../img/bulle-de-chat.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QFrame" name="frame_connection_right">
+      <property name="geometry">
+       <rect>
+        <x>470</x>
+        <y>101</y>
+        <width>531</width>
+        <height>561</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QFrame#frame_connection_right{
+background-color:rgba(0, 0, 255, 180);
+}
+
+</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QLabel" name="label_motivation_2">
+       <property name="geometry">
+        <rect>
+         <x>190</x>
+         <y>240</y>
+         <width>181</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>20</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLabel#label_motivation_2 {
+color: rgb(255, 255, 255);
+}</string>
+       </property>
+       <property name="text">
+        <string>Texte a jouter</string>
+       </property>
+      </widget>
+     </widget>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -1144,7 +1403,7 @@ color: rgb(255, 255, 255);
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>969</width>
+     <width>984</width>
      <height>21</height>
     </rect>
    </property>
