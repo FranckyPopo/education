@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>984</width>
+    <width>985</width>
     <height>685</height>
    </rect>
   </property>
@@ -713,6 +713,129 @@ background-color: rgb(204, 204, 204);
       </widget>
      </widget>
     </widget>
+    <widget class="QWidget" name="page">
+     <widget class="QFrame" name="frame_logo_6">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>0</y>
+        <width>991</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QFrame#frame_logo_2{
+background-color: rgb(255, 255, 255);
+border: 1px solid rgb(126, 126, 126);
+border-top: 0px;
+border-left: 0px;
+border-right: 0px;
+}</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QLabel" name="logo_app_4">
+       <property name="geometry">
+        <rect>
+         <x>41</x>
+         <y>14</y>
+         <width>71</width>
+         <height>71</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap>../../img/bulle-de-chat.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton">
+       <property name="geometry">
+        <rect>
+         <x>834</x>
+         <y>10</y>
+         <width>91</width>
+         <height>71</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>../../img/icons_user.png</normaloff>../../img/icons_user.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>49</width>
+         <height>50</height>
+        </size>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QFrame" name="frame">
+      <property name="geometry">
+       <rect>
+        <x>809</x>
+        <y>80</y>
+        <width>161</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QPushButton" name="bnt_space_etudiant">
+       <property name="geometry">
+        <rect>
+         <x>13</x>
+         <y>4</y>
+         <width>131</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton#bnt_space_etudiant {
+background-color: rgb(255, 255, 255);
+border-radius: 20px;
+}</string>
+       </property>
+       <property name="text">
+        <string>Espace etudiant</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="bnt_space_admin">
+       <property name="geometry">
+        <rect>
+         <x>12</x>
+         <y>53</y>
+         <width>131</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton#bnt_space_admin {
+background-color: rgb(255, 255, 255);
+border-radius: 20px;
+}</string>
+       </property>
+       <property name="text">
+        <string>Espace etudiant</string>
+       </property>
+      </widget>
+     </widget>
+    </widget>
     <widget class="QWidget" name="page_subcription">
      <widget class="QFrame" name="frame_logo_2">
       <property name="geometry">
@@ -1403,8 +1526,8 @@ color: rgb(255, 255, 255);
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>984</width>
-     <height>21</height>
+     <width>985</width>
+     <height>24</height>
     </rect>
    </property>
   </widget>
