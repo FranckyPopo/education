@@ -1,7 +1,6 @@
 import os
 import sqlite3
 import sys
-from time import sleep
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 # Nous créons le dossier qui va cotenir les bd
@@ -38,8 +37,8 @@ class Ui_MainWindow(object):
         cursor.execute(f"""CREATE TABLE IF NOT EXISTS {name_table}(
             last_name text,
             first_name text,
-            class text,
             email text,
+            class text,
             gender text,
             password text) """)
         conn.commit()
@@ -64,8 +63,38 @@ class Ui_MainWindow(object):
         
         return data
 
-    def recording_data(self): 
-        pass
+    def recording_data_etudiant(self):
+        self.creation_database("etudiants.bd", "etudiants")
+        last_name = self.enter_last_name.text()
+        first_name = self.enter_first_name.text()
+        email = self.enter_email.text()
+        gender = self.gender.currentText()
+        clas = self.cls.currentText()
+        password_1 = self.enter_password_1.text()
+        password_2 = self.enter_password_2.text()
+        
+        if last_name and first_name and email and gender and clas and password_1 == password_2:
+            d = {
+                "last_name": last_name, 
+                "first_name": first_name,
+                "email": email,
+                "gender": gender,
+                "class": clas,
+                "password": password_1
+            }
+            conn = sqlite3.connect(folder_bd + "/" + "etudiants.bd")
+            cursor = conn.cursor()
+            cursor.execute("""INSERT INTO etudiants VALUES (:last_name, 
+                        :first_name,
+                        :email,
+                        :gender,
+                        :class,
+                        :password)""", d)
+            conn.commit()
+            conn.close()
+        else:
+            self.alert = QtWidgets.QMessageBox()
+            self.alert.about("Title", "Message")
     
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -82,13 +111,13 @@ class Ui_MainWindow(object):
         self.page_index.setObjectName("page_index")
         self.frame_logo = QtWidgets.QFrame(self.page_index)
         self.frame_logo.setGeometry(QtCore.QRect(10, -1, 991, 101))
-        self.frame_logo.setStyleSheet("QFrame#frame_logo{\n"
-"background-color: rgb(255, 255, 255);\n"
-"border: 1px solid rgb(126, 126, 126);\n"
-"border-top: 0px;\n"
-"border-left: 0px;\n"
-"border-right: 0px;\n"
-"}")
+        self.frame_logo.setStyleSheet("""QFrame#frame_logo{
+        background-color: rgb(255, 255, 255);
+        border: 1px solid rgb(126, 126, 126);
+        border-top: 0px;
+        border-left: 0px;
+        border-right: 0px;
+        }""")
         self.frame_logo.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_logo.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_logo.setObjectName("frame_logo")
@@ -99,17 +128,17 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.bnt_connection.setFont(font)
-        self.bnt_connection.setStyleSheet("QPushButton#bnt_connection {\n"
-"background-color: rgb(255, 255, 255);\n"
-"border: 2px solid rgb(0, 0, 255, 180);\n"
-"border-radius: 5px;\n"
-"color: rgb(0, 0, 255);\n"
-"}\n"
-"\n"
-"QPushButton#bnt_connection::hover {\n"
-"background-color: rgb(0, 0, 255, 180);\n"
-"color: rgb(255, 255, 255);\n"
-"} ")
+        self.bnt_connection.setStyleSheet("""QPushButton#bnt_connection {
+        background-color: rgb(255, 255, 255);
+        border: 2px solid rgb(0, 0, 255, 180);
+        border-radius: 5px;
+        color: rgb(0, 0, 255);
+        }
+
+        QPushButton#bnt_connection::hover {
+        background-color: rgb(0, 0, 255, 180);
+        color: rgb(255, 255, 255);
+        } """)
         self.bnt_connection.setObjectName("bnt_connection")
         self.logo_app = QtWidgets.QLabel(self.frame_logo)
         self.logo_app.setGeometry(QtCore.QRect(41, 14, 71, 71))
@@ -124,26 +153,26 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.bnt_subcription.setFont(font)
-        self.bnt_subcription.setStyleSheet("QPushButton#bnt_subcription {\n"
-"background-color: rgb(255, 255, 255);\n"
-"border: 2px solid rgb(2, 163, 0);\n"
-"border-radius: 5px;\n"
-"color: rgb(2, 163, 0);\n"
-"}\n"
-"\n"
-"QPushButton#bnt_subcription::hover {\n"
-"background-color: rgb(2, 163, 0);\n"
-"color: rgb(255, 255, 255);\n"
-"} ")
+        self.bnt_subcription.setStyleSheet("""QPushButton#bnt_subcription {
+        background-color: rgb(255, 255, 255);
+        border: 2px solid rgb(2, 163, 0);
+        border-radius: 5px;
+        color: rgb(2, 163, 0);
+        }
+
+        QPushButton#bnt_subcription::hover {
+        background-color: rgb(2, 163, 0);
+        color: rgb(255, 255, 255);
+        } """)
         self.bnt_subcription.setObjectName("bnt_subcription")
         self.label_2 = QtWidgets.QLabel(self.frame_logo)
         self.label_2.setGeometry(QtCore.QRect(470, 50, 60, 16))
         self.label_2.setObjectName("label_2")
         self.frame_forums = QtWidgets.QFrame(self.page_index)
         self.frame_forums.setGeometry(QtCore.QRect(30, 101, 941, 541))
-        self.frame_forums.setStyleSheet("QFrame#frame_forums {\n"
-"background-color: rgb(255, 255, 255);\n"
-"}")
+        self.frame_forums.setStyleSheet("""QFrame#frame_forums {
+        background-color: rgb(255, 255, 255);
+        }""")
         self.frame_forums.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_forums.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_forums.setObjectName("frame_forums")
@@ -159,14 +188,14 @@ class Ui_MainWindow(object):
         self.frame_forum_math = QtWidgets.QFrame(self.frame_forums)
         self.frame_forum_math.setGeometry(QtCore.QRect(38, 130, 401, 141))
         self.frame_forum_math.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.frame_forum_math.setStyleSheet("QFrame#frame_forum_math{\n"
-"background-color: rgb(236, 236, 236);\n"
-"border-radius: 3px;\n"
-"}\n"
-"\n"
-"QFrame#frame_forum_math::hover {\n"
-"background-color: rgb(204, 204, 204);\n"
-"}")
+        self.frame_forum_math.setStyleSheet("""QFrame#frame_forum_math{
+        background-color: rgb(236, 236, 236);
+        border-radius: 3px;
+        }
+
+        QFrame#frame_forum_math::hover {
+        background-color: rgb(204, 204, 204);
+        }""")
         self.frame_forum_math.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_forum_math.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_forum_math.setObjectName("frame_forum_math")
@@ -214,14 +243,14 @@ class Ui_MainWindow(object):
         self.frame_forum_physique = QtWidgets.QFrame(self.frame_forums)
         self.frame_forum_physique.setGeometry(QtCore.QRect(490, 130, 401, 141))
         self.frame_forum_physique.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.frame_forum_physique.setStyleSheet("QFrame#frame_forum_physique{\n"
-"background-color: rgb(236, 236, 236);\n"
-"border-radius: 3px;\n"
-"}\n"
-"\n"
-"QFrame#frame_forum_physique::hover {\n"
-"background-color: rgb(204, 204, 204);\n"
-"}")
+        self.frame_forum_physique.setStyleSheet("""QFrame#frame_forum_physique{
+        background-color: rgb(236, 236, 236);
+        border-radius: 3px;
+        }
+
+        QFrame#frame_forum_physique::hover {
+        background-color: rgb(204, 204, 204);
+        }""")
         self.frame_forum_physique.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_forum_physique.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_forum_physique.setObjectName("frame_forum_physique")
@@ -269,14 +298,14 @@ class Ui_MainWindow(object):
         self.frame_forum_philo = QtWidgets.QFrame(self.frame_forums)
         self.frame_forum_philo.setGeometry(QtCore.QRect(492, 360, 401, 141))
         self.frame_forum_philo.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.frame_forum_philo.setStyleSheet("QFrame#frame_forum_philo{\n"
-"background-color: rgb(236, 236, 236);\n"
-"border-radius: 3px;\n"
-"}\n"
-"\n"
-"QFrame#frame_forum_philo::hover {\n"
-"background-color: rgb(204, 204, 204);\n"
-"}")
+        self.frame_forum_philo.setStyleSheet("""QFrame#frame_forum_philo{
+        background-color: rgb(236, 236, 236);
+        border-radius: 3px;
+        }
+
+        QFrame#frame_forum_philo::hover {
+        background-color: rgb(204, 204, 204);
+        }""")
         self.frame_forum_philo.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_forum_philo.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_forum_philo.setObjectName("frame_forum_philo")
@@ -315,14 +344,14 @@ class Ui_MainWindow(object):
         self.frame_forum_francais = QtWidgets.QFrame(self.frame_forums)
         self.frame_forum_francais.setGeometry(QtCore.QRect(40, 370, 401, 141))
         self.frame_forum_francais.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.frame_forum_francais.setStyleSheet("QFrame#frame_forum_francais{\n"
-"background-color: rgb(236, 236, 236);\n"
-"border-radius: 3px;\n"
-"}\n"
-"\n"
-"QFrame#frame_forum_francais::hover {\n"
-"background-color: rgb(204, 204, 204);\n"
-"}")
+        self.frame_forum_francais.setStyleSheet("""QFrame#frame_forum_francais{
+        background-color: rgb(236, 236, 236);
+        border-radius: 3px;
+        }
+
+        QFrame#frame_forum_francais::hover {
+        background-color: rgb(204, 204, 204);
+        }""")
         self.frame_forum_francais.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_forum_francais.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_forum_francais.setObjectName("frame_forum_francais")
@@ -363,13 +392,13 @@ class Ui_MainWindow(object):
         self.pageadmin.setObjectName("pageadmin")
         self.frame_logo_6 = QtWidgets.QFrame(self.pageadmin)
         self.frame_logo_6.setGeometry(QtCore.QRect(10, 0, 991, 121))
-        self.frame_logo_6.setStyleSheet("QFrame#frame_logo_6{\n"
-"background-color: rgb(255, 255, 255);\n"
-"border: 1px solid rgb(126, 126, 126);\n"
-"border-top: 0px;\n"
-"border-left: 0px;\n"
-"border-right: 0px;\n"
-"}")
+        self.frame_logo_6.setStyleSheet("""QFrame#frame_logo_6{
+        background-color: rgb(255, 255, 255);
+        border: 1px solid rgb(126, 126, 126);
+        border-top: 0px;
+        border-left: 0px;
+        border-right: 0px;
+        }""")
         self.frame_logo_6.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_logo_6.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_logo_6.setObjectName("frame_logo_6")
@@ -633,7 +662,7 @@ class Ui_MainWindow(object):
         self.enter_email.setCursorMoveStyle(QtCore.Qt.VisualMoveStyle)
         self.enter_email.setObjectName("enter_email")
         self.enter_password_1 = QtWidgets.QLineEdit(self.frame_subcription_left)
-        self.enter_password_1.setGeometry(QtCore.QRect(100, 300, 291, 41))
+        self.enter_password_1.setGeometry(QtCore.QRect(100, 343, 291, 41))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
         font.setPointSize(14)
@@ -656,7 +685,7 @@ class Ui_MainWindow(object):
         self.enter_password_1.setCursorMoveStyle(QtCore.Qt.VisualMoveStyle)
         self.enter_password_1.setObjectName("enter_password_1")
         self.enter_password_2 = QtWidgets.QLineEdit(self.frame_subcription_left)
-        self.enter_password_2.setGeometry(QtCore.QRect(100, 360, 291, 41))
+        self.enter_password_2.setGeometry(QtCore.QRect(100, 400, 291, 41))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
         font.setPointSize(14)
@@ -700,12 +729,33 @@ class Ui_MainWindow(object):
         "color: black;"
         "}")
         self.gender.setEditable(False)
-        self.gender.setCurrentText("")
         self.gender.setMaxVisibleItems(13)
         self.gender.setDuplicatesEnabled(False)
         self.gender.setObjectName("gender")
+        self.cls = QtWidgets.QComboBox(self.frame_subcription_left)
+        self.cls.setGeometry(QtCore.QRect(100, 300, 291, 31))
+        list_class = ["6éme", "5éme", "4éme", "3éme", "2nd", "1ère", "Terminal", "autres"]
+        for item in list_class: self.cls.addItem(item)
+        self.cls.setFont(font)
+        self.cls.setObjectName("cls")
+        self.cls.setStyleSheet("QComboBox#cls {"
+        "background-color: rgb(255, 255, 255);"
+        "color: black;"
+        "border-top: 1px solid rgb(236, 236, 236);"
+        "border-left: 1px solid rgb(236, 236, 236);"
+        "border-right: 1px solid rgb(236, 236, 236);"
+        "border-bottom: 1px solid black;"
+        "}"
+
+        "QComboBox#cls;;hover {"
+        "border-bottom: 1px solid rgb(0, 0, 255);"
+        "color: black;"
+        "}")
+        self.cls.setEditable(False)
+        
         self.bnt_subcription_2 = QtWidgets.QPushButton(self.frame_subcription_left)
-        self.bnt_subcription_2.setGeometry(QtCore.QRect(100, 440, 291, 41))
+        self.bnt_subcription_2.setGeometry(QtCore.QRect(100, 455, 291, 41))
+        self.bnt_subcription_2.clicked.connect(self.recording_data_etudiant)
         font = QtGui.QFont()
         font.setPointSize(14)
         font.setBold(True)
@@ -724,7 +774,7 @@ class Ui_MainWindow(object):
 "} ")
         self.bnt_subcription_2.setObjectName("bnt_subcription_2")
         self.label_useless_2 = QtWidgets.QLabel(self.frame_subcription_left)
-        self.label_useless_2.setGeometry(QtCore.QRect(100, 497, 181, 16))
+        self.label_useless_2.setGeometry(QtCore.QRect(100, 502, 181, 16))
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(14)
@@ -732,7 +782,7 @@ class Ui_MainWindow(object):
         self.label_useless_2.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
         self.label_useless_2.setObjectName("label_useless_2")
         self.label_connection_account = Label(self.frame_subcription_left)
-        self.label_connection_account.setGeometry(QtCore.QRect(285, 497, 111, 16))
+        self.label_connection_account.setGeometry(QtCore.QRect(285, 502, 111, 16))
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(14)
