@@ -33,7 +33,7 @@
      <number>-2</number>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="page_index">
      <widget class="QFrame" name="frame_logo">
@@ -228,7 +228,7 @@ background-color: rgb(204, 204, 204);
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap>../../img/math.png</pixmap>
+         <pixmap>../img/math.png</pixmap>
         </property>
         <property name="scaledContents">
          <bool>true</bool>
@@ -371,7 +371,7 @@ background-color: rgb(204, 204, 204);
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap>../../img/math.png</pixmap>
+         <pixmap>../img/icons8-physique-100.png</pixmap>
         </property>
         <property name="scaledContents">
          <bool>true</bool>
