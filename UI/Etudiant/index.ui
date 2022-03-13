@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>984</width>
-    <height>685</height>
+    <width>991</width>
+    <height>695</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,11 +23,16 @@
       <height>681</height>
      </rect>
     </property>
+    <property name="cursor">
+     <cursorShape>ArrowCursor</cursorShape>
+    </property>
     <property name="styleSheet">
-     <string notr="true"/>
+     <string notr="true">QStackedWidget#stacked_widget_main{
+background-color: rgb(255, 255, 255);
+}</string>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>4</number>
     </property>
     <widget class="QWidget" name="page_index">
      <widget class="QFrame" name="frame_logo">
@@ -70,6 +75,9 @@ border-right: 0px;
          <bold>true</bold>
         </font>
        </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
        <property name="styleSheet">
         <string notr="true">QPushButton#bnt_connection {
 background-color: rgb(255, 255, 255);
@@ -96,6 +104,9 @@ color: rgb(255, 255, 255);
          <height>71</height>
         </rect>
        </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
        <property name="text">
         <string/>
        </property>
@@ -121,6 +132,9 @@ color: rgb(255, 255, 255);
          <weight>75</weight>
          <bold>true</bold>
         </font>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
        </property>
        <property name="styleSheet">
         <string notr="true">QPushButton#bnt_subcription {
@@ -308,14 +322,14 @@ background-color: rgb(204, 204, 204);
         <rect>
          <x>40</x>
          <y>80</y>
-         <width>161</width>
+         <width>191</width>
          <height>41</height>
         </rect>
        </property>
        <property name="font">
         <font>
          <family>Arial</family>
-         <pointsize>14</pointsize>
+         <pointsize>16</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -458,7 +472,7 @@ background-color: rgb(204, 204, 204);
        <property name="font">
         <font>
          <family>Arial</family>
-         <pointsize>14</pointsize>
+         <pointsize>16</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -713,6 +727,270 @@ background-color: rgb(204, 204, 204);
       </widget>
      </widget>
     </widget>
+    <widget class="QWidget" name="clicked_subjet">
+     <widget class="QFrame" name="frame_nav_2">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>102</y>
+        <width>991</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QFrame#frame_nav_2{
+background-color: rgb(236, 236, 236);
+}</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+     </widget>
+     <widget class="QFrame" name="frame_logo_5">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>0</y>
+        <width>991</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QFrame#frame_logo_5{
+background-color: rgb(255, 255, 255);
+border: 1px solid rgb(126, 126, 126);
+border-top: 0px;
+border-left: 0px;
+border-right: 0px;
+}</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QPushButton" name="bnt_connection_4">
+       <property name="geometry">
+        <rect>
+         <x>780</x>
+         <y>36</y>
+         <width>151</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton#bnt_connection_4 {
+background-color: rgb(255, 255, 255);
+border: 2px solid rgb(0, 0, 255, 180);
+border-radius: 5px;
+color: rgb(0, 0, 255);
+}
+
+QPushButton#bnt_connection_4::hover {
+background-color: rgb(0, 0, 255, 180);
+color: rgb(255, 255, 255);
+} </string>
+       </property>
+       <property name="text">
+        <string>Se connecter</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="logo_app_5">
+       <property name="geometry">
+        <rect>
+         <x>41</x>
+         <y>14</y>
+         <width>71</width>
+         <height>71</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap>../../img/bulle-de-chat.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="bnt_subcription_4">
+       <property name="geometry">
+        <rect>
+         <x>622</x>
+         <y>35</y>
+         <width>151</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>14</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton#bnt_subcription_4 {
+background-color: rgb(255, 255, 255);
+border: 2px solid rgb(2, 163, 0);
+border-radius: 5px;
+color: rgb(2, 163, 0);
+}
+
+QPushButton#bnt_subcription_4::hover {
+background-color: rgb(2, 163, 0);
+color: rgb(255, 255, 255);
+} </string>
+       </property>
+       <property name="text">
+        <string>S'inscrir</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QLabel" name="label_4">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>150</y>
+        <width>191</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>24</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Titre du sujet</string>
+      </property>
+     </widget>
+     <widget class="QFrame" name="frame_container_discuss">
+      <property name="geometry">
+       <rect>
+        <x>78</x>
+        <y>210</y>
+        <width>851</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QFrame#frame_container_discuss {
+border: 1px solid black;
+}</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QScrollBar" name="verticalScrollBar_2">
+       <property name="geometry">
+        <rect>
+         <x>830</x>
+         <y>0</y>
+         <width>20</width>
+         <height>58</height>
+        </rect>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QTextEdit" name="enter_reply">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>290</y>
+        <width>851</width>
+        <height>171</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Times New Roman</family>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="cursor" stdset="0">
+       <cursorShape>IBeamCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QTextEdit#enter_reply {
+background-color: rgb(204, 204, 204);
+border: 1px solid black;
+border-radius: 5px;
+padding: 10px;
+}
+
+QTextEdit#enter_reply::hover {
+background-color: rgb(236, 236, 236);
+}</string>
+      </property>
+      <property name="placeholderText">
+       <string>Entrer vôtre message</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="bnt_reply">
+      <property name="geometry">
+       <rect>
+        <x>780</x>
+        <y>480</y>
+        <width>151</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>14</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton#bnt_reply {
+background-color: rgb(255, 255, 255);
+border: 2px solid rgb(2, 163, 0);
+border-radius: 5px;
+color: rgb(2, 163, 0);
+}
+
+QPushButton#bnt_reply::hover {
+background-color: rgb(2, 163, 0);
+color: rgb(255, 255, 255);
+} </string>
+      </property>
+      <property name="text">
+       <string>Répondre</string>
+      </property>
+     </widget>
+    </widget>
     <widget class="QWidget" name="page_subcription">
      <widget class="QFrame" name="frame_logo_2">
       <property name="geometry">
@@ -746,6 +1024,9 @@ border-right: 0px;
          <width>71</width>
          <height>71</height>
         </rect>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
        </property>
        <property name="text">
         <string/>
@@ -813,6 +1094,9 @@ background-color: rgb(255, 255, 255);
          <weight>75</weight>
          <bold>true</bold>
         </font>
+       </property>
+       <property name="cursor">
+        <cursorShape>IBeamCursor</cursorShape>
        </property>
        <property name="text">
         <string>Inscription</string>
@@ -1069,6 +1353,9 @@ border-bottom: 1px solid rgb(0, 0, 255);
          <bold>true</bold>
         </font>
        </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
        <property name="styleSheet">
         <string notr="true">QPushButton#bnt_subcription_2 {
 background-color: rgb(255, 255, 255);
@@ -1126,6 +1413,9 @@ background-color:rgba(0, 0, 255, 180);
          <bold>true</bold>
         </font>
        </property>
+       <property name="cursor">
+        <cursorShape>IBeamCursor</cursorShape>
+       </property>
        <property name="styleSheet">
         <string notr="true">QLabel#label_motivation {
 color: rgb(255, 255, 255);
@@ -1137,7 +1427,205 @@ color: rgb(255, 255, 255);
       </widget>
      </widget>
     </widget>
-    <widget class="QWidget" name="pag_connection">
+    <widget class="QWidget" name="clicked_forum">
+     <widget class="QFrame" name="frame_logo_4">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>0</y>
+        <width>991</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QFrame#frame_logo_4{
+background-color: rgb(255, 255, 255);
+border: 1px solid rgb(126, 126, 126);
+border-top: 0px;
+border-left: 0px;
+border-right: 0px;
+}</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QPushButton" name="bnt_connection_3">
+       <property name="geometry">
+        <rect>
+         <x>780</x>
+         <y>36</y>
+         <width>151</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton#bnt_connection_3 {
+background-color: rgb(255, 255, 255);
+border: 2px solid rgb(0, 0, 255, 180);
+border-radius: 5px;
+color: rgb(0, 0, 255);
+}
+
+QPushButton#bnt_connection_3::hover {
+background-color: rgb(0, 0, 255, 180);
+color: rgb(255, 255, 255);
+} </string>
+       </property>
+       <property name="text">
+        <string>Se connecter</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="logo_app_4">
+       <property name="geometry">
+        <rect>
+         <x>41</x>
+         <y>14</y>
+         <width>71</width>
+         <height>71</height>
+        </rect>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap>../../img/bulle-de-chat.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="bnt_subcription_3">
+       <property name="geometry">
+        <rect>
+         <x>622</x>
+         <y>35</y>
+         <width>151</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton#bnt_subcription_3 {
+background-color: rgb(255, 255, 255);
+border: 2px solid rgb(2, 163, 0);
+border-radius: 5px;
+color: rgb(2, 163, 0);
+}
+
+QPushButton#bnt_subcription_3::hover {
+background-color: rgb(2, 163, 0);
+color: rgb(255, 255, 255);
+} </string>
+       </property>
+       <property name="text">
+        <string>S'inscrir</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QFrame" name="frame_nav">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>102</y>
+        <width>991</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QFrame#frame_nav{
+background-color: rgb(204, 204, 204);
+}</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+     </widget>
+     <widget class="QFrame" name="frame_subjet">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>210</y>
+        <width>871</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QFrame#frame_subjet {
+border: 1px solid black;
+}</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QScrollBar" name="verticalScrollBar">
+       <property name="geometry">
+        <rect>
+         <x>850</x>
+         <y>0</y>
+         <width>20</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QLabel" name="label_3">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>150</y>
+        <width>301</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>18</pointsize>
+       </font>
+      </property>
+      <property name="cursor">
+       <cursorShape>IBeamCursor</cursorShape>
+      </property>
+      <property name="text">
+       <string>nom de la categori a ajouter</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="page_connection">
      <widget class="QFrame" name="frame_connection_left">
       <property name="geometry">
        <rect>
@@ -1248,6 +1736,9 @@ border-bottom: 2px solid rgb(0, 0, 255);
          <pointsize>14</pointsize>
         </font>
        </property>
+       <property name="focusPolicy">
+        <enum>Qt::ClickFocus</enum>
+       </property>
        <property name="styleSheet">
         <string notr="true">QLineEdit#enter_password_connection{
 padding: 10px;
@@ -1283,6 +1774,9 @@ border-bottom: 2px solid rgb(0, 0, 255);
          <weight>75</weight>
          <bold>true</bold>
         </font>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
        </property>
        <property name="styleSheet">
         <string notr="true">QPushButton#bnt_connection_2 {
@@ -1335,6 +1829,9 @@ border-right: 0px;
          <height>71</height>
         </rect>
        </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
        <property name="text">
         <string/>
        </property>
@@ -1385,6 +1882,9 @@ background-color:rgba(0, 0, 255, 180);
          <bold>true</bold>
         </font>
        </property>
+       <property name="cursor">
+        <cursorShape>IBeamCursor</cursorShape>
+       </property>
        <property name="styleSheet">
         <string notr="true">QLabel#label_motivation_2 {
 color: rgb(255, 255, 255);
@@ -1403,7 +1903,7 @@ color: rgb(255, 255, 255);
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>984</width>
+     <width>991</width>
      <height>21</height>
     </rect>
    </property>
