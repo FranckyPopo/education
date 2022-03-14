@@ -411,8 +411,8 @@ class Ui_MainWindow(object):
         self.logo_app_6.setObjectName("logo_app_6")
         self.frame_controler = QtWidgets.QFrame(self.frame_logo_6)
         self.frame_controler.setGeometry(QtCore.QRect(749, 2, 181, 111))
-        self.frame_controler.setStyleSheet("QFrame#frame_controler{\n"
-"border: 0px solid;\n"
+        self.frame_controler.setStyleSheet("QFrame#frame_controler{"
+"border: 0px solid;"
 "}")
         self.frame_controler.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_controler.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -420,36 +420,32 @@ class Ui_MainWindow(object):
         self.bnt_space_etudiant = QtWidgets.QPushButton(self.frame_controler)
         self.bnt_space_etudiant.setGeometry(QtCore.QRect(1, 10, 171, 41))
         self.bnt_space_etudiant.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.bnt_space_etudiant.setStyleSheet("QPushButton#bnt_space_etudiant {\n"
-"background-color: rgb(77, 86, 255);\n"
-"border-radius: 20px;\n"
-"color: white;\n"
-"}\n"
-"\n"
-"QPushButton#bnt_space_etudiant::hover {\n"
-"background-color: rgb(90, 79, 255);\n"
-"}\n"
-"")
+        self.bnt_space_etudiant.setStyleSheet("""QPushButton#bnt_space_etudiant {
+        background-color: rgb(77, 86, 255);
+        border-radius: 20px;
+        color: white;
+        }
+
+        QPushButton#bnt_space_etudiant::hover {
+        background-color: rgb(90, 79, 255);
+        }
+        """)
         self.bnt_space_etudiant.setObjectName("bnt_space_etudiant")
         self.bnt_space_admin = QtWidgets.QPushButton(self.frame_controler)
         self.bnt_space_admin.setGeometry(QtCore.QRect(0, 60, 171, 41))
         self.bnt_space_admin.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.bnt_space_admin.setStyleSheet("QPushButton#bnt_space_admin {\n"
-"background-color: rgb(2, 163, 0);\n"
-"border-radius: 20px;\n"
-"color: white;\n"
-"}\n"
-"\n"
-"QPushButton#bnt_space_admin::hover {\n"
-"}\n"
-"")
+        self.bnt_space_admin.setStyleSheet("""QPushButton#bnt_space_admin {\n"
+        background-color: rgb(2, 163, 0);
+        border-radius: 20px;
+        color: white;
+        }
+        """)
         self.bnt_space_admin.setObjectName("bnt_space_admin")
         self.frame = QtWidgets.QFrame(self.pageadmin)
         self.frame.setGeometry(QtCore.QRect(10, 160, 1001, 141))
-        self.frame.setStyleSheet("QFrame#frame{ \n"
-"background-color: rgb(226, 226, 226);\n"
-"}\n"
-"")
+        self.frame.setStyleSheet("QFrame#frame{"
+"background-color: rgb(226, 226, 226);"
+"}")
         self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame.setObjectName("frame")
