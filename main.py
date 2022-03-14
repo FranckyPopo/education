@@ -26,7 +26,48 @@ class Ui_MainWindow(object):
     def window_subscription(self):
         self.stackedWidget.setCurrentWidget(self.page_subscription)
 
-         
+    def recording_user(self):
+        # Récupératioin des données saisir pas l'utilisateur
+        last_name = self.enter_last_name.text()
+        first_name = self.enter_first_name.text()
+        email = self.enter_email.text()
+        gender = self.enter_gender.currentText()
+        clas = self.enter_class.currentText()
+        password_1 = self.enter_password_1.text()
+        password_2 = self.enter_password_2.text()
+        
+        if (last_name and first_name and email and gender and clas and password_1 == password_2
+            and last_name.isalpha() and first_name.isalpha() and last_name.isspace()
+            and first_name.isspace() and email.isspace() and password_1.isspace() and password_2.isspace()):
+            d = {
+                "last_name": last_name, 
+                "first_name": first_name,
+                "email": email,
+                "gender": gender,
+                "class": clas,
+                "password": password_1
+            }
+
+            conn = sqlite3.connect(folder_bd + "/" + "etudiants.bd")
+            cursor = conn.cursor()
+            cursor.execute(f"""CREATE TABLE IF NOT EXISTS etudiants(
+                last_name text,
+                first_name text,
+                email text,
+                gender text,
+                class text,
+                password text) """)
+            cursor.execute("""INSERT INTO etudiants VALUES (:last_name, 
+                :first_name,
+                :email,
+                :gender,
+                :class,
+                :password)""", d)
+            conn.commit()
+            conn.close     
+        else:
+            print("Error")
+   
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1021, 703)
@@ -214,6 +255,7 @@ class Ui_MainWindow(object):
 "}")
         self.enter_email.setObjectName("enter_email")
         self.bnt_subcription = QtWidgets.QPushButton(self.frame_subscribtion)
+        self.bnt_subcription.clicked.connect(self.recording_user)
         self.bnt_subcription.setGeometry(QtCore.QRect(286, 514, 211, 31))
         font = QtGui.QFont()
         font.setFamily("Verdana")
@@ -320,6 +362,8 @@ class Ui_MainWindow(object):
 "}")
         self.enter_password_1.setObjectName("enter_password_1")
         self.enter_gender = QtWidgets.QComboBox(self.frame_subscribtion)
+        self.enter_gender.addItem("Homme")
+        self.enter_gender.addItem("Femme")
         self.enter_gender.setGeometry(QtCore.QRect(226, 324, 331, 24))
         self.enter_gender.setStyleSheet("QComboBox#enter_gender {\n"
 "border-left: 0px; \n"
@@ -336,6 +380,8 @@ class Ui_MainWindow(object):
 "")
         self.enter_gender.setObjectName("enter_gender")
         self.enter_class = QtWidgets.QComboBox(self.frame_subscribtion)
+        list_class = ["6éme", "5éme", "4éme", "3éme", "2nd", "1ère", "Terminal"]
+        for item in list_class: self.enter_class.addItem(item)
         self.enter_class.setGeometry(QtCore.QRect(226, 366, 331, 24))
         self.enter_class.setStyleSheet("QComboBox#enter_class {\n"
 "border-left: 0px; \n"
