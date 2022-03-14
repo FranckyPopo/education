@@ -4,6 +4,7 @@ import os
 import sqlite3
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QMessageBox
 
 # Nous créons le dossier qui va cotenir les bd
 folder_current = os.getcwd()
@@ -19,13 +20,18 @@ class Frame(QtWidgets.QFrame):
         self.clicked.emit()
 
 
-class Ui_MainWindow(object):
+class Ui_MainWindow(QtWidgets.QMainWindow):
+    
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
+    
     def window_connection(self):
         self.stackedWidget.setCurrentWidget(self.page_connection)
         
     def window_subscription(self):
         self.stackedWidget.setCurrentWidget(self.page_subscription)
-
+        
     def recording_user(self):
         # Récupératioin des données saisir pas l'utilisateur
         last_name = self.enter_last_name.text()
@@ -66,7 +72,8 @@ class Ui_MainWindow(object):
             conn.commit()
             conn.close     
         else:
-            print("Error")
+            QMessageBox.about(self, "Erreur", "Une erreur est survenue lors de l'enregistrement, Veuillez vérifier vos informations")
+
    
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -678,8 +685,6 @@ class Ui_MainWindow(object):
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
+    window = Ui_MainWindow()
+    window.show()
     sys.exit(app.exec_())
