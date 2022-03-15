@@ -29,11 +29,31 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         super().__init__()
         self.setupUi(self)
     
+    def initUI(self):             
+        self.vbox = QtWidgets.QVBoxLayout()              
+
+        for i in range(1,1100):
+            label = QtWidgets.QLabel(str(i))
+            self.vbox.addWidget(label)
+
+        self.subjet.setLayout(self.vbox)
+
+        #Scroll Area Properties
+        self.contenai_subjet.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+        self.contenai_subjet.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.contenai_subjet.setWidgetResizable(True)
+        self.contenai_subjet.setWidget(self.subjet)
+
+    
     def window_connection(self):
         self.stackedWidget.setCurrentWidget(self.page_connection)
         
     def window_subscription(self):
         self.stackedWidget.setCurrentWidget(self.page_subscription)
+        
+    def window_subjets(self):
+        self.stackedWidget.setCurrentWidget(self.page_subjet)
+        self.initUI()
         
     def recording_user(self):
         # Récupératioin des données saisir pas l'utilisateur
@@ -85,10 +105,10 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 :class,
                 :password)""", self.d)
             conn.commit()
-            conn.close 
+            conn.close()
             QMessageBox.about(self, "Code valide", "Félicitation Vous venez de valider vôtre inscription")
-        else:
-            QMessageBox.about(self, "Code invalide", "Le code que vous avez saisit est invalide")
+            self.window_subjets()
+        else: QMessageBox.about(self, "Code invalide", "Le code que vous avez saisit est invalide")
             
     def code_generation(self, name_user, email_user):
         code = []
@@ -135,13 +155,13 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.enter_code.setFont(QtGui.QFont("Times New Roman", 14))
         self.enter_code.setObjectName("enter_code")
         self.enter_code.setStyleSheet("""QLineEdit#enter_code {
-        background-color: rgb(236, 236, 236);
-        border-radius: 3px;
-        padding: 5px;
-        border: 1px solid rgb(160, 161, 182);
-        border-left: 0px;
-        border-right: 0px;
-        border-top: 0px;
+            background-color: rgb(236, 236, 236);
+            border-radius: 3px;
+            padding: 5px;
+            border: 1px solid rgb(160, 161, 182);
+            border-left: 0px;
+            border-right: 0px;
+            border-top: 0px;
         }
         
         QLineEdit#enter_code::hover {
@@ -206,6 +226,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.subjet = QtWidgets.QWidget()
         self.subjet.setGeometry(QtCore.QRect(0, 0, 831, 671))
         self.subjet.setObjectName("subjet")
+
         self.contenai_subjet.setWidget(self.subjet)
         self.stackedWidget.addWidget(self.page_subjet)
         self.page_connection = QtWidgets.QWidget()
@@ -649,8 +670,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.logo_2.setPixmap(QtGui.QPixmap("UI\\../img/physique.png"))
         self.logo_2.setScaledContents(True)
         self.logo_2.setObjectName("logo_2")
-        self.frame_category_3 = QtWidgets.QFrame(self.bar_nav)
-        #self.frame_category_3.clicked.connection(self.)
+        self.frame_category_3 = Frame(self.bar_nav)
+        self.frame_category_3.clicked.connect(self.window_subjets)
         self.frame_category_3.setGeometry(QtCore.QRect(10, 102, 311, 61))
         self.frame_category_3.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.frame_category_3.setStyleSheet("QFrame#frame_category_3::hover{\n"
@@ -668,7 +689,6 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.label_8.setObjectName("label_8")
         self.logo = QtWidgets.QLabel(self.frame_category_3)
         self.logo.setGeometry(QtCore.QRect(30, 5, 61, 51))
-        self.logo.setText("")
         self.logo.setPixmap(QtGui.QPixmap("UI\\../img/planète-terre.png"))
         self.logo.setScaledContents(True)
         self.logo.setObjectName("logo")
@@ -736,8 +756,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
 
         self.retranslateUi(MainWindow)
         self.stackedWidget.setCurrentIndex(0)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
-        
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)  
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
