@@ -3,6 +3,9 @@
 import os
 import sqlite3
 import sys
+import smtplib
+import string
+from random import choice
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 
@@ -43,9 +46,10 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         password_2 = self.enter_password_2.text()
         
         if (last_name and first_name and email and gender and clas and password_1 == password_2
-            and last_name.isalpha() and first_name.isalpha() and last_name.isspace()
-            and first_name.isspace() and email.isspace() and password_1.isspace() and password_2.isspace()):
-            d = {
+            and last_name.isalpha() and first_name.isalpha() and not last_name.isspace()
+            and not first_name.isspace() and not email.isspace() and not password_1.isspace() and not password_2.isspace()):
+
+            self.d = {
                 "last_name": last_name, 
                 "first_name": first_name,
                 "email": email,
@@ -53,7 +57,15 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 "class": clas,
                 "password": password_1
             }
-
+            self.code = self.code_generation(last_name, email)
+            self.stackedWidget.setCurrentWidget(self.page_confimed_code)     
+        else:
+            QMessageBox.about(self, "Erreur", "Une erreur est survenue lors de l'enregistrement, Veuillez vérifier vos informations")
+       
+    def recording_final(self):
+        code_user = self.enter_code.text()
+        if code_user == self.code:
+            print("oui")
             conn = sqlite3.connect(folder_bd + "/" + "etudiants.bd")
             cursor = conn.cursor()
             cursor.execute(f"""CREATE TABLE IF NOT EXISTS etudiants(
@@ -68,13 +80,34 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 :email,
                 :gender,
                 :class,
-                :password)""", d)
+                :password)""", self.d)
             conn.commit()
-            conn.close     
+            conn.close 
         else:
-            QMessageBox.about(self, "Erreur", "Une erreur est survenue lors de l'enregistrement, Veuillez vérifier vos informations")
+            QMessageBox.about(self, "Code invalide", "Le code que vous avez saisit est invalide")
+            
+    def code_generation(self, name_user, email_user):
+        code = []
+        list_number = string.digits
+        
+        for i in range(0, 6): 
+            n = choice(list_number) 
+            code.append(n)
+            
+        code = "".join(code)
+         
+        msg = """subject: Validation de l'inscription
+        Félicitation {} vous venez de vous inscrit sur l'application ChatSchool.
+        Pour valider vôtre inscription veuillez entrer le code suivant: {}
+        """.format(name_user, code)
+        msg = msg.encode("utf-8")
+        server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
+        server.login("chatschool22@gmail.com", "Popo2022")
+        server.sendmail("chatschool22@gmail.com", email_user, msg)
+        server.quit()
+        
+        return code
 
-   
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1021, 703)
@@ -84,6 +117,56 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.stackedWidget.setGeometry(QtCore.QRect(310, 0, 711, 671))
         self.stackedWidget.setStyleSheet("")
         self.stackedWidget.setObjectName("stackedWidget")
+        
+        self.page_confimed_code = QtWidgets.QWidget()
+        self.page_confimed_code.setObjectName("page_confimed_code")
+        self.page_confimed_code.setStyleSheet("""QWidget#page_confimed_code {
+            background-color: white;}""")
+        self.label_code = QtWidgets.QLabel("Entrer le code", self.page_confimed_code)
+        self.label_code.setObjectName("label_code")
+        self.label_code.setGeometry(270, 300, 331, 31)
+        font = QtGui.QFont("Arial", 18)
+        self.label_code.setFont(font)
+        self.enter_code = QtWidgets.QLineEdit(self.page_confimed_code) 
+        self.enter_code.setGeometry(200, 350, 300, 35)
+        self.enter_code.setFont(QtGui.QFont("Times New Roman", 14))
+        self.enter_code.setObjectName("enter_code")
+        self.enter_code.setStyleSheet("""QLineEdit#enter_code {
+        background-color: rgb(236, 236, 236);
+        border-radius: 3px;
+        padding: 5px;
+        border: 1px solid rgb(160, 161, 182);
+        border-left: 0px;
+        border-right: 0px;
+        border-top: 0px;
+        }
+        
+        QLineEdit#enter_code::hover {
+            border-bottom-color: rgb(64, 40, 200);
+        }
+        """)
+        
+        self.bnt_code = QtWidgets.QPushButton("Valider", self.page_confimed_code)
+        self.bnt_code.clicked.connect(self.recording_final)
+        self.bnt_code.setGeometry(280, 400, 150, 35)
+        self.bnt_code.setFont(QtGui.QFont("Arial", 14))
+        self.bnt_code.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.bnt_code.setObjectName("bnt_code")
+        self.bnt_code.setStyleSheet("""QPushButton#bnt_code{
+            background-color: white;
+            color: rgb(2, 171, 0);
+            padding: 5px;
+            border: 2px solid rgb(2, 171, 0);
+            border-radius: 5px;
+        }
+        
+        QPushButton#bnt_code::hover{
+            background-color: rgb(2, 171, 0);
+            color: white;
+        }
+        """)
+
+        self.stackedWidget.addWidget(self.page_confimed_code)
         self.page_discuss = QtWidgets.QWidget()
         self.page_discuss.setObjectName("page_discuss")
         self.contenai_discuss = QtWidgets.QScrollArea(self.page_discuss)
@@ -187,19 +270,19 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         font.setPointSize(14)
         self.bnt_connection.setFont(font)
         self.bnt_connection.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.bnt_connection.setStyleSheet("QPushButton#bnt_connection{\n"
-"background-color: white;\n"
-"color: rgb(64, 40, 200);\n"
-"padding: 5px;\n"
-"border: 2px solid rgb(64, 40, 200);\n"
-"border-radius: 5px;\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton#bnt_connection::hover{\n"
-"background-color: rgb(64, 40, 200);\n"
-"color: white;\n"
-"}\n"
+        self.bnt_connection.setStyleSheet("QPushButton#bnt_connection{"
+"background-color: white;"
+"color: rgb(64, 40, 200);"
+"padding: 5px;"
+"border: 2px solid rgb(64, 40, 200);"
+"border-radius: 5px;"
+"}"
+""
+""
+"QPushButton#bnt_connection::hover{"
+"background-color: rgb(64, 40, 200);"
+"color: white;"
+"}"
 "")
         self.bnt_connection.setObjectName("bnt_connection")
         self.lien_subscription = QtWidgets.QPushButton(self.frame_connection)
@@ -301,7 +384,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
 "}\n"
 "\n"
 "QLineEdit#enter_last_name::hover {\n"
-"border-bottom-color:  rgb(64, 40, 200);\n"
+"border-bottom-color: rgb(64, 40, 200);\n"
 "\n"
 "}")
         self.enter_last_name.setObjectName("enter_last_name")
