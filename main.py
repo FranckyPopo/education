@@ -48,7 +48,10 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         if (last_name and first_name and email and gender and clas and password_1 == password_2
             and last_name.isalpha() and first_name.isalpha() and not last_name.isspace()
             and not first_name.isspace() and not email.isspace() and not password_1.isspace() and not password_2.isspace()):
-
+            msg_user = """
+            Vous venez de recevoir un code validation dans vôtre boite mail.
+            Veuillez le saisit pour valider vôtre inscription.
+            """
             self.d = {
                 "last_name": last_name, 
                 "first_name": first_name,
@@ -58,6 +61,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 "password": password_1
             }
             self.code = self.code_generation(last_name, email)
+            QMessageBox.about(self, "Code de validation", msg_user)
             self.stackedWidget.setCurrentWidget(self.page_confimed_code)     
         else:
             QMessageBox.about(self, "Erreur", "Une erreur est survenue lors de l'enregistrement, Veuillez vérifier vos informations")
@@ -65,7 +69,6 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
     def recording_final(self):
         code_user = self.enter_code.text()
         if code_user == self.code:
-            print("oui")
             conn = sqlite3.connect(folder_bd + "/" + "etudiants.bd")
             cursor = conn.cursor()
             cursor.execute(f"""CREATE TABLE IF NOT EXISTS etudiants(
@@ -83,6 +86,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 :password)""", self.d)
             conn.commit()
             conn.close 
+            QMessageBox.about(self, "Code valide", "Félicitation Vous venez de valider vôtre inscription")
         else:
             QMessageBox.about(self, "Code invalide", "Le code que vous avez saisit est invalide")
             
@@ -93,10 +97,9 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         for i in range(0, 6): 
             n = choice(list_number) 
             code.append(n)
-            
         code = "".join(code)
          
-        msg = """subject: Validation de l'inscription
+        msg = """subject: Validation de l'inscription\n
         Félicitation {} vous venez de vous inscrit sur l'application ChatSchool.
         Pour valider vôtre inscription veuillez entrer le code suivant: {}
         """.format(name_user, code)
