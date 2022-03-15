@@ -27,7 +27,7 @@
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>3</number>
     </property>
     <widget class="QWidget" name="page_discuss">
      <widget class="QScrollArea" name="contenai_discuss">
@@ -83,6 +83,9 @@ QWidget#subjet{
 background-color: rgb(255, 255, 255);
 
 }</string>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Sunken</enum>
       </property>
       <property name="widgetResizable">
        <bool>true</bool>
@@ -687,6 +690,9 @@ font-weight: bold;
 border: 0px;
 }</string>
     </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
     <property name="widgetResizable">
      <bool>true</bool>
     </property>
@@ -710,6 +716,9 @@ border: 0px;
       </property>
       <property name="cursor">
        <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="toolTip">
+       <string>connection</string>
       </property>
       <property name="styleSheet">
        <string notr="true">QFrame#frame_conne_1::hover{
@@ -821,6 +830,9 @@ background-color: rgb(204, 204, 204);
       <property name="cursor">
        <cursorShape>PointingHandCursor</cursorShape>
       </property>
+      <property name="toolTip">
+       <string>Forum pilosophie</string>
+      </property>
       <property name="styleSheet">
        <string notr="true">QFrame#frame_category_4::hover{
 background-color: rgb(204, 204, 204);
@@ -882,6 +894,9 @@ background-color: rgb(204, 204, 204);
       </property>
       <property name="cursor">
        <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="toolTip">
+       <string>Forum mathématique</string>
       </property>
       <property name="styleSheet">
        <string notr="true">QFrame#frame_category_1::hover{
@@ -945,6 +960,9 @@ background-color: rgb(204, 204, 204);
       <property name="cursor">
        <cursorShape>PointingHandCursor</cursorShape>
       </property>
+      <property name="toolTip">
+       <string>Forums physique</string>
+      </property>
       <property name="styleSheet">
        <string notr="true">QFrame#frame_category_2::hover{
 background-color: rgb(204, 204, 204);
@@ -1007,6 +1025,9 @@ background-color: rgb(204, 204, 204);
       <property name="cursor">
        <cursorShape>PointingHandCursor</cursorShape>
       </property>
+      <property name="toolTip">
+       <string>Forum svt</string>
+      </property>
       <property name="styleSheet">
        <string notr="true">QFrame#frame_category_3::hover{
 background-color: rgb(204, 204, 204);
@@ -1068,6 +1089,9 @@ background-color: rgb(204, 204, 204);
       </property>
       <property name="cursor">
        <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="toolTip">
+       <string>Forum français</string>
       </property>
       <property name="styleSheet">
        <string notr="true">QFrame#frame_category_5::hover{
@@ -1152,6 +1176,9 @@ background-color: rgb(204, 204, 204);
       </property>
       <property name="cursor">
        <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="toolTip">
+       <string>Forum anglais</string>
       </property>
       <property name="styleSheet">
        <string notr="true">QFrame#frame_category_6::hover{
