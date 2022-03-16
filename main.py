@@ -84,7 +84,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 "class": clas,
                 "password": password_1
             }
-            self.code = self.code_generation(last_name, email)
+            self.code = self.email_confimed(last_name, email)
             QMessageBox.about(self, "Code de validation", msg_user)
             self.stackedWidget.setCurrentWidget(self.page_confimed_code)     
         else:
@@ -114,7 +114,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             self.window_subjets()
         else: QMessageBox.about(self, "Code invalide", "Le code que vous avez saisit est invalide")
             
-    def code_generation(self, name_user, email_user):
+    def email_confimed(self, name_user, email_user):
         code = []
         list_number = string.digits
         
@@ -134,6 +134,64 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         server.quit()
         
         return code
+
+
+    def get_data(self, name_file, name_table):
+        FILE = folder_bd + "/" + name_file
+        conn = sqlite3.connect(FILE)
+        cursor = conn.cursor()
+        data = cursor.execute(f"SELECT * FROM {name_table}").fetchall()
+        conn.commit()
+        conn.close()
+        return data
+
+    def generation_id_subjet(self):
+        list_id_subjet = self.get_data("forums.bd", "id")
+        code = []
+        list_number = string.digits
+        
+        for i in range(0, 6): 
+            n = choice(list_number) 
+            code.append(n)
+        code = "".join(code)
+        
+        for code_exists in list_id_subjet:
+            if code_exists == code:
+                return self.generation_id_subjet()
+        return code
+        
+    def recording_sujet(self):
+        subjet = self.enter_subjet.currentText()
+        title = self.enter_title_subjet.text()
+        description = self.enter_description.toPlainText()
+        d = {
+            "subjet": subjet,
+            "title": title,
+            "description": description,
+            "id_subjet": None
+        }
+        
+        if subjet and title and description and not subjet.isspace() and not title.isspace() and not description.isspace():
+            conn = sqlite3.connect(folder_bd + "/" + "forums.bd")
+            cursor = conn.cursor()
+            
+            cursor.execute("CREATE TABLE IF NOT EXISTS id_subjet (id text)")
+            cursor.execute(f"INSERT INTO id VALUES (:id_subjet)", d)
+            cursor.execute(f"""CREATE TABLE IF NOT EXISTS {subjet}(
+            subjet text,
+            title text,
+            description text,
+            id_subjet text)""")
+            cursor.execute(f"""INSERT INTO {subjet} VALUES (
+            :subjet,
+            :title,
+            :description,
+            :id_subjet)""", d)
+            conn.commit()
+            conn.close()
+            
+            
+        else: QMessageBox.about(self, "Imposible d'ajouter le sujet", "Une erreur est survenue lors de l'ajout du sujet, Veuillez vérifier les données les données que vous avez saisit")
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -254,6 +312,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.enter_description.setGeometry(100, 200, 331, 150)
         
         self.bnt_creat_subjet = QtWidgets.QPushButton("Crée le sujet", self.frame_creat_subjet)
+        self.bnt_creat_subjet.clicked.connect(self.recording_sujet)
         self.bnt_creat_subjet.setObjectName("bnt_creat_subjet")
         self.bnt_creat_subjet.setGeometry(230, 370, 200, 31)
         font = QtGui.QFont()
