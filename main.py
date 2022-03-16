@@ -44,7 +44,6 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.contenai_subjet.setWidgetResizable(True)
         self.contenai_subjet.setWidget(self.subjet)
 
-    
     def window_connection(self):
         self.stackedWidget.setCurrentWidget(self.page_connection)
         
