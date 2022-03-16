@@ -55,6 +55,10 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.stackedWidget.setCurrentWidget(self.page_subjet)
         self.initUI()
         
+    def window_creat_subjet(self):
+        self.stackedWidget.setCurrentWidget(self.page_creat_discuss)
+
+        
     def recording_user(self):
         # Récupératioin des données saisir pas l'utilisateur
         last_name = self.enter_last_name.text()
@@ -188,8 +192,92 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             color: white;
         }
         """)
-
         self.stackedWidget.addWidget(self.page_confimed_code)
+        
+        # Page création de la discution
+        self.page_creat_discuss = QtWidgets.QWidget()
+        self.page_creat_discuss.setObjectName("page_creat_discuss")
+        self.page_creat_discuss.setStyleSheet("""QWidget#page_creat_discuss {
+        background-color: white;}""")
+        
+        
+        self.frame_creat_subjet = QtWidgets.QFrame(self.page_creat_discuss)
+        self.frame_creat_subjet.setObjectName("frame_creat_subjet")
+        self.frame_creat_subjet.setGeometry(100, 100, 450, 450)
+        self.frame_creat_subjet.setStyleSheet("""QFrame#frame_creat_subjet{
+            border: 1px solid black;
+            }""")
+        
+        self.enter_subjet = QtWidgets.QComboBox(self.frame_creat_subjet)
+        self.enter_subjet.setGeometry(100, 100, 331, 24)
+        self.enter_subjet.setObjectName("enter_subjet")
+        self.enter_subjet.setStyleSheet("QComboBox#enter_subjet {\n"
+"border-left: 0px; \n"
+"border-top: 0px; \n"
+"border-right: 0px;\n"
+"border-radius: 3px; \n"
+"border-bottom: 1px solid rgb(204, 204, 204); \n"
+"background-color: rgb(236, 236, 236);\n"
+"}\n"
+"\n"
+"QComboBox#enter_gender::hover {\n"
+"border-bottom-color: rgb(160, 161, 182);\n"
+"}\n"
+"")
+        
+        list_subjet = ["SVT", "Physique", "Anglais", "Philosophie"]
+        for item in list_subjet: self.enter_subjet.addItem(item)
+        
+        self.enter_title_subjet = QtWidgets.QLineEdit(self.frame_creat_subjet)
+        self.enter_title_subjet.setGeometry(100, 150, 331, 28)
+        self.enter_title_subjet.setObjectName("enter_title_subjet")
+        font = QtGui.QFont()
+        font.setFamily("Times New Roman")
+        font.setPointSize(14)
+        self.enter_title_subjet.setFont(font)
+        self.enter_title_subjet.setStyleSheet("QLineEdit#enter_title_subjet{\n"
+"background-color: rgb(236, 236, 236);\n"
+"border-radius: 3px;\n"
+"padding: 5px;\n"
+"border: 1px solid rgb(160, 161, 182);\n"
+"border-left: 0px;\n"
+"border-right: 0px;\n"
+"border-top: 0px;\n"
+"}\n"
+"\n"
+"QLineEdit#enter_title_subjet::hover {\n"
+"border-bottom-color: rgb(64, 40, 200);\n"
+"\n"
+"}")
+        
+        self.enter_description = QtWidgets.QTextEdit(self.frame_creat_subjet)
+        self.enter_description.setGeometry(100, 200, 331, 150)
+        
+        self.bnt_creat_subjet = QtWidgets.QPushButton("Crée le sujet", self.frame_creat_subjet)
+        self.bnt_creat_subjet.setObjectName("bnt_creat_subjet")
+        self.bnt_creat_subjet.setGeometry(230, 370, 200, 31)
+        font = QtGui.QFont()
+        font.setFamily("Verdana")
+        font.setPointSize(14)
+        self.bnt_creat_subjet.setFont(font)
+        self.bnt_creat_subjet.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.bnt_creat_subjet.setStyleSheet("QPushButton#bnt_creat_subjet{"
+"background-color: white;"
+"color: rgb(2, 171, 0);"
+"padding: 5px;"
+"border: 2px solid rgb(2, 171, 0);"
+"border-radius: 5px;"
+"}"
+""
+""
+"QPushButton#bnt_creat_subjet::hover{"
+"background-color: rgb(2, 171, 0);"
+"color: white;"
+"}"
+"")
+        
+        self.stackedWidget.addWidget(self.page_creat_discuss)
+        
         self.page_discuss = QtWidgets.QWidget()
         self.page_discuss.setObjectName("page_discuss")
         self.contenai_discuss = QtWidgets.QScrollArea(self.page_discuss)
@@ -605,7 +693,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.label_matire_scientifique.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
         self.label_matire_scientifique.setObjectName("label_matire_scientifique")
         self.frame_category_4 = QtWidgets.QFrame(self.bar_nav)
-        self.frame_category_4.setGeometry(QtCore.QRect(10, 492, 311, 71))
+        self.frame_category_4.setGeometry(QtCore.QRect(10, 370, 311, 71))
         self.frame_category_4.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.frame_category_4.setStyleSheet("QFrame#frame_category_4::hover{\n"
 "background-color: rgb(204, 204, 204);\n"
@@ -626,30 +714,47 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.logo_6.setPixmap(QtGui.QPixmap("UI\\../img/philosophie.png"))
         self.logo_6.setScaledContents(True)
         self.logo_6.setObjectName("logo_6")
-        self.frame_category_1 = QtWidgets.QFrame(self.bar_nav)
-        self.frame_category_1.setGeometry(QtCore.QRect(10, 238, 311, 61))
-        self.frame_category_1.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.frame_category_1.setStyleSheet("QFrame#frame_category_1::hover{\n"
+        
+        # Frame ajout un sujet
+        self.frame_reply = Frame(self.bar_nav)
+        self.frame_reply.clicked.connect(self.window_creat_subjet)
+        self.frame_reply.setGeometry(QtCore.QRect(10, 450, 311, 80))
+        self.frame_reply.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.frame_reply.setStyleSheet("QFrame#frame_reply::hover{\n"
 "background-color: rgb(204, 204, 204);\n"
 "}")
-        self.frame_category_1.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame_category_1.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame_category_1.setObjectName("frame_category_1")
-        self.label_4 = QtWidgets.QLabel(self.frame_category_1)
-        self.label_4.setGeometry(QtCore.QRect(120, 14, 153, 34))
+        self.frame_reply.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_reply.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_reply.setObjectName("frame_reply")
+        self.label_subjet = QtWidgets.QLabel(self.frame_reply)
+        self.label_subjet.setGeometry(QtCore.QRect(110, 31, 131, 32))
+        self.label_subjet.setText("Créé un sujet")
         font = QtGui.QFont()
         font.setFamily("Verdana")
         font.setPointSize(16)
-        self.label_4.setFont(font)
-        self.label_4.setObjectName("label_4")
-        self.logo_3 = QtWidgets.QLabel(self.frame_category_1)
-        self.logo_3.setGeometry(QtCore.QRect(30, 5, 61, 51))
-        self.logo_3.setText("")
-        self.logo_3.setPixmap(QtGui.QPixmap("UI\\../img/mathématiques.png"))
-        self.logo_3.setScaledContents(True)
-        self.logo_3.setObjectName("logo_3")
+        font.setWeight(75)
+        self.label_subjet.setFont(font)
+        self.label_subjet.setObjectName("label_subjet")
+        self.label_img_subjet = QtWidgets.QLabel(self.frame_reply)
+        self.label_img_subjet.setGeometry(QtCore.QRect(16, 10, 71, 70))
+        self.label_img_subjet.setPixmap(QtGui.QPixmap("D:\Programmation\Documents\Projet_Nan\education\img\groupe-de-discussion.png"))
+        self.label_img_subjet.setScaledContents(True)
+        self.label_img_subjet.setObjectName("label_img_subjet")
+        self.label = QtWidgets.QLabel(self.bar_nav)
+        self.label.setGeometry(QtCore.QRect(30, 12, 91, 31))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(18)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label.setFont(font)
+        self.label.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
+        self.label.setObjectName("label")
+        
+        
+        
         self.frame_category_2 = QtWidgets.QFrame(self.bar_nav)
-        self.frame_category_2.setGeometry(QtCore.QRect(10, 171, 311, 61))
+        self.frame_category_2.setGeometry(QtCore.QRect(30, 171, 311, 61))
         self.frame_category_2.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.frame_category_2.setStyleSheet("QFrame#frame_category_2::hover{\n"
 "background-color: rgb(204, 204, 204);\n"
@@ -692,30 +797,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.logo.setPixmap(QtGui.QPixmap("UI\\../img/planète-terre.png"))
         self.logo.setScaledContents(True)
         self.logo.setObjectName("logo")
-        self.frame_category_5 = QtWidgets.QFrame(self.bar_nav)
-        self.frame_category_5.setGeometry(QtCore.QRect(10, 420, 311, 61))
-        self.frame_category_5.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.frame_category_5.setStyleSheet("QFrame#frame_category_5::hover{\n"
-"background-color: rgb(204, 204, 204);\n"
-"}")
-        self.frame_category_5.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame_category_5.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame_category_5.setObjectName("frame_category_5")
-        self.label_10 = QtWidgets.QLabel(self.frame_category_5)
-        self.label_10.setGeometry(QtCore.QRect(120, 14, 102, 34))
-        font = QtGui.QFont()
-        font.setFamily("Verdana")
-        font.setPointSize(16)
-        self.label_10.setFont(font)
-        self.label_10.setObjectName("label_10")
-        self.logo_5 = QtWidgets.QLabel(self.frame_category_5)
-        self.logo_5.setGeometry(QtCore.QRect(30, 6, 61, 51))
-        self.logo_5.setText("")
-        self.logo_5.setPixmap(QtGui.QPixmap("UI\\../img/alphabet.png"))
-        self.logo_5.setScaledContents(True)
-        self.logo_5.setObjectName("logo_5")
         self.label_matiere_litraire = QtWidgets.QLabel(self.bar_nav)
-        self.label_matiere_litraire.setGeometry(QtCore.QRect(50, 305, 151, 41))
+        self.label_matiere_litraire.setGeometry(QtCore.QRect(50, 260, 151, 41))
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(16)
@@ -723,7 +806,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.label_matiere_litraire.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
         self.label_matiere_litraire.setObjectName("label_matiere_litraire")
         self.frame_category_6 = QtWidgets.QFrame(self.bar_nav)
-        self.frame_category_6.setGeometry(QtCore.QRect(10, 350, 311, 61))
+        self.frame_category_6.setGeometry(QtCore.QRect(10, 300, 311, 61))
         self.frame_category_6.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.frame_category_6.setStyleSheet("QFrame#frame_category_6::hover{\n"
 "background-color: rgb(204, 204, 204);\n"
@@ -773,6 +856,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.enter_first_name.setPlaceholderText(_translate("MainWindow", "Prénom"))
         self.enter_password_2.setPlaceholderText(_translate("MainWindow", "Comfirmer le mot de passe"))
         self.enter_password_1.setPlaceholderText(_translate("MainWindow", "Mot de passe"))
+        self.enter_title_subjet.setPlaceholderText(_translate("MainWindow", "Entrer le titre du subjet"))
         self.label_subscription.setText(_translate("MainWindow", "Inscription"))
         self.lien_connection.setText(_translate("MainWindow", "Connecter vous ici"))
         self.label_unitile_2.setText(_translate("MainWindow", "Vous avez déha un compte ?"))
@@ -780,12 +864,11 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.label.setText(_translate("MainWindow", "Forums"))
         self.label_matire_scientifique.setText(_translate("MainWindow", "Matiére scientifique"))
         self.label_9.setText(_translate("MainWindow", "Philosophie"))
-        self.label_4.setText(_translate("MainWindow", "Mathématique"))
         self.label_7.setText(_translate("MainWindow", "Physique"))
         self.label_8.setText(_translate("MainWindow", "SVT"))
-        self.label_10.setText(_translate("MainWindow", "Français"))
         self.label_matiere_litraire.setText(_translate("MainWindow", "Matiére litéraire"))
         self.label_11.setText(_translate("MainWindow", "Anglais"))
+#        self.label_subjet(_translate("MainWindow", "Crée un sujet"))
 
 
 if __name__ == "__main__":
