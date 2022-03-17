@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from cProfile import label
 import os
 import sqlite3
 import sys
@@ -7,6 +8,7 @@ import smtplib
 import string
 from random import choice
 from functools import partial
+from turtle import tiltangle
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 
@@ -29,25 +31,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-    
-    def display_subjet(self, name_subjet):  
-        list_subjets_formus = self.get_data("forums.bd", "subjets_forums")
-        subjets = [subjet for subjet in list_subjets_formus if subjet[0].lower() == name_subjet]
-        print(subjets)
         
-        self.vbox = QtWidgets.QVBoxLayout()              
-        for i in range(1,1100):
-            label = QtWidgets.QLabel(str(i))
-            self.vbox.addWidget(label)
-
-        self.subjet.setLayout(self.vbox)
-
-        #Scroll Area Properties
-        self.contenai_subjet.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
-        self.contenai_subjet.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        self.contenai_subjet.setWidgetResizable(True)
-        self.contenai_subjet.setWidget(self.subjet)
-
     def window_connection(self):
         self.stackedWidget.setCurrentWidget(self.page_connection)
         
@@ -61,6 +45,30 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
     def window_creat_subjet(self):
         self.stackedWidget.setCurrentWidget(self.page_creat_discuss)
 
+    
+    def display_subjet(self, name_subjet):  
+        # Le programme filtre les sujets
+        list_subjets_formus = self.get_data("forums.bd", "subjets_forums")
+        subjets = [subjet for subjet in list_subjets_formus if subjet[0].lower() == name_subjet]
+        
+        self.vbox = QtWidgets.QVBoxLayout()  
+        
+        for item in subjets:
+            self.frame_subjet = QtWidgets.QFrame()
+            title_subjet = item[1].title()
+            label_title = QtWidgets.QLabel(title_subjet, self.frame_subjet)
+            
+            self.vbox.addWidget(self.frame_subjet)
+        print(self.vbox.children())
+        self.subjet.setLayout(self.vbox)
+
+        #Scroll Area Properties
+        self.contenai_subjet.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+        self.contenai_subjet.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.contenai_subjet.setWidgetResizable(True)
+        self.contenai_subjet.setWidget(self.subjet)
+
+    
         
     def recording_user(self):
         # Récupératioin des données saisir pas l'utilisateur
@@ -142,11 +150,6 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         FILE = folder_bd + "/" + name_file
         conn = sqlite3.connect(FILE)
         cursor = conn.cursor()
-        cursor.execute(f"""CREATE TABLE IF NOT EXISTS {name_table}(
-            subjet text,
-            title text,
-            description text,
-            id_subjet text)""")
         data = cursor.execute(f"SELECT * FROM {name_table}").fetchall()
         conn.commit()
         conn.close()
@@ -183,7 +186,11 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         if subjet and title and description and not subjet.isspace() and not title.isspace() and not description.isspace():
             conn = sqlite3.connect(folder_bd + "/" + "forums.bd")
             cursor = conn.cursor()
-            
+            cursor.execute(f"""CREATE TABLE IF NOT EXISTS subjets_forums(
+            subjet text,
+            title text,
+            description text,
+            id_subjet text)""")
             cursor.execute(f"""INSERT INTO subjets_forums VALUES (
             :subjet,
             :title,
@@ -753,7 +760,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.label_matire_scientifique.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
         self.label_matire_scientifique.setObjectName("label_matire_scientifique")
         self.frame_category_4 = Frame(self.bar_nav)
-        self.frame_category_4.clicked.connect(partial(self.display_subjet, "philosophie"))
+        self.frame_category_4.clicked.connect(partial(self.window_subjets, "philosophie"))
         self.frame_category_4.setGeometry(QtCore.QRect(10, 370, 311, 71))
         self.frame_category_4.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.frame_category_4.setStyleSheet("QFrame#frame_category_4::hover{\n"
@@ -811,11 +818,9 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.label.setFont(font)
         self.label.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
         self.label.setObjectName("label")
-        
-        
-        
+
         self.frame_category_2 = Frame(self.bar_nav)
-        self.frame_category_2.clicked.connect(partial(self.display_subjet, "physique"))
+        self.frame_category_2.clicked.connect(partial(self.window_subjets, "physique"))
         self.frame_category_2.setGeometry(QtCore.QRect(30, 171, 311, 61))
         self.frame_category_2.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.frame_category_2.setStyleSheet("QFrame#frame_category_2::hover{\n"
@@ -868,7 +873,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.label_matiere_litraire.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
         self.label_matiere_litraire.setObjectName("label_matiere_litraire")
         self.frame_category_6 = Frame(self.bar_nav)
-        self.frame_category_6.clicked.connect(partial(self.display_subjet, "anglais"))
+        self.frame_category_6.clicked.connect(partial(self.window_subjets, "anglais"))
         self.frame_category_6.setGeometry(QtCore.QRect(10, 300, 311, 61))
         self.frame_category_6.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.frame_category_6.setStyleSheet("QFrame#frame_category_6::hover{\n"
