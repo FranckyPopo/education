@@ -134,18 +134,22 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         
         return code
 
-
     def get_data(self, name_file, name_table):
         FILE = folder_bd + "/" + name_file
         conn = sqlite3.connect(FILE)
         cursor = conn.cursor()
+        cursor.execute(f"""CREATE TABLE IF NOT EXISTS {name_table}(
+            subjet text,
+            title text,
+            description text,
+            id_subjet text)""")
         data = cursor.execute(f"SELECT * FROM {name_table}").fetchall()
         conn.commit()
         conn.close()
         return data
 
     def generation_id_subjet(self):
-        list_id_subjet = self.get_data("forums.bd", "id")
+        list_subjet_forums = self.get_data("forums.bd", "subjets_forums")
         code = []
         list_number = string.digits
         
@@ -154,7 +158,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             code.append(n)
         code = "".join(code)
         
-        for code_exists in list_id_subjet:
+        for forums in list_subjet_forums:
+            code_exists = forums[3]
             if code_exists == code:
                 return self.generation_id_subjet()
         return code
@@ -163,33 +168,26 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         subjet = self.enter_subjet.currentText()
         title = self.enter_title_subjet.text()
         description = self.enter_description.toPlainText()
+        id_subjet = self.generation_id_subjet()
         d = {
             "subjet": subjet,
             "title": title,
             "description": description,
-            "id_subjet": None
+            "id_subjet": id_subjet
         }
         
         if subjet and title and description and not subjet.isspace() and not title.isspace() and not description.isspace():
             conn = sqlite3.connect(folder_bd + "/" + "forums.bd")
             cursor = conn.cursor()
             
-            cursor.execute("CREATE TABLE IF NOT EXISTS id_subjet (id text)")
-            cursor.execute(f"INSERT INTO id VALUES (:id_subjet)", d)
-            cursor.execute(f"""CREATE TABLE IF NOT EXISTS {subjet}(
-            subjet text,
-            title text,
-            description text,
-            id_subjet text)""")
-            cursor.execute(f"""INSERT INTO {subjet} VALUES (
+            cursor.execute(f"""INSERT INTO subjets_forums VALUES (
             :subjet,
             :title,
             :description,
             :id_subjet)""", d)
             conn.commit()
-            conn.close()
-            
-            
+            conn.close()        
+            QMessageBox.about(self, "Sujet", "Vôtre sujet vient d'être publié")    
         else: QMessageBox.about(self, "Imposible d'ajouter le sujet", "Une erreur est survenue lors de l'ajout du sujet, Veuillez vérifier les données les données que vous avez saisit")
 
     def setupUi(self, MainWindow):
