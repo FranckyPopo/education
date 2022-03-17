@@ -6,6 +6,7 @@ import sys
 import smtplib
 import string
 from random import choice
+from functools import partial
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 
@@ -29,9 +30,12 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         super().__init__()
         self.setupUi(self)
     
-    def initUI(self):             
+    def display_subjet(self, name_subjet):  
+        list_subjets_formus = self.get_data("forums.bd", "subjets_forums")
+        subjets = [subjet for subjet in list_subjets_formus if subjet[0].lower() == name_subjet]
+        print(subjets)
+        
         self.vbox = QtWidgets.QVBoxLayout()              
-
         for i in range(1,1100):
             label = QtWidgets.QLabel(str(i))
             self.vbox.addWidget(label)
@@ -50,9 +54,9 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
     def window_subscription(self):
         self.stackedWidget.setCurrentWidget(self.page_subscription)
         
-    def window_subjets(self):
+    def window_subjets(self, name_subjet):
         self.stackedWidget.setCurrentWidget(self.page_subjet)
-        self.initUI()
+        self.display_subjet(name_subjet)
         
     def window_creat_subjet(self):
         self.stackedWidget.setCurrentWidget(self.page_creat_discuss)
@@ -748,7 +752,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.label_matire_scientifique.setFont(font)
         self.label_matire_scientifique.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
         self.label_matire_scientifique.setObjectName("label_matire_scientifique")
-        self.frame_category_4 = QtWidgets.QFrame(self.bar_nav)
+        self.frame_category_4 = Frame(self.bar_nav)
+        self.frame_category_4.clicked.connect(partial(self.display_subjet, "philosophie"))
         self.frame_category_4.setGeometry(QtCore.QRect(10, 370, 311, 71))
         self.frame_category_4.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.frame_category_4.setStyleSheet("QFrame#frame_category_4::hover{\n"
@@ -809,7 +814,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         
         
         
-        self.frame_category_2 = QtWidgets.QFrame(self.bar_nav)
+        self.frame_category_2 = Frame(self.bar_nav)
+        self.frame_category_2.clicked.connect(partial(self.display_subjet, "physique"))
         self.frame_category_2.setGeometry(QtCore.QRect(30, 171, 311, 61))
         self.frame_category_2.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.frame_category_2.setStyleSheet("QFrame#frame_category_2::hover{\n"
@@ -832,7 +838,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.logo_2.setScaledContents(True)
         self.logo_2.setObjectName("logo_2")
         self.frame_category_3 = Frame(self.bar_nav)
-        self.frame_category_3.clicked.connect(self.window_subjets)
+        self.frame_category_3.clicked.connect(partial(self.window_subjets, "svt"))
         self.frame_category_3.setGeometry(QtCore.QRect(10, 102, 311, 61))
         self.frame_category_3.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.frame_category_3.setStyleSheet("QFrame#frame_category_3::hover{\n"
@@ -861,7 +867,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.label_matiere_litraire.setFont(font)
         self.label_matiere_litraire.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
         self.label_matiere_litraire.setObjectName("label_matiere_litraire")
-        self.frame_category_6 = QtWidgets.QFrame(self.bar_nav)
+        self.frame_category_6 = Frame(self.bar_nav)
+        self.frame_category_6.clicked.connect(partial(self.display_subjet, "anglais"))
         self.frame_category_6.setGeometry(QtCore.QRect(10, 300, 311, 61))
         self.frame_category_6.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.frame_category_6.setStyleSheet("QFrame#frame_category_6::hover{\n"
