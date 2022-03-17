@@ -52,15 +52,22 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         subjets = [subjet for subjet in list_subjets_formus if subjet[0].lower() == name_subjet]
         
         self.vbox = QtWidgets.QVBoxLayout()  
-        
-        for item in subjets:
-            self.frame_subjet = QtWidgets.QFrame()
-            title_subjet = item[1].title()
-            label_title = QtWidgets.QLabel(title_subjet, self.frame_subjet)
-            
-            self.vbox.addWidget(self.frame_subjet)
-        print(self.vbox.children())
         self.subjet.setLayout(self.vbox)
+        lo = self.subjet.children()
+        
+        g = 50
+        for i in lo[::2]: i.deleteLater()
+        
+        for subjet in subjets:
+            title = subjet[0]
+            f = QtWidgets.QFrame()
+            l = QtWidgets.QLabel(title)
+            l.setGeometry(50, g, 100, 100)
+            self.vbox.addWidget(l)
+            g += 20
+
+            
+        
 
         #Scroll Area Properties
         self.contenai_subjet.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
