@@ -3,7 +3,6 @@
 import os
 import sqlite3
 import sys
-import smtplib
 import string
 from random import choice
 from PyQt5 import QtCore, QtGui, QtWidgets
