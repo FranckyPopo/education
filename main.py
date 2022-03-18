@@ -157,7 +157,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         FILE = folder_bd + "/" + name_file
         conn = sqlite3.connect(FILE)
         cursor = conn.cursor()
-        data = cursor.execute(f"SELECT * FROM {name_table}").fetchall()
+        data = cursor.execute(f"SELECT * FROM subjets_forums").fetchall()
         conn.commit()
         conn.close()
         return data
@@ -182,12 +182,12 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         subjet = self.enter_subjet.currentText()
         title = self.enter_title_subjet.text()
         description = self.enter_description.toPlainText()
-        id_subjet = self.generation_id_subjet()
+        
         d = {
             "subjet": subjet,
             "title": title,
             "description": description,
-            "id_subjet": id_subjet
+            "id_subjet": None
         }
         
         if subjet and title and description and not subjet.isspace() and not title.isspace() and not description.isspace():
@@ -198,6 +198,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             title text,
             description text,
             id_subjet text)""")
+            id_subjet = self.generation_id_subjet()
+            d["id_subjet"] = id_subjet 
             cursor.execute(f"""INSERT INTO subjets_forums VALUES (
             :subjet,
             :title,
