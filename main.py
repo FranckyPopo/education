@@ -6,9 +6,9 @@ import smtplib
 import string
 from random import choice
 from functools import partial
-from turtle import tiltangle
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
+from datetime import datetime
 
 # Nous créons le dossier qui va cotenir les bd
 folder_current = os.getcwd()
@@ -43,7 +43,6 @@ class MainWindow(QtWidgets.QMainWindow):
     def window_creat_subjet(self):
         self.stackedWidget.setCurrentWidget(self.page_creat_discuss)
 
-    
     def display_subjet(self, name_subjet):  
         # Le programme filtre les sujets
         list_subjets_formus = self.get_data("forums.bd", "subjets_forums")
@@ -51,18 +50,60 @@ class MainWindow(QtWidgets.QMainWindow):
         
         self.vbox = QtWidgets.QVBoxLayout()  
         
-        for sub in range(0, 40):
-            title = QtWidgets.QFrame()
-            title.setFixedSize(300, 200)
-            title.setStyleSheet("""QFrame{
-                background-color: red;
-                color: white;
-                border-radius: 2px;
-                border: 1px solid green; 
-            }""")
-            label = QtWidgets.QLabel("test {}".format(sub), title)
+        for subjet in subjets:
+            frame_subjet = QtWidgets.QFrame()
+            frame_subjet.setObjectName("frame_subjet")
+            frame_subjet.setFixedSize(650, 110)
+
+            frame_subjet.setStyleSheet("""
+                QFrame#frame_subjet{
+                    background-color: #cccccc;
+                    border-radius: 5px;
+                    margin-left: 25px;
+                    margin-top: 15px;
+                }
+                
+                QFrame#frame_subjet::hover{
+                    background-color: #ececec;
+                }
+                
+                QLabel#label_title{
+                    margin-top: 30px;
+                    margin-left: 50px;
+                }
+                
+                QLabel#label_author{
+                    margin-left: 50px;
+                    margin-top: 70px;
+                }
+            """)
+            title = subjet[1]
+            label_title = QtWidgets.QLabel(title, frame_subjet)
+            label_title.setObjectName("label_title")
+            font_title = QtGui.QFont()
+            font_title.setFamily("Arial")
+            font_title.setPointSize(16)
+            font_title.setWeight(50)
+            font_title.setBold(True)
+            label_title.setFont(font_title)
             
-            self.vbox.addWidget(title)
+            # Nous récupérons les différentes information du sujet 
+            author = "Afri Kreto"
+            date = None
+            infos = f"Par {} {}".format(author, date)
+            label_author = QtWidgets.QLabel(frame_subjet)
+            label_author.setObjectName("label_author")
+            label_author.setText(author)
+            font_autor = QtGui.QFont()
+            font_autor.setFamily("Arial")
+            font_autor.setPointSize(14)
+            font_autor.setWeight(50)
+            label_author.setFont(font_autor)
+            
+           
+            
+                
+            self.vbox.addWidget(frame_subjet)
 
         self.subjet.setLayout(self.vbox)
         
@@ -71,8 +112,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.contenai_subjet.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.contenai_subjet.setWidgetResizable(True)
         self.contenai_subjet.setWidget(self.subjet)
-
-    
         
     def recording_user(self):
         # Récupératioin des données saisir pas l'utilisateur
@@ -179,11 +218,16 @@ class MainWindow(QtWidgets.QMainWindow):
         subjet = self.enter_subjet.currentText()
         title = self.enter_title_subjet.text()
         description = self.enter_description.toPlainText()
-        
+
+        # Le programme récupère la date d'aujoud'hui        
+        date_recording = self.date_recording_subjet()
         d = {
             "subjet": subjet,
             "title": title,
             "description": description,
+            "author": "user user",
+            "date_day": date_recording.get("day"),
+            "date_time": date_recording.get("time"),
             "id_subjet": None
         }
         
@@ -194,6 +238,9 @@ class MainWindow(QtWidgets.QMainWindow):
             subjet text,
             title text,
             description text,
+            author text,
+            date_day text,
+            date_time text,
             id_subjet text)""")
             id_subjet = self.generation_id_subjet()
             d["id_subjet"] = id_subjet 
@@ -201,11 +248,21 @@ class MainWindow(QtWidgets.QMainWindow):
             :subjet,
             :title,
             :description,
+            :author,
+            :date_day,
+            :date_time,
             :id_subjet)""", d)
             conn.commit()
             conn.close()        
             QMessageBox.about(self, "Sujet", "Vôtre sujet vient d'être publié")    
         else: QMessageBox.about(self, "Imposible d'ajouter le sujet", "Une erreur est survenue lors de l'ajout du sujet, Veuillez vérifier les données les données que vous avez saisit")
+
+    def date_recording_subjet(self):
+        today = datetime.now()
+        day = today.strftime("%Y/%m/%d")
+        time = today.strftime("%H:%M:%S")
+        date = {"day": day, "time": time}
+        return date
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
