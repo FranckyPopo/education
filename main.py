@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-
-from cProfile import label
 import os
 import sqlite3
 import sys
@@ -26,7 +24,7 @@ class Frame(QtWidgets.QFrame):
         self.clicked.emit()
 
 
-class Ui_MainWindow(QtWidgets.QMainWindow):
+class MainWindow(QtWidgets.QMainWindow):
     
     def __init__(self):
         super().__init__()
@@ -52,23 +50,22 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         subjets = [subjet for subjet in list_subjets_formus if subjet[0].lower() == name_subjet]
         
         self.vbox = QtWidgets.QVBoxLayout()  
-        self.subjet.setLayout(self.vbox)
-        lo = self.subjet.children()
         
-        g = 50
-        for i in lo[::2]: i.deleteLater()
-        
-        for subjet in subjets:
-            title = subjet[0]
-            f = QtWidgets.QFrame()
-            l = QtWidgets.QLabel(title)
-            l.setGeometry(50, g, 100, 100)
-            self.vbox.addWidget(l)
-            g += 20
-
+        for sub in range(0, 40):
+            title = QtWidgets.QFrame()
+            title.setFixedSize(300, 200)
+            title.setStyleSheet("""QFrame{
+                background-color: red;
+                color: white;
+                border-radius: 2px;
+                border: 1px solid green; 
+            }""")
+            label = QtWidgets.QLabel("test {}".format(sub), title)
             
-        
+            self.vbox.addWidget(title)
 
+        self.subjet.setLayout(self.vbox)
+        
         #Scroll Area Properties
         self.contenai_subjet.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
         self.contenai_subjet.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
@@ -950,6 +947,6 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
-    window = Ui_MainWindow()
+    window = MainWindow()
     window.show()
     sys.exit(app.exec_())
