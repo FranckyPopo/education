@@ -43,73 +43,75 @@ class MainWindow(QtWidgets.QMainWindow):
         
     def window_creat_subjet(self):
         self.stackedWidget.setCurrentWidget(self.page_creat_discuss)
-
+        
     def display_subjet(self, name_subjet):  
         # Le programme filtre les sujets
         list_subjets_forums = self.get_data("forums.bd", "subjets_forums")
         subjets = [subjet for subjet in list_subjets_forums if subjet[0].lower() == name_subjet]
-        self.vbox = QtWidgets.QVBoxLayout()  
         
         widget_children = self.subjet.children()
-        if widget_children: 
-            for item in widget_children: item.deleteLater()
-        else:
-            for subjet in subjets:
-                frame_subjet = QtWidgets.QFrame()
-                frame_subjet.setObjectName("frame_subjet")
-                frame_subjet.setFixedSize(650, 110)
-                frame_subjet.setStyleSheet("""
-                    QFrame#frame_subjet{
-                        background-color: #cccccc;
-                        border-radius: 5px;
-                        margin-left: 25px;
-                        margin-top: 15px;
-                    }
-                    
-                    QFrame#frame_subjet::hover{
-                        background-color: #ececec;
-                    }
-                    
-                    QLabel#label_title{
-                        margin-top: 30px;
-                        margin-left: 50px;
-                    }
-                    
-                    QLabel#label_author{
-                        margin-left: 50px;
-                        margin-top: 70px;
-                    }
-                """)
-                title = subjet[1]
-                label_title = QtWidgets.QLabel(title, frame_subjet)
-                label_title.setObjectName("label_title")
-                font_title = QtGui.QFont()
-                font_title.setFamily("Arial")
-                font_title.setPointSize(16)
-                font_title.setWeight(50)
-                font_title.setBold(True)
-                label_title.setFont(font_title)
+        for item in widget_children[1::]:
+            item.deleteLater() 
+            
+        for i in range(self.vbox.count()):
+            self.vbox.removeItem(self.vbox.itemAt(i))
 
-                # Nous récupérons les différentes information du sujet 
-                date_recording_subjet = subjet[4].replace("/", "-")
-                dates = date.fromisoformat(date_recording_subjet)
-                author = "Afri Kreto"
-                day = dates.strftime("%d %B %Y").replace("March", "mars")
-                time = subjet[5]
-                infos = f"Par {author} {day} {time} "
+        for subjet in reversed(subjets):
+            frame_subjet = QtWidgets.QFrame()
+            frame_subjet.setObjectName("frame_subjet")
+            frame_subjet.setFixedSize(650, 110)
+            frame_subjet.setStyleSheet("""
+                QFrame#frame_subjet{
+                    background-color: #cccccc;
+                    border-radius: 5px;
+                    margin-left: 25px;
+                    margin-top: 15px;
+                }
                 
-                label_author = QtWidgets.QLabel(frame_subjet)
-                label_author.setObjectName("label_author")
-                label_author.setText(infos)
-                font_autor = QtGui.QFont()
-                font_autor.setFamily("Arial")
-                font_autor.setPointSize(14)
-                font_autor.setWeight(50)
-                label_author.setFont(font_autor)
+                QFrame#frame_subjet::hover{
+                    background-color: #ececec;
+                }
+                
+                QLabel#label_title{
+                    margin-top: 30px;
+                    margin-left: 50px;
+                }
+                
+                QLabel#label_author{
+                    margin-left: 50px;
+                    margin-top: 70px;
+                }
+            """)
+            title = subjet[1]
+            label_title = QtWidgets.QLabel(title, frame_subjet)
+            label_title.setObjectName("label_title")
+            font_title = QtGui.QFont()
+            font_title.setFamily("Arial")
+            font_title.setPointSize(16)
+            font_title.setWeight(50)
+            font_title.setBold(True)
+            label_title.setFont(font_title)
 
-                self.vbox.addWidget(frame_subjet)
+            # Nous récupérons les différentes information du sujet 
+            date_recording_subjet = subjet[4].replace("/", "-")
+            dates = date.fromisoformat(date_recording_subjet)
+            author = "Afri Kreto"
+            day = dates.strftime("%d %B %Y").replace("March", "mars")
+            time = subjet[5]
+            infos = f"Par {author} {day} {time} "
+            
+            label_author = QtWidgets.QLabel(frame_subjet)
+            label_author.setObjectName("label_author")
+            label_author.setText(infos)
+            font_autor = QtGui.QFont()
+            font_autor.setFamily("Arial")
+            font_autor.setPointSize(14)
+            font_autor.setWeight(50)
+            label_author.setFont(font_autor)
 
-            self.subjet.setLayout(self.vbox)
+            self.vbox.addWidget(frame_subjet)
+
+        self.subjet.setLayout(self.vbox)
         
         #Scroll Area Properties
         self.contenai_subjet.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
@@ -273,6 +275,9 @@ class MainWindow(QtWidgets.QMainWindow):
         MainWindow.resize(1021, 703)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
+        self.vbox = QtWidgets.QVBoxLayout()
+
+        # Vbox
         self.stackedWidget = QtWidgets.QStackedWidget(self.centralwidget)
         self.stackedWidget.setGeometry(QtCore.QRect(310, 0, 711, 671))
         self.stackedWidget.setStyleSheet("")
