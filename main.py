@@ -57,7 +57,8 @@ class MainWindow(QtWidgets.QMainWindow):
             self.vbox.removeItem(self.vbox.itemAt(i))
 
         for subjet in reversed(subjets):
-            frame_subjet = QtWidgets.QFrame()
+            frame_subjet = Frame()
+            frame_subjet.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
             frame_subjet.setObjectName("frame_subjet")
             frame_subjet.setFixedSize(650, 110)
             frame_subjet.setStyleSheet("""
@@ -275,9 +276,10 @@ class MainWindow(QtWidgets.QMainWindow):
         MainWindow.resize(1021, 703)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
+        
+        # Vbox display subjet
         self.vbox = QtWidgets.QVBoxLayout()
-
-        # Vbox
+        
         self.stackedWidget = QtWidgets.QStackedWidget(self.centralwidget)
         self.stackedWidget.setGeometry(QtCore.QRect(310, 0, 711, 671))
         self.stackedWidget.setStyleSheet("")
@@ -1008,7 +1010,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.label_8.setText(_translate("MainWindow", "SVT"))
         self.label_matiere_litraire.setText(_translate("MainWindow", "Matiére litéraire"))
         self.label_11.setText(_translate("MainWindow", "Anglais"))
-#        self.label_subjet(_translate("MainWindow", "Crée un sujet"))
 
 
 if __name__ == "__main__":
