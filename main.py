@@ -37,17 +37,25 @@ class MainWindow(QtWidgets.QMainWindow):
     def window_subscription(self):
         self.stackedWidget.setCurrentWidget(self.page_subscription)
         
-    def window_subjets(self, name_subjet):
+    def window_subjets(self, name_subjet: str):
         self.stackedWidget.setCurrentWidget(self.page_subjet)
         self.display_subjet(name_subjet)
         
     def window_creat_subjet(self):
         self.stackedWidget.setCurrentWidget(self.page_creat_discuss)
         
-    def display_subjet(self, name_subjet):  
+    def window_discuss(self, id_subjet: str):
+        self.stackedWidget.setCurrentWidget(self.page_discuss)
+        self.display_dicuss(id_subjet)
+        
+    def display_subjet(self, name_subjet: str):  
         # Le programme filtre les sujets
-        list_subjets_forums = self.get_data("forums.bd", "subjets_forums")
-        subjets = [subjet for subjet in list_subjets_forums if subjet[0].lower() == name_subjet]
+        conn = sqlite3.connect(folder_bd + "/" + "forums.bd")
+        cursor = conn.cursor()
+        subjets = cursor.execute(f"SELECT * FROM subjets_forums WHERE subjet='{name_subjet}'").fetchall()
+        conn.commit()
+        conn.close()
+        pprint(subjets)
         
         widget_children = self.subjet.children()
         for item in widget_children[1::]:
@@ -57,7 +65,11 @@ class MainWindow(QtWidgets.QMainWindow):
             self.vbox.removeItem(self.vbox.itemAt(i))
 
         for subjet in reversed(subjets):
+            # Récupération de l'id du sujet 
+            id_subjet = subjet[6]
+
             frame_subjet = Frame()
+            frame_subjet.clicked.connect(partial(self.window_discuss, id_subjet))
             frame_subjet.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
             frame_subjet.setObjectName("frame_subjet")
             frame_subjet.setFixedSize(650, 110)
@@ -119,6 +131,36 @@ class MainWindow(QtWidgets.QMainWindow):
         self.contenai_subjet.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.contenai_subjet.setWidgetResizable(True)
         self.contenai_subjet.setWidget(self.subjet)
+
+        
+    def display_dicuss(self, id_subjet: str):
+        conn = sqlite3.connect(folder_bd + "/" + "forums.bd")
+        cursor = conn.cursor()
+        cursor.execute("""CREATE TABLE IF NOT EXISTS discuss (
+            id_subjet,
+            name_user text,
+            message_user text,
+            publication_date text,
+            publication_time text)""")
+        subjet = cursor.execute(f"SELECT * FROM discuss WHERE id_subjet='{id_subjet}'").fetchall()
+        conn.commit()
+        conn.close()
+        
+        frame_main = QtWidgets.QFrame()
+        title_subjet = subjet[1]
+        label_title = QtWidgets.QLabel(title_subjet)
+        
+        for i in range(0, 51):
+            label = QtWidgets.QLabel("Label discussion")
+            self.vbox_2.addWidget(label)
+            
+        self.discuss.setLayout(self.vbox_2)
+        
+        #Scroll Area Properties
+        self.contenai_discuss.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+        self.contenai_discuss.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.contenai_discuss.setWidgetResizable(True)
+        self.contenai_discuss.setWidget(self.discuss)
         
     def recording_user(self):
         # Récupératioin des données saisir pas l'utilisateur
@@ -222,7 +264,7 @@ class MainWindow(QtWidgets.QMainWindow):
         return code
         
     def recording_sujet(self):
-        subjet = self.enter_subjet.currentText()
+        subjet = self.enter_subjet.currentText().lower()
         title = self.enter_title_subjet.text()
         description = self.enter_description.toPlainText()
 
@@ -279,6 +321,9 @@ class MainWindow(QtWidgets.QMainWindow):
         
         # Vbox display subjet
         self.vbox = QtWidgets.QVBoxLayout()
+        
+        # Vbox display subjet
+        self.vbox_2 = QtWidgets.QVBoxLayout()
         
         self.stackedWidget = QtWidgets.QStackedWidget(self.centralwidget)
         self.stackedWidget.setGeometry(QtCore.QRect(310, 0, 711, 671))
