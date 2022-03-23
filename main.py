@@ -8,7 +8,7 @@ from random import choice
 from functools import partial
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
-from datetime import datetime
+from datetime import datetime, date
 
 # Nous créons le dossier qui va cotenir les bd
 folder_current = os.getcwd()
@@ -54,7 +54,6 @@ class MainWindow(QtWidgets.QMainWindow):
             frame_subjet = QtWidgets.QFrame()
             frame_subjet.setObjectName("frame_subjet")
             frame_subjet.setFixedSize(650, 110)
-
             frame_subjet.setStyleSheet("""
                 QFrame#frame_subjet{
                     background-color: #cccccc;
@@ -86,23 +85,24 @@ class MainWindow(QtWidgets.QMainWindow):
             font_title.setWeight(50)
             font_title.setBold(True)
             label_title.setFont(font_title)
-            
+
             # Nous récupérons les différentes information du sujet 
+            date_recording_subjet = subjet[4].replace("/", "-")
+            dates = date.fromisoformat(date_recording_subjet)
             author = "Afri Kreto"
-            date = None
-            infos = f"Par {} {}".format(author, date)
+            day = dates.strftime("%d %B %Y").replace("March", "mars")
+            time = subjet[5]
+            infos = f"Par {author} {day} {time} "
+            print(infos)
             label_author = QtWidgets.QLabel(frame_subjet)
             label_author.setObjectName("label_author")
-            label_author.setText(author)
+            label_author.setText(infos)
             font_autor = QtGui.QFont()
             font_autor.setFamily("Arial")
             font_autor.setPointSize(14)
             font_autor.setWeight(50)
             label_author.setFont(font_autor)
-            
-           
-            
-                
+
             self.vbox.addWidget(frame_subjet)
 
         self.subjet.setLayout(self.vbox)
@@ -230,7 +230,7 @@ class MainWindow(QtWidgets.QMainWindow):
             "date_time": date_recording.get("time"),
             "id_subjet": None
         }
-        
+
         if subjet and title and description and not subjet.isspace() and not title.isspace() and not description.isspace():
             conn = sqlite3.connect(folder_bd + "/" + "forums.bd")
             cursor = conn.cursor()
