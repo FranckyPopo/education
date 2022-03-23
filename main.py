@@ -14,6 +14,7 @@ from PyQt5.QtWidgets import QMessageBox
 # Nous créons le dossier qui va cotenir les bd
 folder_current = os.getcwd()
 folder_bd = os.path.join(folder_current, "data")
+folder_img = os.path.join(folder_current, "img")
 os.makedirs(folder_bd, exist_ok="yes")
 
 class Frame(QtWidgets.QFrame):
@@ -55,7 +56,6 @@ class MainWindow(QtWidgets.QMainWindow):
         subjets = cursor.execute(f"SELECT * FROM subjets_forums WHERE subjet='{name_subjet}'").fetchall()
         conn.commit()
         conn.close()
-        pprint(subjets)
         
         widget_children = self.subjet.children()
         for item in widget_children[1::]:
@@ -134,6 +134,11 @@ class MainWindow(QtWidgets.QMainWindow):
 
         
     def display_dicuss(self, id_subjet: str):
+        # On supprimer les widgets
+        widget_children = self.discuss.children()
+        for item in widget_children[1::]: item.deleteLater() 
+        for i in range(self.vbox_2.count()):self.vbox_2.removeItem(self.vbox_2.itemAt(i))
+            
         conn = sqlite3.connect(folder_bd + "/" + "forums.bd")
         cursor = conn.cursor()
         cursor.execute("""CREATE TABLE IF NOT EXISTS discuss (
@@ -142,17 +147,50 @@ class MainWindow(QtWidgets.QMainWindow):
             message_user text,
             publication_date text,
             publication_time text)""")
-        subjet = cursor.execute(f"SELECT * FROM discuss WHERE id_subjet='{id_subjet}'").fetchall()
+        subjet = cursor.execute(f"SELECT * FROM subjets_forums WHERE id_subjet='{id_subjet}'").fetchall()
         conn.commit()
         conn.close()
         
-        frame_main = QtWidgets.QFrame()
-        title_subjet = subjet[1]
-        label_title = QtWidgets.QLabel(title_subjet)
+        description = subjet[0][2]
         
-        for i in range(0, 51):
-            label = QtWidgets.QLabel("Label discussion")
-            self.vbox_2.addWidget(label)
+        frame_main = QtWidgets.QFrame()
+        frame_main.setObjectName("frame_main")
+        frame_main.setStyleSheet("""
+            QFrame#frame_main {
+            
+            }
+            
+            QLabel#label_title {
+                margin: 20px;
+            }
+            """)
+        
+        title_subjet = subjet[0][1]
+        label_title = QtWidgets.QLabel(title_subjet, frame_main)
+        label_title.setObjectName("label_title")
+        font_title = QtGui.QFont()
+        font_title.setFamily("Arial")
+        font_title.setPointSize(24)
+        font_title.setWeight(50)
+        font_title.setBold(True)
+        label_title.setFont(font_title)
+        
+        frame_subjet = QtWidgets.QFrame()
+        frame_subjet.setObjectName("frame_subjet")
+        
+        label_img = QtWidgets.QLabel(frame_subjet)
+        label_img.setPixmap(QtGui.QPixmap(folder_img + "/" + "people.png"))
+        
+        label_day = QtWidgets.QLabel("Jeudi 15 sep", frame_subjet)
+        label_description = QtWidgets.QLabel(description, frame_subjet)
+
+        
+        self.vbox_2.addWidget(frame_main)
+        self.vbox_2.addWidget(frame_subjet)
+        
+        # for i in range(0, 51):
+        #     label = QtWidgets.QLabel("Label discussion")
+        #     self.vbox_2.addWidget(label)
             
         self.discuss.setLayout(self.vbox_2)
         
