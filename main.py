@@ -7,6 +7,7 @@ import string
 from random import choice
 from functools import partial
 from datetime import datetime, date
+from PIL import Image, ImageTk
 from pprint import pprint
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
@@ -177,10 +178,13 @@ class MainWindow(QtWidgets.QMainWindow):
         
         frame_subjet = QtWidgets.QFrame()
         frame_subjet.setObjectName("frame_subjet")
+        frame_subjet.setStyleSheet("QFrame#frame_subjet {border: 1px solid black;}")
         
-        label_img = QtWidgets.QLabel(frame_subjet)
-        label_img.setPixmap(QtGui.QPixmap(folder_img + "/" + "people.png"))
-        
+        label_picture_user = QtWidgets.QLabel(frame_subjet)
+        picture_modify = QtGui.QPixmap(folder_img + "/" + "people.png")
+        picture_modify =  picture_modify.scaled(100, 100)
+        label_picture_user.setPixmap(picture_modify)
+
         label_day = QtWidgets.QLabel("Jeudi 15 sep", frame_subjet)
         label_description = QtWidgets.QLabel(description, frame_subjet)
 
@@ -894,7 +898,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.label_connection.setObjectName("label_connection")
         self.label_user_connection = QtWidgets.QLabel(self.frame_conne_1)
         self.label_user_connection.setGeometry(QtCore.QRect(16, 10, 71, 70))
-        self.label_user_connection.setText("")
         self.label_user_connection.setPixmap(QtGui.QPixmap("UI\\../img/personne.png"))
         self.label_user_connection.setScaledContents(True)
         self.label_user_connection.setObjectName("label_user_connection")
