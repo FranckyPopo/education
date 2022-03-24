@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
-
 import os
 import sqlite3
 import sys
 import string
 from random import choice
+from functools import partial
+from datetime import datetime, date
+from pprint import pprint
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 
@@ -22,41 +24,100 @@ class Frame(QtWidgets.QFrame):
         self.clicked.emit()
 
 
-class Ui_MainWindow(QtWidgets.QMainWindow):
+class MainWindow(QtWidgets.QMainWindow):
     
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-    
-    def initUI(self):             
-        self.vbox = QtWidgets.QVBoxLayout()              
-
-        for i in range(1,1100):
-            label = QtWidgets.QLabel(str(i))
-            self.vbox.addWidget(label)
-
-        self.subjet.setLayout(self.vbox)
-
-        #Scroll Area Properties
-        self.contenai_subjet.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
-        self.contenai_subjet.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        self.contenai_subjet.setWidgetResizable(True)
-        self.contenai_subjet.setWidget(self.subjet)
-
-    
+        
     def window_connection(self):
         self.stackedWidget.setCurrentWidget(self.page_connection)
         
     def window_subscription(self):
         self.stackedWidget.setCurrentWidget(self.page_subscription)
         
-    def window_subjets(self):
+    def window_subjets(self, name_subjet):
         self.stackedWidget.setCurrentWidget(self.page_subjet)
-        self.initUI()
+        self.display_subjet(name_subjet)
         
     def window_creat_subjet(self):
         self.stackedWidget.setCurrentWidget(self.page_creat_discuss)
+        
+    def display_subjet(self, name_subjet):  
+        # Le programme filtre les sujets
+        list_subjets_forums = self.get_data("forums.bd", "subjets_forums")
+        subjets = [subjet for subjet in list_subjets_forums if subjet[0].lower() == name_subjet]
+        
+        widget_children = self.subjet.children()
+        for item in widget_children[1::]:
+            item.deleteLater() 
+            
+        for i in range(self.vbox.count()):
+            self.vbox.removeItem(self.vbox.itemAt(i))
 
+        for subjet in reversed(subjets):
+            frame_subjet = Frame()
+            frame_subjet.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+            frame_subjet.setObjectName("frame_subjet")
+            frame_subjet.setFixedSize(650, 110)
+            frame_subjet.setStyleSheet("""
+                QFrame#frame_subjet{
+                    background-color: #cccccc;
+                    border-radius: 5px;
+                    margin-left: 25px;
+                    margin-top: 15px;
+                }
+                
+                QFrame#frame_subjet::hover{
+                    background-color: #ececec;
+                }
+                
+                QLabel#label_title{
+                    margin-top: 30px;
+                    margin-left: 50px;
+                }
+                
+                QLabel#label_author{
+                    margin-left: 50px;
+                    margin-top: 70px;
+                }
+            """)
+            title = subjet[1]
+            label_title = QtWidgets.QLabel(title, frame_subjet)
+            label_title.setObjectName("label_title")
+            font_title = QtGui.QFont()
+            font_title.setFamily("Arial")
+            font_title.setPointSize(16)
+            font_title.setWeight(50)
+            font_title.setBold(True)
+            label_title.setFont(font_title)
+
+            # Nous récupérons les différentes information du sujet 
+            date_recording_subjet = subjet[4].replace("/", "-")
+            dates = date.fromisoformat(date_recording_subjet)
+            author = "Afri Kreto"
+            day = dates.strftime("%d %B %Y").replace("March", "mars")
+            time = subjet[5]
+            infos = f"Par {author} {day} {time} "
+            
+            label_author = QtWidgets.QLabel(frame_subjet)
+            label_author.setObjectName("label_author")
+            label_author.setText(infos)
+            font_autor = QtGui.QFont()
+            font_autor.setFamily("Arial")
+            font_autor.setPointSize(14)
+            font_autor.setWeight(50)
+            label_author.setFont(font_autor)
+
+            self.vbox.addWidget(frame_subjet)
+
+        self.subjet.setLayout(self.vbox)
+        
+        #Scroll Area Properties
+        self.contenai_subjet.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+        self.contenai_subjet.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.contenai_subjet.setWidgetResizable(True)
+        self.contenai_subjet.setWidget(self.subjet)
         
     def recording_user(self):
         # Récupératioin des données saisir pas l'utilisateur
@@ -83,7 +144,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 "class": clas,
                 "password": password_1
             }
-            self.code = self.code_generation(last_name, email)
+            self.code = self.email_confimed(last_name, email)
             QMessageBox.about(self, "Code de validation", msg_user)
             self.stackedWidget.setCurrentWidget(self.page_confimed_code)     
         else:
@@ -113,7 +174,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             self.window_subjets()
         else: QMessageBox.about(self, "Code invalide", "Le code que vous avez saisit est invalide")
             
-    def code_generation(self, name_user, email_user):
+    def email_confimed(self, name_user, email_user):
         code = []
         list_number = string.digits
         
@@ -134,11 +195,90 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         
         return code
 
+    def get_data(self, name_file, name_table):
+        FILE = folder_bd + "/" + name_file
+        conn = sqlite3.connect(FILE)
+        cursor = conn.cursor()
+        data = cursor.execute(f"SELECT * FROM subjets_forums").fetchall()
+        conn.commit()
+        conn.close()
+        return data
+
+    def generation_id_subjet(self):
+        list_subjet_forums = self.get_data("forums.bd", "subjets_forums")
+        code = []
+        list_number = string.digits
+        
+        for i in range(0, 6): 
+            n = choice(list_number) 
+            code.append(n)
+        code = "".join(code)
+        
+        for forums in list_subjet_forums:
+            code_exists = forums[3]
+            if code_exists == code:
+                return self.generation_id_subjet()
+        return code
+        
+    def recording_sujet(self):
+        subjet = self.enter_subjet.currentText()
+        title = self.enter_title_subjet.text()
+        description = self.enter_description.toPlainText()
+
+        # Le programme récupère la date d'aujoud'hui        
+        date_recording = self.date_recording_subjet()
+        d = {
+            "subjet": subjet,
+            "title": title,
+            "description": description,
+            "author": "user user",
+            "date_day": date_recording.get("day"),
+            "date_time": date_recording.get("time"),
+            "id_subjet": None
+        }
+
+        if subjet and title and description and not subjet.isspace() and not title.isspace() and not description.isspace():
+            conn = sqlite3.connect(folder_bd + "/" + "forums.bd")
+            cursor = conn.cursor()
+            cursor.execute(f"""CREATE TABLE IF NOT EXISTS subjets_forums(
+            subjet text,
+            title text,
+            description text,
+            author text,
+            date_day text,
+            date_time text,
+            id_subjet text)""")
+            id_subjet = self.generation_id_subjet()
+            d["id_subjet"] = id_subjet 
+            cursor.execute(f"""INSERT INTO subjets_forums VALUES (
+            :subjet,
+            :title,
+            :description,
+            :author,
+            :date_day,
+            :date_time,
+            :id_subjet)""", d)
+            conn.commit()
+            conn.close()        
+            QMessageBox.about(self, "Sujet", "Vôtre sujet vient d'être publié")    
+        else: QMessageBox.about(self, "Imposible d'ajouter le sujet", "Une erreur est survenue lors de l'ajout du sujet, Veuillez vérifier les données les données que vous avez saisit")
+
+    def date_recording_subjet(self):
+        today = datetime.now()
+        day = today.strftime("%Y/%m/%d")
+        time = today.strftime("%H:%M:%S")
+        date = {"day": day, "time": time}
+        return date
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1021, 703)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
+        
+        # Vbox display subjet
+        self.vbox = QtWidgets.QVBoxLayout()
+        
         self.stackedWidget = QtWidgets.QStackedWidget(self.centralwidget)
         self.stackedWidget.setGeometry(QtCore.QRect(310, 0, 711, 671))
         self.stackedWidget.setStyleSheet("")
@@ -253,6 +393,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.enter_description.setGeometry(100, 200, 331, 150)
         
         self.bnt_creat_subjet = QtWidgets.QPushButton("Crée le sujet", self.frame_creat_subjet)
+        self.bnt_creat_subjet.clicked.connect(self.recording_sujet)
         self.bnt_creat_subjet.setObjectName("bnt_creat_subjet")
         self.bnt_creat_subjet.setGeometry(230, 370, 200, 31)
         font = QtGui.QFont()
@@ -691,7 +832,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.label_matire_scientifique.setFont(font)
         self.label_matire_scientifique.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
         self.label_matire_scientifique.setObjectName("label_matire_scientifique")
-        self.frame_category_4 = QtWidgets.QFrame(self.bar_nav)
+        self.frame_category_4 = Frame(self.bar_nav)
+        self.frame_category_4.clicked.connect(partial(self.window_subjets, "philosophie"))
         self.frame_category_4.setGeometry(QtCore.QRect(10, 370, 311, 71))
         self.frame_category_4.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.frame_category_4.setStyleSheet("QFrame#frame_category_4::hover{\n"
@@ -749,10 +891,9 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.label.setFont(font)
         self.label.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
         self.label.setObjectName("label")
-        
-        
-        
-        self.frame_category_2 = QtWidgets.QFrame(self.bar_nav)
+
+        self.frame_category_2 = Frame(self.bar_nav)
+        self.frame_category_2.clicked.connect(partial(self.window_subjets, "physique"))
         self.frame_category_2.setGeometry(QtCore.QRect(30, 171, 311, 61))
         self.frame_category_2.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.frame_category_2.setStyleSheet("QFrame#frame_category_2::hover{\n"
@@ -775,7 +916,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.logo_2.setScaledContents(True)
         self.logo_2.setObjectName("logo_2")
         self.frame_category_3 = Frame(self.bar_nav)
-        self.frame_category_3.clicked.connect(self.window_subjets)
+        self.frame_category_3.clicked.connect(partial(self.window_subjets, "svt"))
         self.frame_category_3.setGeometry(QtCore.QRect(10, 102, 311, 61))
         self.frame_category_3.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.frame_category_3.setStyleSheet("QFrame#frame_category_3::hover{\n"
@@ -804,7 +945,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.label_matiere_litraire.setFont(font)
         self.label_matiere_litraire.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
         self.label_matiere_litraire.setObjectName("label_matiere_litraire")
-        self.frame_category_6 = QtWidgets.QFrame(self.bar_nav)
+        self.frame_category_6 = Frame(self.bar_nav)
+        self.frame_category_6.clicked.connect(partial(self.window_subjets, "anglais"))
         self.frame_category_6.setGeometry(QtCore.QRect(10, 300, 311, 61))
         self.frame_category_6.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.frame_category_6.setStyleSheet("QFrame#frame_category_6::hover{\n"
@@ -867,11 +1009,10 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.label_8.setText(_translate("MainWindow", "SVT"))
         self.label_matiere_litraire.setText(_translate("MainWindow", "Matiére litéraire"))
         self.label_11.setText(_translate("MainWindow", "Anglais"))
-#        self.label_subjet(_translate("MainWindow", "Crée un sujet"))
 
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
-    window = Ui_MainWindow()
+    window = MainWindow()
     window.show()
     sys.exit(app.exec_())
