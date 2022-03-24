@@ -7,7 +7,6 @@ import string
 from random import choice
 from functools import partial
 from datetime import datetime, date
-from PIL import Image, ImageTk
 from pprint import pprint
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
@@ -59,11 +58,9 @@ class MainWindow(QtWidgets.QMainWindow):
         conn.close()
         
         widget_children = self.subjet.children()
-        for item in widget_children[1::]:
-            item.deleteLater() 
+        for item in widget_children[1::]: item.deleteLater() 
             
-        for i in range(self.vbox.count()):
-            self.vbox.removeItem(self.vbox.itemAt(i))
+        for i in range(self.vbox.count()): self.vbox.removeItem(self.vbox.itemAt(i))
 
         for subjet in reversed(subjets):
             # Récupération de l'id du sujet 
@@ -151,14 +148,11 @@ class MainWindow(QtWidgets.QMainWindow):
         subjet = cursor.execute(f"SELECT * FROM subjets_forums WHERE id_subjet='{id_subjet}'").fetchall()
         conn.commit()
         conn.close()
-        
-        description = subjet[0][2]
-        
+
         frame_main = QtWidgets.QFrame()
         frame_main.setObjectName("frame_main")
         frame_main.setStyleSheet("""
-            QFrame#frame_main {
-            
+            QFrame#frame_subjet{
             }
             
             QLabel#label_title {
@@ -176,21 +170,74 @@ class MainWindow(QtWidgets.QMainWindow):
         font_title.setBold(True)
         label_title.setFont(font_title)
         
-        frame_subjet = QtWidgets.QFrame()
+        frame_subjet = QtWidgets.QFrame(frame_main)
+        frame_subjet.adjustSize()
         frame_subjet.setObjectName("frame_subjet")
-        frame_subjet.setStyleSheet("QFrame#frame_subjet {border: 1px solid black;}")
+        frame_subjet.move(25, 100)
         
         label_picture_user = QtWidgets.QLabel(frame_subjet)
-        picture_modify = QtGui.QPixmap(folder_img + "/" + "people.png")
+        label_picture_user.setGeometry(0, 25, 100, 100)
+        picture_modify = QtGui.QPixmap(folder_img + "/" + "avatar_defaut.png")
         picture_modify =  picture_modify.scaled(100, 100)
         label_picture_user.setPixmap(picture_modify)
 
-        label_day = QtWidgets.QLabel("Jeudi 15 sep", frame_subjet)
-        label_description = QtWidgets.QLabel(description, frame_subjet)
-
+        label_name_user = QtWidgets.QLabel("Afri Kreto", frame_subjet)
+        label_name_user.setObjectName("label_name_user")
+        #label_name_user.setStyleSheet("border: 1px solid black; margin-bottom: 50px;")
+        label_name_user.setFixedWidth(100)
+        label_name_user.adjustSize()
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setFamily("Arial")
+        font.setPointSize(16)
+        label_name_user.setFont(font)
         
+        label_day = QtWidgets.QLabel("Jeudi 15 mars", frame_subjet)
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(16)
+        label_day.setFont(font)
+        label_day.setObjectName("label_day")
+        label_day.setStyleSheet("QLabel#label_day {color: #696969;}")
+        label_day.adjustSize()
+        label_day.move(120, 0)
+        
+        label_description = QtWidgets.QLabel(frame_subjet)
+        label_description.setObjectName("label_description")
+        label_description.setFixedWidth(450)
+        font = QtGui.QFont()
+        font.setFamily("Time New Roman")
+        font.setPointSize(16)
+        
+        #label_description.setStyleSheet("border: 1px solid blck;")
+        label_description.setText("""Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id vestibulum lectus, quis aliquet lectus. Donec laoreet facilisis metus, id sagittis nisi placerat condimentum. Ut condimentum lectus ac luctus posuere. Mauris eu neque tortor. Duis in augue tempor, malesuada nibh eu, posuere mi. Integer dapibus ut nulla eu maximus. Proin ac libero finibus, porta erat quis, aliquet quam. Vivamus elit orci, placerat laoreet faucibus vitae, scelerisque a magna. Suspendisse interdum dui a leo ullamcorper imperdiet. Donec volutpat congue ante non placerat. Mauris accumsan non mauris eget congue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Donec scelerisque interdum tellus nec congue. Etiam nec pharetra risus, vitae tempus metus. Curabitur id nisl laoreet, pellentesque urna a, ornare nulla. Fusce blandit, leo vel euismod porttitor, dolor magna dignissim justo, sed consectetur augue justo ac mi.
+
+Etiam blandit ante non arcu fringilla fermentum. Vivamus vitae luctus diam. Nulla auctor feugiat lacinia. Morbi ac erat quam. Nam finibus lectus id lectus placerat sagittis. Phasellus vel gravida diam. Ut vitae lorem commodo dolor dictum tincidunt ac suscipit ipsum. Nulla pharetra sem euismod pretium volutpat. Quisque placerat tincidunt dolor at placerat. Nullam ornare viverra tempor. Donec congue tincidunt leo in faucibus. Phasellus tristique sed odio sed porta. Morbi et est risus. Vestibulum eget odio pellentesque, tempor felis eget, tempor ante.
+
+Nulla tempus enim sapien, at rhoncus dui scelerisque quis. Vestibulum accumsan pharetra ultrices. Maecenas a lorem quam. Proin tincidunt est libero, eget tempor arcu lobortis sed. In facilisis malesuada nibh vitae maximus. Etiam elementum elit ipsum, eu venenatis risus finibus quis. Donec ac massa finibus, dignissim ipsum luctus, tristique felis. Ut eu facilisis ex. Proin in diam in dui blandit iaculis. Ut sit amet finibus tellus, nec condimentum enim. Fusce sodales tincidunt tortor nec egestas. Vestibulum fermentum eros egestas justo accumsan, vitae feugiat erat interdum. Etiam consectetur urna sit amet libero semper vestibulum.
+
+Nunc porttitor tellus nec lorem dignissim tincidunt. Suspendisse quis quam dignissim, tempus mi dictum, consequat erat. Duis est eros, porttitor at urna luctus, eleifend venenatis turpis. Praesent viverra ornare blandit. Nunc lacinia felis et nisi sollicitudin, id ornare velit posuere. In nisi ex, gravida sed ligula vel, blandit hendrerit libero. Nullam ut sem nec nisl ultrices tincidunt. Aenean tortor ex, congue vitae ultricies a, luctus ut magna. Sed suscipit sodales lacus, quis condimentum eros ultricies et. Pellentesque iaculis mi non risus eleifend facilisis. In ultricies convallis vehicula. Aenean tortor dui, pharetra sit amet lorem a, iaculis imperdiet velit. Donec luctus quis est vitae tempor. Aenean et nulla odio. Donec luctus in purus et sagittis.
+
+Sed eleifend metus quis consectetur volutpat. Suspendisse pretium justo velit, eget fringilla odio ultrices ac. Ut eu maximus dui. Sed laoreet diam eget leo luctus hendrerit. In luctus, purus varius ornare finibus, sapien velit ultricies lorem, nec semper felis leo sit amet libero. Sed ut porttitor nunc, at accumsan purus. Nunc ut risus dictum, molestie dolor vitae, dapibus arcu. Quisque ac ultricies dolor. Ut porttitor nibh vel dui porttitor porttitor. Proin purus lectus, euismod rutrum turpis eget, sagittis consequat tortor.
+
+Proin tempus a sapien et blandit. Cras auctor suscipit facilisis. Pellentesque varius aliquet tincidunt. Fusce venenatis rhoncus nibh, nec ornare ligula fermentum id. Suspendisse potenti. Curabitur ultrices nec tellus et lacinia. Mauris nec nulla at velit varius finibus. Quisque sodales euismod ligula. Nam ac cursus lacus. Sed ut arcu cursus tellus ultrices tristique. Donec sed erat ut lectus aliquet vestibulum blandit quis risus. Duis convallis tempus hendrerit. Cras id pulvinar felis, ac pellentesque mauris. Nulla sed mi et lectus cursus suscipit sagittis vitae erat.
+
+Nullam vel ullamcorper sapien, et ornare libero. Suspendisse dapibus arcu turpis, nec auctor enim volutpat non. Nam gravida est eu ante lobortis, ut ultricies augue porttitor. Vestibulum accumsan vitae augue eu iaculis. Aenean pretium maximus mollis. Donec convallis consequat mi, ut sodales arcu facilisis eget. Nam lacus mauris, condimentum et libero non, rutrum condimentum turpis. Fusce et congue nunc. In lacinia sit amet nibh ut bibendum. Nulla semper interdum neque, ut varius ipsum pellentesque eu. Etiam placerat feugiat aliquet. Pellentesque in sodales sapien.
+
+Donec eget sapien et quam posuere vestibulum eu id massa. Maecenas justo odio, tempor sit amet iaculis id, mattis eget ante. Suspendisse ultricies vitae orci quis fermentum. Aenean ultrices sapien augue, id finibus libero molestie non. Donec pulvinar turpis id luctus efficitur. Suspendisse lobortis scelerisque odio at pulvinar. Donec odio purus, egestas nec cursus id, commodo sit amet turpis. In hac habitasse platea dictumst. Nam sagittis velit sit amet dolor maximus, ut fermentum turpis finibus. Proin dapibus libero ac sapien sollicitudin dapibus. Nulla mattis accumsan mi at tincidunt. Sed sed porta justo, at ullamcorper nulla. Praesent dolor libero, viverra quis ex vitae, porta hendrerit sapien.
+
+Aenean quis sem ut diam congue ultrices. Vivamus luctus sapien nec velit consectetur, et bibendum nisl gravida. Integer non faucibus tellus, nec vehicula felis. Morbi dolor eros, congue in dictum a, molestie blandit ante. Suspendisse potenti. Maecenas blandit nibh pulvinar sem gravida, in congue lacus pharetra. Cras sed porttitor quam. Fusce sagittis nulla et augue feugiat elementum. Maecenas non dictum ante, nec suscipit ipsum. Sed facilisis risus at risus convallis auctor. Nam a arcu posuere, commodo felis sit amet, egestas leo. Duis luctus lacus sed venenatis dictum. Etiam auctor tortor in risus rutrum, et fringilla metus dignissim. Fusce sit amet velit vestibulum, eleifend odio vitae, consequat nunc. Pellentesque nisi risus, pulvinar in felis eget, facilisis tempor metus.
+
+Suspendisse risus velit, lacinia ac augue sit amet, malesuada aliquam sem. Vivamus dictum rhoncus facilisis. Nunc ut facilisis tortor. Etiam lacinia neque eu mauris dictum, vel dictum ex tristique. Ut at dapibus dolor. Vestibulum mollis dui ac augue egestas fringilla. Proin venenatis mi turpis, vel laoreet nibh posuere ac. Proin posuere nisi at lorem ultricies, a tempus nunc ullamcorper. Cras urna purus, malesuada a convallis a, pulvinar id felis. Proin felis sem, condimentum efficitur ullamcorper quis, porttitor sit amet tortor. Maecenas sed dapibus nunc, a viverra nisl. Fusce sit amet nunc aliquet metus dictum mollis. Pellentesque eget rhoncus tellus, et commodo libero.""")
+        label_description.setWordWrap(True)
+        label_description.adjustSize()
+        label_description.setAlignment(QtCore.Qt.AlignLeft)
+        label_description.move(120, 30)
+        font = QtGui.QFont()
+        font.setFamily("Time New Roman")
+        font.setPointSize(14)
+        label_description.setFont(font)
         self.vbox_2.addWidget(frame_main)
-        self.vbox_2.addWidget(frame_subjet)
         
         # for i in range(0, 51):
         #     label = QtWidgets.QLabel("Label discussion")
