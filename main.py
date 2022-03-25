@@ -150,16 +150,12 @@ class MainWindow(QtWidgets.QMainWindow):
         conn.close()
 
         frame_main = QtWidgets.QFrame()
-        frame_main.move(0, 0)
-        # frame_main.setMaximumWidth(700)
-        #frame_main.setMaximumHeight(400)
+        frame_main.setFixedSize(700, 400)
         frame_main.setObjectName("frame_main")
-        frame_main.setStyleSheet("QFrame#frame_main{border: 1px solid black;}")
         
         title_subjet = subjet[0][1]
         label_title = QtWidgets.QLabel(title_subjet)
-        label_title.setMaximumWidth(700)
-        label_title.setMaximumHeight(80)
+        label_title.setFixedSize(700, 80)
         label_title.move(50, 0)
         
         #label_title.setStyleSheet("border: 1px solid black")
@@ -181,6 +177,7 @@ class MainWindow(QtWidgets.QMainWindow):
         label_name_user.move(20, 0)
         label_name_user.setObjectName("label_name_user")
         #label_name_user.setStyleSheet("border: 1px solid black; margin-bottom: 50px;")
+        
         label_name_user.setFixedWidth(100)
         label_name_user.adjustSize()
         font = QtGui.QFont()
@@ -215,16 +212,60 @@ class MainWindow(QtWidgets.QMainWindow):
         label_description.setWordWrap(True)
         label_description.adjustSize()
         label_description.setAlignment(QtCore.Qt.AlignLeft)
-        
-        list_subjet_user = [label_title, label_name_user,label_picture_user, label_day, label_description, ]
-        #for item in list_subjet_user: self.vbox_2.addWidget(item)
 
         self.vbox_2.addWidget(label_title)
         self.vbox_2.addWidget(frame_main)
         
-        # for i in range(0, 51):
-        #     label = QtWidgets.QLabel("Label discussion")
-        #     self.vbox_2.addWidget(label)
+        x, y = frame_main.x() +1000, frame_main.y() +1000
+        for i in range(0, 21):
+            frame_reply = QtWidgets.QFrame()
+            frame_reply.setFixedSize(700, 250)
+            frame_reply.setObjectName("frame_reply")
+            frame_reply.setStyleSheet("QFrame#frame_reply{margin: 50px 50px;}")
+            
+            label_picture_user = QtWidgets.QLabel(frame_reply)
+            #label_picture_user.setStyleSheet("border: 1px solid black;")
+            label_picture_user.move(20, 30)
+            picture_modify = QtGui.QPixmap(folder_img + "/" + "people.png")
+            picture_modify =  picture_modify.scaled(100, 100)
+            label_picture_user.setPixmap(picture_modify)
+            
+            label_name_user = QtWidgets.QLabel("Frakcy Popo", frame_reply)
+            label_name_user.move(20, 0)
+
+            font.setBold(True)
+            font.setFamily("Arial")
+            font.setPointSize(16)
+            label_name_user.setFont(font)
+            
+            label_day = QtWidgets.QLabel("Jeudi 15 mars", frame_reply)
+            label_day.move(150, 0)
+            font = QtGui.QFont()
+            font.setFamily("Arial")
+            font.setPointSize(16)
+            label_day.setFont(font)
+            label_day.setObjectName("label_day")
+            label_day.setStyleSheet("QLabel#label_day {color: #696969;}")
+            label_day.adjustSize()
+            
+            label_description = QtWidgets.QLabel(frame_reply)
+            label_description.setObjectName("label_description")
+            #label_description.setStyleSheet("border: 1px solid black;")
+            label_description.move(150, 30)
+            label_description.setFixedWidth(500)
+            font = QtGui.QFont()
+            font.setFamily("Time New Roman")
+            font.setPointSize(16)
+            label_description.setFont(font)
+
+            description = """Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id vestibulum lectus, quis aliquet lectus. Donec laoreet facilisis metus, id sagittis nisi placerat condimentum. Ut condimentum lectus ac luctus posuere. Mauris eu neque tortor. Duis in augue tempor, ok"""
+            #label_description.setStyleSheet("border: 1px solid blck;")
+            label_description.setText(description)
+            label_description.setWordWrap(True)
+            label_description.adjustSize()
+            label_description.setAlignment(QtCore.Qt.AlignLeft)
+            
+            self.vbox_2.addWidget(frame_reply)
         
         self.discuss.setLayout(self.vbox_2)
         
