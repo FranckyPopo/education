@@ -268,9 +268,41 @@ class MainWindow(QtWidgets.QMainWindow):
             self.vbox_2.addWidget(frame_reply)
             
         enter_message = QtWidgets.QTextEdit()
-        enter_message.setFixedSize(500, 80)
-        bnt_reply_message = QtWidgets.QPushButton("Repondre")
-        bnt_reply_message.setFixedSize(100, 30)
+        enter_message.setFixedSize(680, 170)
+        enter_message.setObjectName("enter_message")
+        enter_message.setStyleSheet("""
+            QTextEdit#enter_message{
+                border-radius: 2px;
+                border: 1px solid black;
+                font-size: 14px;
+                font-family: Time New Roman;
+                margin-left: 10px; 
+                margin-bottom: 10px; 
+                padding: 5px;
+            }
+            """)
+         
+        
+        bnt_reply_message = QtWidgets.QPushButton("Répondre")
+        bnt_reply_message.setObjectName("bnt_reply_message")
+        bnt_reply_message.setStyleSheet("""
+            QPushButton#bnt_reply_message{
+                margin-left: 570px;
+                font-size: 16px;
+                font-weight: bold;
+                background-color: white;
+                color: blue;
+                border-radius: 3px;
+                border: 1px solid blue;
+            }
+            
+            QPushButton#bnt_reply_message::hover{
+                background-color: blue;
+                color: white;
+            }
+            
+        """)
+        bnt_reply_message.setFixedSize(680, 30)
         
         self.vbox_2.addWidget(enter_message)
         self.vbox_2.addWidget(bnt_reply_message)
