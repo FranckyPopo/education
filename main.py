@@ -217,7 +217,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.vbox_2.addWidget(frame_main)
         
         x, y = frame_main.x() +1000, frame_main.y() +1000
-        for i in range(0, 21):
+        for i in range(0, 5):
             frame_reply = QtWidgets.QFrame()
             frame_reply.setFixedSize(700, 250)
             frame_reply.setObjectName("frame_reply")
@@ -266,7 +266,14 @@ class MainWindow(QtWidgets.QMainWindow):
             label_description.setAlignment(QtCore.Qt.AlignLeft)
             
             self.vbox_2.addWidget(frame_reply)
+            
+        enter_message = QtWidgets.QTextEdit()
+        enter_message.setFixedSize(500, 80)
+        bnt_reply_message = QtWidgets.QPushButton("Repondre")
+        bnt_reply_message.setFixedSize(100, 30)
         
+        self.vbox_2.addWidget(enter_message)
+        self.vbox_2.addWidget(bnt_reply_message)
         self.discuss.setLayout(self.vbox_2)
         
         #Scroll Area Properties
