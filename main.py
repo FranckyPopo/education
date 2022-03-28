@@ -31,6 +31,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        self.user_connection = True
         
     def window_connection(self):
         self.stackedWidget.setCurrentWidget(self.page_connection)
@@ -49,10 +50,15 @@ class MainWindow(QtWidgets.QMainWindow):
         self.stackedWidget.setCurrentWidget(self.page_discuss)
         self.display_dicuss(id_subject)
         
-    def id_reply(self, id_subjet):
-        "Cette méthode va permetre de retourner l'id du sujet a la méthode reply_subjet"
-        return id_subjet
-        
+    def decorator(func):
+        def connection(self, id_subjet):
+            if self.user_connection:
+                return func(self, id_subjet)
+            else:
+                QMessageBox.about(self, "Imposible de publié un message erreur", "Vous devez vous connecter avant de publier une réponse")
+        return connection
+                
+    
     def display_subjet(self, name_subjet: str):  
         # Le programme filtre les sujets
         conn = sqlite3.connect(folder_bd + "/" + "forums.bd")
@@ -233,7 +239,7 @@ class MainWindow(QtWidgets.QMainWindow):
             name = item[1] 
             message = item[2]
             date = item[4]
-                        
+
             frame_reply = QtWidgets.QFrame()
             frame_reply.setFixedSize(700, 200)
             frame_reply.setObjectName("frame_reply")
@@ -334,7 +340,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.contenai_discuss.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.contenai_discuss.setWidgetResizable(True)
         self.contenai_discuss.setWidget(self.discuss)
-        
+      
+    @decorator
     def reply_subjet(self, id_subject):
         # Le programme récupère les données de l'utilisateur
         date = self.date_recording_subjet()
@@ -360,7 +367,7 @@ class MainWindow(QtWidgets.QMainWindow):
             conn.commit()
             conn.close()
             QMessageBox.about(self, "Message publié", "Vôtre message vient d'être publié")
-        else: QMessageBox.about(self, "Imposible de publié un message erreur", "Vous devez vous connecté avant de publié un sujet")
+        else: QMessageBox.about(self, "Imposible de publié un message erreur", "Vous devez remplir le champ avant d'envoyer la réponse")
                 
     def recording_user(self):
         # Récupératioin des données saisir pas l'utilisateur
