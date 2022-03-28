@@ -154,7 +154,6 @@ class MainWindow(QtWidgets.QMainWindow):
         conn.close()
         
         author = subject[0][3]
-        id_subject = subject[0][6]
         date_day = subject[0][4]
         description = subject[0][2]
 
@@ -223,8 +222,18 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.vbox_2.addWidget(label_title)
         self.vbox_2.addWidget(frame_main)
+
+        conn = sqlite3.connect(folder_bd + "/" + "forums.bd")
+        cursor = conn.cursor()
+        discuss = cursor.execute(f"SELECT * FROM discuss WHERE id_subjet='{id_subject}'").fetchall()
+        conn.commit()
+        conn.close()
         
-        for i in range(0, 5):                
+        for item in discuss:    
+            name = item[1] 
+            message = item[2]
+            date = item[4]
+                        
             frame_reply = QtWidgets.QFrame()
             frame_reply.setFixedSize(700, 200)
             frame_reply.setObjectName("frame_reply")
@@ -242,7 +251,7 @@ class MainWindow(QtWidgets.QMainWindow):
             picture_modify =  picture_modify.scaled(100, 100)
             label_picture_user.setPixmap(picture_modify)
             
-            label_name_user = QtWidgets.QLabel("Franky Popo", frame_reply)
+            label_name_user = QtWidgets.QLabel(name, frame_reply)
             label_name_user.move(20, 0)
 
             font.setBold(True)
@@ -250,7 +259,7 @@ class MainWindow(QtWidgets.QMainWindow):
             font.setPointSize(16)
             label_name_user.setFont(font)
             
-            label_day = QtWidgets.QLabel("Jeudi 15 mars", frame_reply)
+            label_day = QtWidgets.QLabel(date, frame_reply)
             label_day.move(150, 0)
             font = QtGui.QFont()
             font.setFamily("Arial")
@@ -272,7 +281,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
             description = """Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id vestibulum lectus, quis aliquet lectus. Donec laoreet facilisis metus, id sagittis nisi placerat condimentum. Ut condimentum lectus ac luctus posuere. Mauris eu neque tortor. Duis in augue tempor, ok"""
             #label_description.setStyleSheet("border: 1px solid blck;")
-            label_description.setText(description)
+            label_description.setText(message)
             label_description.setWordWrap(True)
             label_description.adjustSize()
             label_description.setAlignment(QtCore.Qt.AlignLeft)
