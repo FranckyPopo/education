@@ -49,6 +49,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.stackedWidget.setCurrentWidget(self.page_discuss)
         self.display_dicuss(id_subject)
         
+    def id_reply(self, id_subjet):
+        "Cette méthode va permetre de retourner l'id du sujet a la méthode reply_subjet"
+        return id_subjet
+        
     def display_subjet(self, name_subjet: str):  
         # Le programme filtre les sujets
         conn = sqlite3.connect(folder_bd + "/" + "forums.bd")
@@ -65,7 +69,7 @@ class MainWindow(QtWidgets.QMainWindow):
         for subjet in reversed(subjets):
             # Récupération de l'id du sujet 
             id_subject = subjet[6]
-
+            
             frame_subjet = Frame()
             frame_subjet.clicked.connect(partial(self.window_discuss, id_subject))
             frame_subjet.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
@@ -145,16 +149,16 @@ class MainWindow(QtWidgets.QMainWindow):
             message_user text,
             publication_date text,
             publication_time text)""")
-        subjet = cursor.execute(f"SELECT * FROM subjets_forums WHERE id_subjet='{id_subject}'").fetchall()
+        subject = cursor.execute(f"SELECT * FROM subjets_forums WHERE id_subjet='{id_subject}'").fetchall()
         conn.commit()
         conn.close()
+        id_subject = subject[0][6]
 
         frame_main = QtWidgets.QFrame()
         frame_main.setFixedSize(700, 400)
         frame_main.setObjectName("frame_main")
         
-        title_subjet = subjet[0][1]
-        print(title_subjet)
+        title_subjet = subject[0][1]
         label_title = QtWidgets.QLabel(title_subjet)
         label_title.setFixedSize(700, 80)
         label_title.move(50, 0)
@@ -288,7 +292,7 @@ class MainWindow(QtWidgets.QMainWindow):
             """)
         
         bnt_reply_message = QtWidgets.QPushButton("Répondre")
-        bnt_reply_message.clicked.connect(self.reply_subjet)
+        bnt_reply_message.clicked.connect(partial(self.reply_subjet, id_subject))
         bnt_reply_message.setObjectName("bnt_reply_message")
         bnt_reply_message.setStyleSheet("""
             QPushButton#bnt_reply_message{
@@ -319,33 +323,32 @@ class MainWindow(QtWidgets.QMainWindow):
         self.contenai_discuss.setWidgetResizable(True)
         self.contenai_discuss.setWidget(self.discuss)
         
-    def reply_subjet(self):
+    def reply_subjet(self, id_subject):
         # Le programme récupère les données de l'utilisateur
+        date = self.date_recording_subjet()
         d = {
+            "id_subject": id_subject,
             "user_name": "Francky Popo",
-            "date_day": self.date_recording_subjet(),
             "message_user": self.enter_message.toPlainText(),
-            "id_subject": None
+            "date_day": date["day"],
+            "date_time": date["time"],
         }
-        print(None)
         
-        # if message_user and message_user.isspace():
-        #     conn = sqlite3.connect(folder_bd + "/" + "forums.bd")
-        #     cursor = conn.cursor()
-        #     cursor.execute("""CREATE TABLE IF NOT EXISTS reply_subjet (
-        #         user_name text,
-        #         date_day text,
-        #         message_user text,
-        #         id_subjet text)""")
-        #     cursor.execute("""INSERT INTO reply_subjet 
-        #     VALUES (:user_name,
-        #        :date_day
-        #        :message_user
-        #        :id_subejt)""", d)
-        #     conn.commit()
-        #     conn.close()
-        #     QMessageBox.about(self, "Message publié", "Vôtre message vient d'être publié")
-        # else: QMessageBox.about(self, "Imposible de publié un message erreur", "Vous devez vous connecté avant de publié un sujet")
+        message_user = self.enter_message.toPlainText()
+        if message_user and not message_user.isspace():
+            conn = sqlite3.connect(folder_bd + "/" + "forums.bd")
+            cursor = conn.cursor()
+            cursor.execute("""INSERT INTO discuss 
+                VALUES (:id_subject,
+                :user_name,
+                :message_user,
+                :date_day,
+                :date_time
+                )""", d)
+            conn.commit()
+            conn.close()
+            QMessageBox.about(self, "Message publié", "Vôtre message vient d'être publié")
+        else: QMessageBox.about(self, "Imposible de publié un message erreur", "Vous devez vous connecté avant de publié un sujet")
                 
     def recording_user(self):
         # Récupératioin des données saisir pas l'utilisateur
