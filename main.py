@@ -45,9 +45,9 @@ class MainWindow(QtWidgets.QMainWindow):
     def window_creat_subjet(self):
         self.stackedWidget.setCurrentWidget(self.page_creat_discuss)
         
-    def window_discuss(self, id_subjet: str):
+    def window_discuss(self, id_subject):
         self.stackedWidget.setCurrentWidget(self.page_discuss)
-        self.display_dicuss(id_subjet)
+        self.display_dicuss(id_subject)
         
     def display_subjet(self, name_subjet: str):  
         # Le programme filtre les sujets
@@ -64,10 +64,10 @@ class MainWindow(QtWidgets.QMainWindow):
 
         for subjet in reversed(subjets):
             # Récupération de l'id du sujet 
-            id_subjet = subjet[6]
+            id_subject = subjet[6]
 
             frame_subjet = Frame()
-            frame_subjet.clicked.connect(partial(self.window_discuss, id_subjet))
+            frame_subjet.clicked.connect(partial(self.window_discuss, id_subject))
             frame_subjet.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
             frame_subjet.setObjectName("frame_subjet")
             frame_subjet.setFixedSize(650, 110)
@@ -131,7 +131,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.contenai_subjet.setWidget(self.subjet)
 
         
-    def display_dicuss(self, id_subjet: str):
+    def display_dicuss(self, id_subject):
         # On supprimer les widgets
         widget_children = self.discuss.children()
         for item in widget_children[1::]: item.deleteLater() 
@@ -145,7 +145,7 @@ class MainWindow(QtWidgets.QMainWindow):
             message_user text,
             publication_date text,
             publication_time text)""")
-        subjet = cursor.execute(f"SELECT * FROM subjets_forums WHERE id_subjet='{id_subjet}'").fetchall()
+        subjet = cursor.execute(f"SELECT * FROM subjets_forums WHERE id_subjet='{id_subject}'").fetchall()
         conn.commit()
         conn.close()
 
@@ -154,6 +154,7 @@ class MainWindow(QtWidgets.QMainWindow):
         frame_main.setObjectName("frame_main")
         
         title_subjet = subjet[0][1]
+        print(title_subjet)
         label_title = QtWidgets.QLabel(title_subjet)
         label_title.setFixedSize(700, 80)
         label_title.move(50, 0)
@@ -216,12 +217,16 @@ class MainWindow(QtWidgets.QMainWindow):
         self.vbox_2.addWidget(label_title)
         self.vbox_2.addWidget(frame_main)
         
-        x, y = frame_main.x() +1000, frame_main.y() +1000
-        for i in range(0, 5):
+        for i in range(0, 5):                
             frame_reply = QtWidgets.QFrame()
-            frame_reply.setFixedSize(700, 250)
+            frame_reply.setFixedSize(700, 200)
             frame_reply.setObjectName("frame_reply")
-            frame_reply.setStyleSheet("QFrame#frame_reply{margin: 50px 50px;}")
+            frame_reply.setStyleSheet("""
+                QFrame#frame_reply{
+                    margin-top: 20px;
+                    margin-bottom: 20px;
+                    
+                }""")
             
             label_picture_user = QtWidgets.QLabel(frame_reply)
             #label_picture_user.setStyleSheet("border: 1px solid black;")
@@ -230,7 +235,7 @@ class MainWindow(QtWidgets.QMainWindow):
             picture_modify =  picture_modify.scaled(100, 100)
             label_picture_user.setPixmap(picture_modify)
             
-            label_name_user = QtWidgets.QLabel("Frakcy Popo", frame_reply)
+            label_name_user = QtWidgets.QLabel("Franky Popo", frame_reply)
             label_name_user.move(20, 0)
 
             font.setBold(True)
@@ -267,10 +272,10 @@ class MainWindow(QtWidgets.QMainWindow):
             
             self.vbox_2.addWidget(frame_reply)
             
-        enter_message = QtWidgets.QTextEdit()
-        enter_message.setFixedSize(680, 170)
-        enter_message.setObjectName("enter_message")
-        enter_message.setStyleSheet("""
+        self.enter_message = QtWidgets.QTextEdit()
+        self.enter_message.setFixedSize(680, 170)
+        self.enter_message.setObjectName("enter_message")
+        self.enter_message.setStyleSheet("""
             QTextEdit#enter_message{
                 border-radius: 2px;
                 border: 1px solid black;
@@ -281,9 +286,9 @@ class MainWindow(QtWidgets.QMainWindow):
                 padding: 5px;
             }
             """)
-         
         
         bnt_reply_message = QtWidgets.QPushButton("Répondre")
+        bnt_reply_message.clicked.connect(self.reply_subjet)
         bnt_reply_message.setObjectName("bnt_reply_message")
         bnt_reply_message.setStyleSheet("""
             QPushButton#bnt_reply_message{
@@ -304,7 +309,7 @@ class MainWindow(QtWidgets.QMainWindow):
         """)
         bnt_reply_message.setFixedSize(680, 30)
         
-        self.vbox_2.addWidget(enter_message)
+        self.vbox_2.addWidget(self.enter_message)
         self.vbox_2.addWidget(bnt_reply_message)
         self.discuss.setLayout(self.vbox_2)
         
@@ -314,6 +319,34 @@ class MainWindow(QtWidgets.QMainWindow):
         self.contenai_discuss.setWidgetResizable(True)
         self.contenai_discuss.setWidget(self.discuss)
         
+    def reply_subjet(self):
+        # Le programme récupère les données de l'utilisateur
+        d = {
+            "user_name": "Francky Popo",
+            "date_day": self.date_recording_subjet(),
+            "message_user": self.enter_message.toPlainText(),
+            "id_subject": None
+        }
+        print(None)
+        
+        # if message_user and message_user.isspace():
+        #     conn = sqlite3.connect(folder_bd + "/" + "forums.bd")
+        #     cursor = conn.cursor()
+        #     cursor.execute("""CREATE TABLE IF NOT EXISTS reply_subjet (
+        #         user_name text,
+        #         date_day text,
+        #         message_user text,
+        #         id_subjet text)""")
+        #     cursor.execute("""INSERT INTO reply_subjet 
+        #     VALUES (:user_name,
+        #        :date_day
+        #        :message_user
+        #        :id_subejt)""", d)
+        #     conn.commit()
+        #     conn.close()
+        #     QMessageBox.about(self, "Message publié", "Vôtre message vient d'être publié")
+        # else: QMessageBox.about(self, "Imposible de publié un message erreur", "Vous devez vous connecté avant de publié un sujet")
+                
     def recording_user(self):
         # Récupératioin des données saisir pas l'utilisateur
         last_name = self.enter_last_name.text()
