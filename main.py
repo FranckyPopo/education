@@ -152,7 +152,11 @@ class MainWindow(QtWidgets.QMainWindow):
         subject = cursor.execute(f"SELECT * FROM subjets_forums WHERE id_subjet='{id_subject}'").fetchall()
         conn.commit()
         conn.close()
+        
+        author = subject[0][3]
         id_subject = subject[0][6]
+        date_day = subject[0][4]
+        description = subject[0][2]
 
         frame_main = QtWidgets.QFrame()
         frame_main.setFixedSize(700, 400)
@@ -178,7 +182,7 @@ class MainWindow(QtWidgets.QMainWindow):
         picture_modify =  picture_modify.scaled(100, 100)
         label_picture_user.setPixmap(picture_modify)
 
-        label_name_user = QtWidgets.QLabel("Afri Kreto", frame_main)
+        label_name_user = QtWidgets.QLabel(author, frame_main)
         label_name_user.move(20, 0)
         label_name_user.setObjectName("label_name_user")
         #label_name_user.setStyleSheet("border: 1px solid black; margin-bottom: 50px;")
@@ -191,7 +195,7 @@ class MainWindow(QtWidgets.QMainWindow):
         font.setPointSize(16)
         label_name_user.setFont(font)
         
-        label_day = QtWidgets.QLabel("Jeudi 15 mars", frame_main)
+        label_day = QtWidgets.QLabel(date_day, frame_main)
         label_day.move(150, 0)
         font = QtGui.QFont()
         font.setFamily("Arial")
@@ -211,7 +215,6 @@ class MainWindow(QtWidgets.QMainWindow):
         font.setPointSize(16)
         label_description.setFont(font)
 
-        description = """Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id vestibulum lectus, quis aliquet lectus. Donec laoreet facilisis metus, id sagittis nisi placerat condimentum. Ut condimentum lectus ac luctus posuere. Mauris eu neque tortor. Duis in augue tempor, malesuada nibh eu, posuere mi. Integer dapibus ut nulla eu maximus. Proin ac libero finibus, porta erat quis, aliquet quam. Vivamus elit orci, placerat laoreet faucibus vitae, scelerisque a magna. Suspendisse interdum dui a leo ullamcorper imperdiet. Donec volutpat congue ante non placerat. Mauris accumsan non mauris eget congue. Vestibulum ante ipsum primis cieznineic ok"""
         #label_description.setStyleSheet("border: 1px solid blck;")
         label_description.setText(description)
         label_description.setWordWrap(True)
