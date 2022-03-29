@@ -367,8 +367,17 @@ class MainWindow(QtWidgets.QMainWindow):
             QMessageBox.about(self, "Message publié", "Vôtre message vient d'être publié")
         else: QMessageBox.about(self, "Imposible de publié un message erreur", "Vous devez remplir le champ avant d'envoyer la réponse")
                
-    def account_verification(self):
-        conn = sqlite3.connect()           
+    def account_verification(self, email_student: str) -> bool: 
+        conn = sqlite3.connect(folder_bd + "/" + "etudiants.bd")    
+        cursor = conn.cursor()    
+        students = cursor.execute("SELECT * FROM etudiants").fetchall()
+        conn.commit()
+        conn.close()   
+        
+        for student in students:
+            if student[2] == email_student:
+                return True
+        return False
      
     def recording_user(self):
         # Récupératioin des données saisir pas l'utilisateur
@@ -380,26 +389,30 @@ class MainWindow(QtWidgets.QMainWindow):
         password_1 = self.enter_password_1.text()
         password_2 = self.enter_password_2.text()
         
-        if (last_name and first_name and email and gender and clas and password_1 == password_2
-            and last_name.isalpha() and first_name.isalpha() and not last_name.isspace()
-            and not first_name.isspace() and not email.isspace() and not password_1.isspace() and not password_2.isspace()):
-            msg_user = """
-            Vous venez de recevoir un code validation dans vôtre boite mail.
-            Veuillez le saisit pour valider vôtre inscription.
-            """
-            self.d = {
-                "last_name": last_name, 
-                "first_name": first_name,
-                "email": email,
-                "gender": gender,
-                "class": clas,
-                "password": password_1
-            }
-            self.code = self.email_confimed(last_name, email)
-            QMessageBox.about(self, "Code de validation", msg_user)
-            self.stackedWidget.setCurrentWidget(self.page_confimed_code)     
+        account_exists = self.account_verification(email)
+        if account_exists:
+            QMessageBox.about(self, "Compte", "L'email que vous avez saisit est associé a un compte")
         else:
-            QMessageBox.about(self, "Erreur", "Une erreur est survenue lors de l'enregistrement, Veuillez vérifier vos informations")
+            if (last_name and first_name and email and gender and clas and password_1 == password_2
+                and last_name.isalpha() and first_name.isalpha() and not last_name.isspace()
+                and not first_name.isspace() and not email.isspace() and not password_1.isspace() and not password_2.isspace()):
+                msg_user = """
+                Vous venez de recevoir un code validation dans vôtre boite mail.
+                Veuillez le saisit pour valider vôtre inscription.
+                """
+                self.d = {
+                    "last_name": last_name, 
+                    "first_name": first_name,
+                    "email": email,
+                    "gender": gender,
+                    "class": clas,
+                    "password": password_1
+                }
+                self.code = self.email_confimed(last_name, email)
+                QMessageBox.about(self, "Code de validation", msg_user)
+                self.stackedWidget.setCurrentWidget(self.page_confimed_code)     
+            else:
+                QMessageBox.about(self, "Erreur", "Une erreur est survenue lors de l'enregistrement, Veuillez vérifier vos informations")
        
     def recording_final(self):
         code_user = self.enter_code.text()
