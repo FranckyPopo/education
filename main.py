@@ -452,8 +452,9 @@ class MainWindow(QtWidgets.QMainWindow):
                 self.idenfiant_user = student
                 self.label_connection.setText(f"{self.idenfiant_user[1]} {self.idenfiant_user[0]}")
                 self.window_subjets("svt")
-            else:
-                QMessageBox.about(self, "Connection impossible", "Identifiant incorrect")
+                break
+        else:
+            QMessageBox.about(self, "Connection impossible", "Identifiant incorrect")
         
     def email_confimed(self, name_user: str, email_user: str) -> list:
         code = []
