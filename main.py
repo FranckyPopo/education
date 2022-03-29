@@ -116,7 +116,7 @@ class MainWindow(QtWidgets.QMainWindow):
             # Nous récupérons les différentes information du sujet 
             date_recording_subjet = subjet[4].replace("/", "-")
             dates = date.fromisoformat(date_recording_subjet)
-            author = "Afri Kreto"
+            author = subjet[3]
             day = dates.strftime("%d %B %Y").replace("March", "mars")
             time = subjet[5]
             infos = f"Par {author} {day} {time} "
@@ -476,7 +476,7 @@ class MainWindow(QtWidgets.QMainWindow):
         
         return code
 
-    def get_data(self, name_file, name_table):
+    def get_data(self, name_file: str, name_table: str) -> list:
         FILE = folder_bd + "/" + name_file
         conn = sqlite3.connect(FILE)
         cursor = conn.cursor()
@@ -500,8 +500,9 @@ class MainWindow(QtWidgets.QMainWindow):
             if code_exists == code:
                 return self.generation_id_subjet()
         return code
-        
-    def recording_sujet(self):
+    
+    @decorator
+    def recording_sujet(self, none: None) -> None:
         subjet = self.enter_subjet.currentText().lower()
         title = self.enter_title_subjet.text()
         description = self.enter_description.toPlainText()
@@ -512,7 +513,7 @@ class MainWindow(QtWidgets.QMainWindow):
             "subjet": subjet,
             "title": title,
             "description": description,
-            "author": "user user",
+            "author": f"{self.idenfiant_user[1]} {self.idenfiant_user[0]}",
             "date_day": date_recording.get("day"),
             "date_time": date_recording.get("time"),
             "id_subjet": None
