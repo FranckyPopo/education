@@ -430,9 +430,24 @@ class MainWindow(QtWidgets.QMainWindow):
             conn.commit()
             conn.close()
             QMessageBox.about(self, "Code valide", "Félicitation Vous venez de valider vôtre inscription")
+            self.user_connection = True
             self.window_subjets("svt")
         else: QMessageBox.about(self, "Code invalide", "Le code que vous avez saisit est invalide")
             
+    def connection_user(self):
+        # Récupération des données de l'utilisateur
+        email = self.enter_email_connection.text()
+        password = self.enter_password_connection.text()
+        students = self.get_data("etudiants.bd", "etudiants")
+        
+        for student in students:
+            if student[2] == email and student[5] == password:
+                QMessageBox.about(self, "Connection réussite", "Vous être désormais connecté")
+                self.user_connection = True
+                self.window_subjets("svt")
+            else:
+                QMessageBox.about(self, "Connection impossible", "Identifiant incorrect")
+        
     def email_confimed(self, name_user: str, email_user: str) -> list:
         code = []
         list_number = string.digits
@@ -778,6 +793,7 @@ class MainWindow(QtWidgets.QMainWindow):
 "}")
         self.enter_password_connection.setObjectName("enter_password_connection")
         self.bnt_connection = QtWidgets.QPushButton(self.frame_connection)
+        self.bnt_connection.clicked.connect(self.connection_user)
         self.bnt_connection.setGeometry(QtCore.QRect(298, 400, 211, 31))
         font = QtGui.QFont()
         font.setFamily("Verdana")
