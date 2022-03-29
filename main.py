@@ -3,10 +3,11 @@ import os
 import sqlite3
 import sys
 import string
+import smtplib
 from random import choice
 from functools import partial
 from datetime import datetime, date
-from pprint import pprint
+#from pprint import pprint
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 
@@ -30,7 +31,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        self.user_connection = True
+        self.user_connection = False
         
     def window_connection(self):
         self.stackedWidget.setCurrentWidget(self.page_connection)
@@ -56,8 +57,7 @@ class MainWindow(QtWidgets.QMainWindow):
             else:
                 QMessageBox.about(self, "Imposible de publié un message erreur", "Vous devez vous connecter avant de publier une réponse")
         return connection
-                
-    
+  
     def display_subjet(self, name_subjet: str):  
         # Le programme filtre les sujets
         conn = sqlite3.connect(folder_bd + "/" + "forums.bd")
@@ -139,7 +139,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.contenai_subjet.setWidgetResizable(True)
         self.contenai_subjet.setWidget(self.subjet)
 
-        
     def display_dicuss(self, id_subject):
         # On supprimer les widgets
         widget_children = self.discuss.children()
@@ -367,7 +366,10 @@ class MainWindow(QtWidgets.QMainWindow):
             conn.close()
             QMessageBox.about(self, "Message publié", "Vôtre message vient d'être publié")
         else: QMessageBox.about(self, "Imposible de publié un message erreur", "Vous devez remplir le champ avant d'envoyer la réponse")
-                
+               
+    def account_verification(self):
+        conn = sqlite3.connect()           
+     
     def recording_user(self):
         # Récupératioin des données saisir pas l'utilisateur
         last_name = self.enter_last_name.text()
@@ -420,7 +422,7 @@ class MainWindow(QtWidgets.QMainWindow):
             conn.commit()
             conn.close()
             QMessageBox.about(self, "Code valide", "Félicitation Vous venez de valider vôtre inscription")
-            self.window_subjets()
+            self.window_subjets("svt")
         else: QMessageBox.about(self, "Code invalide", "Le code que vous avez saisit est invalide")
             
     def email_confimed(self, name_user, email_user):
@@ -438,7 +440,7 @@ class MainWindow(QtWidgets.QMainWindow):
         """.format(name_user, code)
         msg = msg.encode("utf-8")
         server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
-        server.login("chatschool22@gmail.com", "Popo2022")
+        server.login("chatschool22@gmail.com", "compteN03")
         server.sendmail("chatschool22@gmail.com", email_user, msg)
         server.quit()
         
