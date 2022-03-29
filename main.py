@@ -32,6 +32,7 @@ class MainWindow(QtWidgets.QMainWindow):
         super().__init__()
         self.setupUi(self)
         self.user_connection = False
+        self.idenfiant_user = None
         
     def window_connection(self):
         self.stackedWidget.setCurrentWidget(self.page_connection)
@@ -376,34 +377,34 @@ class MainWindow(QtWidgets.QMainWindow):
      
     def recording_user(self):
         # Récupératioin des données saisir pas l'utilisateur
-        last_name = self.enter_last_name.text()
-        first_name = self.enter_first_name.text()
-        email = self.enter_email.text()
-        gender = self.enter_gender.currentText()
-        clas = self.enter_class.currentText()
-        password_1 = self.enter_password_1.text()
+        self.last_name = self.enter_last_name.text()
+        self.first_name = self.enter_first_name.text()
+        self.email = self.enter_email.text()
+        self.gender = self.enter_gender.currentText()
+        self.clas = self.enter_class.currentText()
+        self.password_1 = self.enter_password_1.text()
         password_2 = self.enter_password_2.text()
         
-        account_exists = self.account_verification(email)
+        account_exists = self.account_verification(self.email)
         if account_exists:
             QMessageBox.about(self, "Compte", "L'email que vous avez saisit est associé a un compte")
         else:
-            if (last_name and first_name and email and gender and clas and password_1 == password_2
-                and last_name.isalpha() and first_name.isalpha() and not last_name.isspace()
-                and not first_name.isspace() and not email.isspace() and not password_1.isspace() and not password_2.isspace()):
+            if (self.last_name and self.first_name and self.email and self.gender and self.clas and self.password_1 == password_2
+                and self.last_name.isalpha() and self.first_name.isalpha() and not self.last_name.isspace()
+                and not self.first_name.isspace() and not self.email.isspace() and not self.password_1.isspace() and not password_2.isspace()):
                 msg_user = """
                 Vous venez de recevoir un code validation dans vôtre boite mail.
                 Veuillez le saisit pour valider vôtre inscription.
                 """
                 self.d = {
-                    "last_name": last_name, 
-                    "first_name": first_name,
-                    "email": email,
-                    "gender": gender,
-                    "class": clas,
-                    "password": password_1
+                    "last_name": self.last_name, 
+                    "first_name": self.first_name,
+                    "email": self.email,
+                    "gender": self.gender,
+                    "class": self.clas,
+                    "password": self.password_1
                 }
-                self.code = self.email_confimed(last_name, email)
+                self.code = self.email_confimed(self.last_name, self.email)
                 QMessageBox.about(self, "Code de validation", msg_user)
                 self.stackedWidget.setCurrentWidget(self.page_confimed_code)     
             else:
@@ -429,9 +430,13 @@ class MainWindow(QtWidgets.QMainWindow):
                 :password)""", self.d)
             conn.commit()
             conn.close()
-            QMessageBox.about(self, "Code valide", "Félicitation Vous venez de valider vôtre inscription")
+            
             self.user_connection = True
+            self.idenfiant_user = (self.last_name, self.first_name, self.email , self.gender, self.clas, self.password_1)
+            self.label_connection.setText(f"{self.first_name} {self.last_name}")
+            
             self.window_subjets("svt")
+            QMessageBox.about(self, "Code valide", "Félicitation Vous venez de valider vôtre inscription")
         else: QMessageBox.about(self, "Code invalide", "Le code que vous avez saisit est invalide")
             
     def connection_user(self):
@@ -444,6 +449,8 @@ class MainWindow(QtWidgets.QMainWindow):
             if student[2] == email and student[5] == password:
                 QMessageBox.about(self, "Connection réussite", "Vous être désormais connecté")
                 self.user_connection = True
+                self.idenfiant_user = student
+                self.label_connection.setText(f"{self.idenfiant_user[1]} {self.idenfiant_user[0]}")
                 self.window_subjets("svt")
             else:
                 QMessageBox.about(self, "Connection impossible", "Identifiant incorrect")
