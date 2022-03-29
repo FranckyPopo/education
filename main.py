@@ -35,7 +35,16 @@ class MainWindow(QtWidgets.QMainWindow):
         self.idenfiant_user = None
         
     def window_connection(self):
-        self.stackedWidget.setCurrentWidget(self.page_connection)
+        if self.user_connection:
+            self.msgQuestion = QMessageBox()
+            self.msgQuestion.setIcon(QMessageBox.Question)
+            self.msgQuestion.setText("Voulez-vous vous déconnecter ?")
+            self.msgQuestion.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+            self.msgQuestion.buttonClicked.connect(self.deconnection_user)
+            self.msgQuestion.setWindowTitle("Déconnection")
+            self.msgQuestion.show() 
+        else:
+            self.stackedWidget.setCurrentWidget(self.page_connection)
         
     def window_subscription(self):
         self.stackedWidget.setCurrentWidget(self.page_subscription)
@@ -367,7 +376,13 @@ class MainWindow(QtWidgets.QMainWindow):
             conn.close()
             QMessageBox.about(self, "Message publié", "Vôtre message vient d'être publié")
         else: QMessageBox.about(self, "Imposible de publié un message erreur", "Vous devez remplir le champ avant d'envoyer la réponse")
-               
+         
+    def deconnection_user(self, i):
+        if i.text() == '&Yes' :
+            self.user_connection = False
+            self.label_connection.setText("Connection")
+            QMessageBox.about(self, "Déconnection", "Vous venez de vous déconnecter")
+              
     def account_verification(self, email_student: str) -> bool:    
         students = self.get_data("etudiants.bd", "etudiants")
         for student in students:
