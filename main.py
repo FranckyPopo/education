@@ -367,13 +367,8 @@ class MainWindow(QtWidgets.QMainWindow):
             QMessageBox.about(self, "Message publié", "Vôtre message vient d'être publié")
         else: QMessageBox.about(self, "Imposible de publié un message erreur", "Vous devez remplir le champ avant d'envoyer la réponse")
                
-    def account_verification(self, email_student: str) -> bool: 
-        conn = sqlite3.connect(folder_bd + "/" + "etudiants.bd")    
-        cursor = conn.cursor()    
-        students = cursor.execute("SELECT * FROM etudiants").fetchall()
-        conn.commit()
-        conn.close()   
-        
+    def account_verification(self, email_student: str) -> bool:    
+        students = self.get_data("etudiants.bd", "etudiants")
         for student in students:
             if student[2] == email_student:
                 return True
@@ -438,7 +433,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.window_subjets("svt")
         else: QMessageBox.about(self, "Code invalide", "Le code que vous avez saisit est invalide")
             
-    def email_confimed(self, name_user, email_user):
+    def email_confimed(self, name_user: str, email_user: str) -> list:
         code = []
         list_number = string.digits
         
@@ -463,7 +458,7 @@ class MainWindow(QtWidgets.QMainWindow):
         FILE = folder_bd + "/" + name_file
         conn = sqlite3.connect(FILE)
         cursor = conn.cursor()
-        data = cursor.execute(f"SELECT * FROM subjets_forums").fetchall()
+        data = cursor.execute(f"SELECT * FROM {name_table}").fetchall()
         conn.commit()
         conn.close()
         return data
