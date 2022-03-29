@@ -355,7 +355,7 @@ class MainWindow(QtWidgets.QMainWindow):
         date = self.date_recording_subjet()
         d = {
             "id_subject": id_subject,
-            "user_name": "Francky Popo",
+            "user_name": f"{self.idenfiant_user[1]} {self.idenfiant_user[0]}",
             "message_user": self.enter_message.toPlainText(),
             "date_day": date["day"],
             "date_time": date["time"],
