@@ -451,6 +451,14 @@ class MainWindow(QtWidgets.QMainWindow):
             self.idenfiant_user = (self.last_name, self.first_name, self.email , self.gender, self.clas, self.password_1)
             self.label_connection.setText(f"{self.first_name} {self.last_name}")
             
+            # Suppréssion des valeurs des entrés
+            self.enter_last_name.clear()
+            self.enter_first_name.clear()
+            self.enter_email.clear()
+            self.enter_password_1.clear()
+            self.enter_password_2.clear()
+            self.enter_code.clear()
+            
             self.window_subjets("svt")
             QMessageBox.about(self, "Code valide", "Félicitation Vous venez de valider vôtre inscription")
         else: QMessageBox.about(self, "Code invalide", "Le code que vous avez saisit est invalide")
@@ -468,10 +476,12 @@ class MainWindow(QtWidgets.QMainWindow):
                 self.idenfiant_user = student
                 self.label_connection.setText(f"{self.idenfiant_user[1]} {self.idenfiant_user[0]}")
                 self.window_subjets("svt")
+                self.enter_email_connection.clear()
+                self.enter_password_connection.clear()
                 break
         else:
             QMessageBox.about(self, "Connection impossible", "Identifiant incorrect")
-        
+            
     def email_confimed(self, name_user: str, email_user: str) -> list:
         code = []
         list_number = string.digits
