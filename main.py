@@ -335,7 +335,6 @@ class MainWindow(QtWidgets.QMainWindow):
                 background-color: blue;
                 color: white;
             }
-            
         """)
         bnt_reply_message.setFixedSize(680, 30)
         
@@ -358,7 +357,7 @@ class MainWindow(QtWidgets.QMainWindow):
             "user_name": f"{self.idenfiant_user[1]} {self.idenfiant_user[0]}",
             "message_user": self.enter_message.toPlainText(),
             "date_day": date["day"],
-            "date_time": date["time"],
+            "date_time": date["time"]
         }
         
         message_user = self.enter_message.toPlainText()
@@ -375,6 +374,7 @@ class MainWindow(QtWidgets.QMainWindow):
             conn.commit()
             conn.close()
             QMessageBox.about(self, "Message publié", "Vôtre message vient d'être publié")
+            self.display_dicuss(id_subject)
         else: QMessageBox.about(self, "Imposible de publié un message erreur", "Vous devez remplir le champ avant d'envoyer la réponse")
          
     def deconnection_user(self, i):
