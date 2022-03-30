@@ -559,7 +559,9 @@ class MainWindow(QtWidgets.QMainWindow):
             :id_subjet)""", d)
             conn.commit()
             conn.close()        
-            QMessageBox.about(self, "Sujet", "Vôtre sujet vient d'être publié")    
+            QMessageBox.about(self, "Sujet", "Vôtre sujet vient d'être publié")  
+            self.enter_title_subjet.clear()  
+            self.enter_description.clear()
         else: QMessageBox.about(self, "Imposible d'ajouter le sujet", "Une erreur est survenue lors de l'ajout du sujet, Veuillez vérifier les données les données que vous avez saisit")
 
     def date_recording_subjet(self):
@@ -645,78 +647,87 @@ class MainWindow(QtWidgets.QMainWindow):
         self.frame_creat_subjet = QtWidgets.QFrame(self.page_creat_discuss)
         self.frame_creat_subjet.setObjectName("frame_creat_subjet")
         self.frame_creat_subjet.setGeometry(100, 100, 450, 450)
-        self.frame_creat_subjet.setStyleSheet("""QFrame#frame_creat_subjet{
-            border: 1px solid black;
-            }""")
         
         self.enter_subjet = QtWidgets.QComboBox(self.frame_creat_subjet)
-        self.enter_subjet.setGeometry(100, 100, 331, 24)
+        self.enter_subjet.setGeometry(20, 90, 400, 35)
         self.enter_subjet.setObjectName("enter_subjet")
-        self.enter_subjet.setStyleSheet("QComboBox#enter_subjet {\n"
-"border-left: 0px; \n"
-"border-top: 0px; \n"
-"border-right: 0px;\n"
-"border-radius: 3px; \n"
-"border-bottom: 1px solid rgb(204, 204, 204); \n"
-"background-color: rgb(236, 236, 236);\n"
-"}\n"
-"\n"
-"QComboBox#enter_gender::hover {\n"
-"border-bottom-color: rgb(160, 161, 182);\n"
-"}\n"
-"")
-        
+        self.enter_subjet.setStyleSheet("""
+            QComboBox#enter_subjet {
+                border-left: 0px; 
+                border-top: 0px; 
+                border-right: 0px;
+                border-radius: 3px; 
+                border-bottom: 1px solid rgb(204, 204, 204); 
+                background-color: rgb(236, 236, 236); 
+                padding: 10px;
+                font-size: 14px;
+            }
+                
+            QComboBox#enter_gender::hover {
+                border-bottom-color: rgb(160, 161, 182);
+            }
+        """)
+                    
         list_subjet = ["SVT", "Physique", "Anglais", "Philosophie"]
         for item in list_subjet: self.enter_subjet.addItem(item)
         
         self.enter_title_subjet = QtWidgets.QLineEdit(self.frame_creat_subjet)
-        self.enter_title_subjet.setGeometry(100, 150, 331, 28)
+        self.enter_title_subjet.setGeometry(20, 150, 400, 35)
         self.enter_title_subjet.setObjectName("enter_title_subjet")
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
         font.setPointSize(14)
         self.enter_title_subjet.setFont(font)
-        self.enter_title_subjet.setStyleSheet("QLineEdit#enter_title_subjet{\n"
-"background-color: rgb(236, 236, 236);\n"
-"border-radius: 3px;\n"
-"padding: 5px;\n"
-"border: 1px solid rgb(160, 161, 182);\n"
-"border-left: 0px;\n"
-"border-right: 0px;\n"
-"border-top: 0px;\n"
-"}\n"
-"\n"
-"QLineEdit#enter_title_subjet::hover {\n"
-"border-bottom-color: rgb(64, 40, 200);\n"
-"\n"
-"}")
+        self.enter_title_subjet.setStyleSheet("""
+            QLineEdit#enter_title_subjet{
+                background-color: rgb(236, 236, 236);
+                border-radius: 3px;
+                padding: 5px;
+                border: 1px solid rgb(160, 161, 182);
+                border-left: 0px;
+                border-right: 0px;
+                border-top: 0px;
+                font-size: 18px;
+            }
+            
+            QLineEdit#enter_title_subjet::hover {
+                border-bottom-color: rgb(64, 40, 200);
+            
+            }""")
         
         self.enter_description = QtWidgets.QTextEdit(self.frame_creat_subjet)
-        self.enter_description.setGeometry(100, 200, 331, 150)
+        self.enter_description.setGeometry(20, 200, 400, 150)
+        self.enter_description.setObjectName("enter_description")
+        self.enter_description.setStyleSheet("""
+            QTextEdit#enter_description {
+                border: 1px solid rgb(86, 84, 84); 
+                border-radius: 3px;
+            }
+        """)
         
         self.bnt_creat_subjet = QtWidgets.QPushButton("Crée le sujet", self.frame_creat_subjet)
         self.bnt_creat_subjet.clicked.connect(self.recording_sujet)
         self.bnt_creat_subjet.setObjectName("bnt_creat_subjet")
-        self.bnt_creat_subjet.setGeometry(230, 370, 200, 31)
+        self.bnt_creat_subjet.setGeometry(250, 370, 170, 31)
         font = QtGui.QFont()
         font.setFamily("Verdana")
         font.setPointSize(14)
         self.bnt_creat_subjet.setFont(font)
         self.bnt_creat_subjet.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.bnt_creat_subjet.setStyleSheet("QPushButton#bnt_creat_subjet{"
-"background-color: white;"
-"color: rgb(2, 171, 0);"
-"padding: 5px;"
-"border: 2px solid rgb(2, 171, 0);"
-"border-radius: 5px;"
-"}"
-""
-""
-"QPushButton#bnt_creat_subjet::hover{"
-"background-color: rgb(2, 171, 0);"
-"color: white;"
-"}"
-"")
+        self.bnt_creat_subjet.setStyleSheet("""
+            QPushButton#bnt_creat_subjet {
+                background-color: white;
+                color: rgb(2, 171, 0);
+                padding: 5px;
+                border: 1px solid rgb(2, 171, 0);
+                border-radius: 5px;
+            }
+        
+            QPushButton#bnt_creat_subjet::hover{
+                background-color: rgb(2, 171, 0);
+                color: white;
+            }
+        """)
         
         self.stackedWidget.addWidget(self.page_creat_discuss)
         
