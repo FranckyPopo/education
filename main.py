@@ -643,7 +643,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.page_creat_discuss.setStyleSheet("""QWidget#page_creat_discuss {
         background-color: white;}""")
         
-        
         self.frame_creat_subjet = QtWidgets.QFrame(self.page_creat_discuss)
         self.frame_creat_subjet.setObjectName("frame_creat_subjet")
         self.frame_creat_subjet.setGeometry(100, 100, 450, 450)
@@ -1181,12 +1180,11 @@ class MainWindow(QtWidgets.QMainWindow):
         self.frame_reply.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_reply.setObjectName("frame_reply")
         self.label_subjet = QtWidgets.QLabel(self.frame_reply)
-        self.label_subjet.setGeometry(QtCore.QRect(110, 31, 131, 32))
+        self.label_subjet.setGeometry(QtCore.QRect(110, 31, 150, 32))
         self.label_subjet.setText("Créé un sujet")
         font = QtGui.QFont()
         font.setFamily("Verdana")
         font.setPointSize(16)
-        font.setWeight(75)
         self.label_subjet.setFont(font)
         self.label_subjet.setObjectName("label_subjet")
         self.label_img_subjet = QtWidgets.QLabel(self.frame_reply)
@@ -1207,7 +1205,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.frame_category_2 = Frame(self.bar_nav)
         self.frame_category_2.clicked.connect(partial(self.window_subjets, "physique"))
-        self.frame_category_2.setGeometry(QtCore.QRect(30, 171, 311, 61))
+        self.frame_category_2.setGeometry(QtCore.QRect(5, 171, 311, 61))
         self.frame_category_2.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.frame_category_2.setStyleSheet("QFrame#frame_category_2::hover{\n"
 "background-color: rgb(204, 204, 204);\n"
@@ -1223,14 +1221,14 @@ class MainWindow(QtWidgets.QMainWindow):
         self.label_7.setFont(font)
         self.label_7.setObjectName("label_7")
         self.logo_2 = QtWidgets.QLabel(self.frame_category_2)
-        self.logo_2.setGeometry(QtCore.QRect(32, 2, 61, 51))
+        self.logo_2.setGeometry(QtCore.QRect(30, 2, 61, 51))
         self.logo_2.setText("")
         self.logo_2.setPixmap(QtGui.QPixmap("UI\\../img/physique.png"))
         self.logo_2.setScaledContents(True)
         self.logo_2.setObjectName("logo_2")
         self.frame_category_3 = Frame(self.bar_nav)
         self.frame_category_3.clicked.connect(partial(self.window_subjets, "svt"))
-        self.frame_category_3.setGeometry(QtCore.QRect(10, 102, 311, 61))
+        self.frame_category_3.setGeometry(QtCore.QRect(5, 102, 311, 61))
         self.frame_category_3.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.frame_category_3.setStyleSheet("QFrame#frame_category_3::hover{\n"
 "background-color: rgb(204, 204, 204);\n"
@@ -1262,9 +1260,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.frame_category_6.clicked.connect(partial(self.window_subjets, "anglais"))
         self.frame_category_6.setGeometry(QtCore.QRect(10, 300, 311, 61))
         self.frame_category_6.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.frame_category_6.setStyleSheet("QFrame#frame_category_6::hover{\n"
-"background-color: rgb(204, 204, 204);\n"
-"}")
+        self.frame_category_6.setStyleSheet("""
+            QFrame#frame_category_6::hover{
+                background-color: rgb(204, 204, 204);
+            }""")
         self.frame_category_6.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_category_6.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_category_6.setObjectName("frame_category_6")
@@ -1276,7 +1275,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.label_11.setFont(font)
         self.label_11.setObjectName("label_11")
         self.logo_4 = QtWidgets.QLabel(self.frame_category_6)
-        self.logo_4.setGeometry(QtCore.QRect(40, 10, 61, 51))
+        self.logo_4.setGeometry(QtCore.QRect(30, 10, 61, 51))
         self.logo_4.setText("")
         self.logo_4.setPixmap(QtGui.QPixmap("UI\\../img/traduction.png"))
         self.logo_4.setScaledContents(True)
