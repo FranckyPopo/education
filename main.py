@@ -31,6 +31,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        self.window_subjets("svt")
         self.user_connection = False
         self.idenfiant_user = None
         
