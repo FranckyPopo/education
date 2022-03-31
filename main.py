@@ -585,7 +585,6 @@ class MainWindow(QtWidgets.QMainWindow):
         
         self.stackedWidget = QtWidgets.QStackedWidget(self.centralwidget)
         self.stackedWidget.setGeometry(QtCore.QRect(310, 0, 711, 671))
-        self.stackedWidget.setStyleSheet("")
         self.stackedWidget.setObjectName("stackedWidget")
         
         self.page_confimed_code = QtWidgets.QWidget()
@@ -682,25 +681,26 @@ class MainWindow(QtWidgets.QMainWindow):
                 background-color: rgb(236, 236, 236);
                 border-radius: 3px;
                 padding: 5px;
-                border: 1px solid rgb(160, 161, 182);
-                border-left: 0px;
-                border-right: 0px;
-                border-top: 0px;
+                border: 2px solid rgb(160, 161, 182);
                 font-size: 18px;
             }
             
-            QLineEdit#enter_title_subjet::hover {
-                border-bottom-color: rgb(64, 40, 200);
-            
-            }""")
+            QLineEdit#enter_title_subjet::focus {
+                border-color: rgb(2, 171, 0);
+            }
+            """)
         
         self.enter_description = QtWidgets.QTextEdit(self.frame_creat_subjet)
         self.enter_description.setGeometry(20, 200, 400, 150)
         self.enter_description.setObjectName("enter_description")
         self.enter_description.setStyleSheet("""
             QTextEdit#enter_description {
-                border: 1px solid rgb(86, 84, 84); 
+                border: 2px solid rgb(160, 161, 182); 
                 border-radius: 3px;
+            }
+            
+            QTextEdit#enter_description::focus {
+                border-color: rgb(2, 171, 0);
             }
         """)
         
@@ -799,7 +799,7 @@ class MainWindow(QtWidgets.QMainWindow):
 "}")
         self.enter_email_connection.setObjectName("enter_email_connection")
         self.label_connection_2 = QtWidgets.QLabel(self.frame_connection)
-        self.label_connection_2.setGeometry(QtCore.QRect(300, 210, 181, 61))
+        self.label_connection_2.setGeometry(QtCore.QRect(320, 210, 181, 61))
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(24)
@@ -855,8 +855,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.lien_subscription.setGeometry(QtCore.QRect(420, 450, 151, 31))
         font = QtGui.QFont()
         font.setFamily("Verdana")
-        font.setPointSize(11)
-        font.setBold(False)
+        font.setPointSize(14)
         font.setWeight(50)
         self.lien_subscription.setFont(font)
         self.lien_subscription.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
@@ -871,10 +870,10 @@ class MainWindow(QtWidgets.QMainWindow):
 "}")
         self.lien_subscription.setObjectName("lien_subscription")
         self.label_unitile = QtWidgets.QLabel(self.frame_connection)
-        self.label_unitile.setGeometry(QtCore.QRect(230, 458, 201, 16))
+        self.label_unitile.setGeometry(QtCore.QRect(240, 458, 201, 16))
         font = QtGui.QFont()
         font.setFamily("Arial")
-        font.setPointSize(11)
+        font.setPointSize(14)
         self.label_unitile.setFont(font)
         self.label_unitile.setObjectName("label_unitile")
         self.stackedWidget.addWidget(self.page_connection)
@@ -1053,22 +1052,21 @@ class MainWindow(QtWidgets.QMainWindow):
 "")
         self.enter_class.setObjectName("enter_class")
         self.label_subscription = QtWidgets.QLabel(self.frame_subscribtion)
-        self.label_subscription.setGeometry(QtCore.QRect(300, 84, 171, 61))
+        self.label_subscription.setGeometry(QtCore.QRect(320, 84, 171, 61))
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(24)
         font.setBold(True)
         font.setWeight(75)
         self.label_subscription.setFont(font)
-        self.label_subscription.setStyleSheet("")
+        
         self.label_subscription.setObjectName("label_subscription")
         self.lien_connection = QtWidgets.QPushButton(self.frame_subscribtion)
         self.lien_connection.clicked.connect(self.window_connection)
-        self.lien_connection.setGeometry(QtCore.QRect(422, 562, 151, 31))
+        self.lien_connection.setGeometry(QtCore.QRect(410, 562, 151, 31))
         font = QtGui.QFont()
         font.setFamily("Verdana")
-        font.setPointSize(11)
-        font.setBold(False)
+        font.setPointSize(14)
         font.setWeight(50)
         self.lien_connection.setFont(font)
         self.lien_connection.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
@@ -1086,14 +1084,13 @@ class MainWindow(QtWidgets.QMainWindow):
         self.label_unitile_2.setGeometry(QtCore.QRect(229, 570, 201, 16))
         font = QtGui.QFont()
         font.setFamily("Arial")
-        font.setPointSize(11)
+        font.setPointSize(14)
         self.label_unitile_2.setFont(font)
         self.label_unitile_2.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
-        self.label_unitile_2.setStyleSheet("")
         self.label_unitile_2.setObjectName("label_unitile_2")
         self.stackedWidget.addWidget(self.page_subscription)
         self.scrollArea = QtWidgets.QScrollArea(self.centralwidget)
-        self.scrollArea.setGeometry(QtCore.QRect(0, 0, 311, 671))
+        self.scrollArea.setGeometry(QtCore.QRect(20, 0, 311, 671))
         self.scrollArea.setStyleSheet("QScrollArea#scrollArea{\n"
 "border: 0px;\n"
 "}")
@@ -1328,7 +1325,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.enter_password_connection.setPlaceholderText(_translate("MainWindow", "Mot de passe"))
         self.bnt_connection.setText(_translate("MainWindow", "Se connecter"))
         self.lien_subscription.setText(_translate("MainWindow", "Inscrivez-vous ici"))
-        self.label_unitile.setText(_translate("MainWindow", "Vous n\'avez pas de compte ?"))
+        self.label_unitile.setText(_translate("MainWindow", "Vous n'avez pas de compte ?"))
         self.enter_email.setPlaceholderText(_translate("MainWindow", "Addresse email"))
         self.bnt_subcription.setText(_translate("MainWindow", "Inscription"))
         self.enter_last_name.setPlaceholderText(_translate("MainWindow", "Nom"))
@@ -1338,7 +1335,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.enter_title_subjet.setPlaceholderText(_translate("MainWindow", "Entrer le titre du subjet"))
         self.label_subscription.setText(_translate("MainWindow", "Inscription"))
         self.lien_connection.setText(_translate("MainWindow", "Connecter vous ici"))
-        self.label_unitile_2.setText(_translate("MainWindow", "Vous avez déha un compte ?"))
+        self.label_unitile_2.setText(_translate("MainWindow", "Vous avez déja un compte ?"))
         self.label_connection.setText(_translate("MainWindow", "Connection"))
         self.label.setText(_translate("MainWindow", "Forums"))
         self.label_matire_scientifique.setText(_translate("MainWindow", "Matiére scientifique"))
