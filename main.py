@@ -234,16 +234,7 @@ class MainWindow(QtWidgets.QMainWindow):
         label_description.setWordWrap(True)
         label_description.adjustSize()
         label_description.setAlignment(QtCore.Qt.AlignLeft)
-
-        bnt_refresh = QtWidgets.QPushButton("Rafrachier la fenêtre")
-        bnt_refresh.setFixedSize(200, 40)
-        bnt_refresh.setGeometry(100, 50, 0, 0)
         
-        bnt_refresh.setObjectName("bnt_refresh")
-        #bnt_refresh.setStyleSheet("QPushButton#bnt_refresh{margin-bottom: 50px;}")
-        bnt_refresh.clicked.connect(partial(self.display_dicuss, id_subject)) 
-
-        self.vbox_2.addWidget(bnt_refresh)
         self.vbox_2.addWidget(label_title)
         self.vbox_2.addWidget(frame_main)
         
@@ -480,7 +471,7 @@ class MainWindow(QtWidgets.QMainWindow):
                 break
         else:
             QMessageBox.about(self, "Connection impossible", "Identifiant incorrect")
-        
+
     def email_confimed(self, name_user: str, email_user: str) -> list:
         code = []
         list_number = string.digits
@@ -1115,9 +1106,14 @@ class MainWindow(QtWidgets.QMainWindow):
         self.frame_conne_1.clicked.connect(self.window_connection)
         self.frame_conne_1.setGeometry(QtCore.QRect(10, 572, 311, 80))
         self.frame_conne_1.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.frame_conne_1.setStyleSheet("QFrame#frame_conne_1::hover{\n"
-"background-color: rgb(204, 204, 204);\n"
-"}")
+        self.frame_conne_1.setStyleSheet("""
+            QFrame#frame_conne_1{
+                border: 0px;
+            }
+            
+            QFrame#frame_conne_1::hover{
+                background-color: rgb(204, 204, 204);
+            }""")
         self.frame_conne_1.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_conne_1.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_conne_1.setObjectName("frame_conne_1")
@@ -1157,9 +1153,14 @@ class MainWindow(QtWidgets.QMainWindow):
         self.frame_category_4.clicked.connect(partial(self.window_subjets, "philosophie"))
         self.frame_category_4.setGeometry(QtCore.QRect(10, 370, 311, 71))
         self.frame_category_4.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.frame_category_4.setStyleSheet("QFrame#frame_category_4::hover{\n"
-"background-color: rgb(204, 204, 204);\n"
-"}")
+        self.frame_category_4.setStyleSheet("""
+             QFrame#frame_category_4{
+                border: 0px;
+            }
+            
+            QFrame#frame_category_4::hover{
+                background-color: rgb(204, 204, 204);
+            }""")
         self.frame_category_4.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_category_4.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_category_4.setObjectName("frame_category_4")
@@ -1172,7 +1173,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.label_9.setObjectName("label_9")
         self.logo_6 = QtWidgets.QLabel(self.frame_category_4)
         self.logo_6.setGeometry(QtCore.QRect(30, 10, 61, 51))
-        self.logo_6.setText("")
         self.logo_6.setPixmap(QtGui.QPixmap("UI\\../img/philosophie.png"))
         self.logo_6.setScaledContents(True)
         self.logo_6.setObjectName("logo_6")
@@ -1182,9 +1182,14 @@ class MainWindow(QtWidgets.QMainWindow):
         self.frame_reply.clicked.connect(self.window_creat_subjet)
         self.frame_reply.setGeometry(QtCore.QRect(10, 450, 311, 80))
         self.frame_reply.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.frame_reply.setStyleSheet("QFrame#frame_reply::hover{\n"
-"background-color: rgb(204, 204, 204);\n"
-"}")
+        self.frame_reply.setStyleSheet("""
+            QFrame#frame_reply{
+                border: Opx;
+            }
+            
+            QFrame#frame_reply::hover{
+                background-color: rgb(204, 204, 204);
+            }""")
         self.frame_reply.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_reply.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_reply.setObjectName("frame_reply")
@@ -1216,9 +1221,14 @@ class MainWindow(QtWidgets.QMainWindow):
         self.frame_category_2.clicked.connect(partial(self.window_subjets, "physique"))
         self.frame_category_2.setGeometry(QtCore.QRect(5, 171, 311, 61))
         self.frame_category_2.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.frame_category_2.setStyleSheet("QFrame#frame_category_2::hover{\n"
-"background-color: rgb(204, 204, 204);\n"
-"}")
+        self.frame_category_2.setStyleSheet("""
+            QFrame#frame_category_2{
+                border: 0px;
+            }
+            
+            QFrame#frame_category_2::hover{
+                background-color: rgb(204, 204, 204);
+            }""")
         self.frame_category_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_category_2.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_category_2.setObjectName("frame_category_2")
@@ -1231,7 +1241,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.label_7.setObjectName("label_7")
         self.logo_2 = QtWidgets.QLabel(self.frame_category_2)
         self.logo_2.setGeometry(QtCore.QRect(30, 2, 61, 51))
-        self.logo_2.setText("")
         self.logo_2.setPixmap(QtGui.QPixmap("UI\\../img/physique.png"))
         self.logo_2.setScaledContents(True)
         self.logo_2.setObjectName("logo_2")
@@ -1239,9 +1248,14 @@ class MainWindow(QtWidgets.QMainWindow):
         self.frame_category_3.clicked.connect(partial(self.window_subjets, "svt"))
         self.frame_category_3.setGeometry(QtCore.QRect(5, 102, 311, 61))
         self.frame_category_3.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.frame_category_3.setStyleSheet("QFrame#frame_category_3::hover{\n"
-"background-color: rgb(204, 204, 204);\n"
-"}")
+        self.frame_category_3.setStyleSheet("""
+             QFrame#frame_category_3{
+                border: 0px;
+            }
+            
+            QFrame#frame_category_3::hover{
+                background-color: rgb(204, 204, 204);
+            }""")
         self.frame_category_3.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_category_3.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_category_3.setObjectName("frame_category_3")
@@ -1270,6 +1284,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.frame_category_6.setGeometry(QtCore.QRect(10, 300, 311, 61))
         self.frame_category_6.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.frame_category_6.setStyleSheet("""
+             QFrame#frame_category_6{
+                border: 0px;
+            }                                
+                                            
             QFrame#frame_category_6::hover{
                 background-color: rgb(204, 204, 204);
             }""")
@@ -1285,7 +1303,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.label_11.setObjectName("label_11")
         self.logo_4 = QtWidgets.QLabel(self.frame_category_6)
         self.logo_4.setGeometry(QtCore.QRect(30, 10, 61, 51))
-        self.logo_4.setText("")
         self.logo_4.setPixmap(QtGui.QPixmap("UI\\../img/traduction.png"))
         self.logo_4.setScaledContents(True)
         self.logo_4.setObjectName("logo_4")
