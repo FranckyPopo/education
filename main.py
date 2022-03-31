@@ -234,9 +234,18 @@ class MainWindow(QtWidgets.QMainWindow):
         label_description.adjustSize()
         label_description.setAlignment(QtCore.Qt.AlignLeft)
 
+        bnt_refresh = QtWidgets.QPushButton("Rafrachier la fenêtre")
+        bnt_refresh.setFixedSize(200, 40)
+        bnt_refresh.setGeometry(100, 50, 0, 0)
+        
+        bnt_refresh.setObjectName("bnt_refresh")
+        #bnt_refresh.setStyleSheet("QPushButton#bnt_refresh{margin-bottom: 50px;}")
+        bnt_refresh.clicked.connect(partial(self.display_dicuss, id_subject)) 
+
+        self.vbox_2.addWidget(bnt_refresh)
         self.vbox_2.addWidget(label_title)
         self.vbox_2.addWidget(frame_main)
-
+        
         conn = sqlite3.connect(folder_bd + "/" + "forums.bd")
         cursor = conn.cursor()
         discuss = cursor.execute(f"SELECT * FROM discuss WHERE id_subjet='{id_subject}'").fetchall()
@@ -377,8 +386,8 @@ class MainWindow(QtWidgets.QMainWindow):
             QMessageBox.about(self, "Message publié", "Vôtre message vient d'être publié")
         else: QMessageBox.about(self, "Imposible de publié un message erreur", "Vous devez remplir le champ avant d'envoyer la réponse")
          
-    def deconnection_user(self, i):
-        if i.text() == '&Yes' :
+    def deconnection_user(self, even):
+        if even.text() == '&Yes' :
             self.user_connection = False
             self.label_connection.setText("Connection")
             QMessageBox.about(self, "Déconnection", "Vous venez de vous déconnecter")
@@ -639,8 +648,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.page_creat_discuss.setObjectName("page_creat_discuss")
         self.page_creat_discuss.setStyleSheet("""QWidget#page_creat_discuss {
         background-color: white;}""")
-        
-        
+
         self.frame_creat_subjet = QtWidgets.QFrame(self.page_creat_discuss)
         self.frame_creat_subjet.setObjectName("frame_creat_subjet")
         self.frame_creat_subjet.setGeometry(100, 100, 450, 450)
