@@ -6,7 +6,8 @@ import string
 import smtplib
 from random import choice
 from functools import partial
-from datetime import datetime, date
+from datetime import datetime
+import time
 #from pprint import pprint
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
@@ -126,8 +127,8 @@ class MainWindow(QtWidgets.QMainWindow):
             # Nous récupérons les différentes information du sujet 
             date_recording_subjet = subjet[4].replace("/", "-")
             dates = date.fromisoformat(date_recording_subjet)
-            author = subjet[3]
             day = dates.strftime("%d %B %Y").replace("March", "mars")
+            author = subjet[3]
             time = subjet[5]
             infos = f"Par {author} {day} {time} "
             
@@ -575,11 +576,30 @@ class MainWindow(QtWidgets.QMainWindow):
         else: QMessageBox.about(self, "Imposible d'ajouter le sujet", "Une erreur est survenue lors de l'ajout du sujet, Veuillez vérifier les données les données que vous avez saisit")
 
     def date_recording_subjet(self):
+        MONTHS = {
+            1: "Janvier", 2: "Février", 3: "Mars", 
+            4: "Avril", 5: "Mai", 6: "Juin",
+            7: "Juillet", 8: "Août", 9: "Septembre",
+            10: "Octobre", 11: "Nomvembre", 12: "Décembre" 
+        }
+        day = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Ventredi", "Samedi", "Dimanche"]
+
         today = datetime.now()
-        day = today.strftime("%Y/%m/%d")
-        time = today.strftime("%H:%M:%S")
-        date = {"day": day, "time": time}
-        return date
+        week_day = today.weekday()
+        day_of_month = today.day
+        year = today.year
+        month = today.month
+        day = day[week_day]
+
+        time = today.time()
+
+        for key, value in MONTHS.items():
+            if key == month:
+                month = value
+                break
+        day = f"{day} {day_of_month} {month} {year} à {time}"
+
+        return {"day": day, "time": time}
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
