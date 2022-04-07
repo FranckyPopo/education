@@ -125,12 +125,9 @@ class MainWindow(QtWidgets.QMainWindow):
             label_title.setFont(font_title)
 
             # Nous récupérons les différentes information du sujet 
-            date_recording_subjet = subjet[4].replace("/", "-")
-            dates = date.fromisoformat(date_recording_subjet)
-            day = dates.strftime("%d %B %Y").replace("March", "mars")
+            day = subjet[4]
             author = subjet[3]
-            time = subjet[5]
-            infos = f"Par {author} {day} {time} "
+            infos = f"Par {author} {day}"
             
             label_author = QtWidgets.QLabel(frame_subjet)
             label_author.setObjectName("label_author")
@@ -248,7 +245,7 @@ class MainWindow(QtWidgets.QMainWindow):
         for item in discuss:    
             name = item[1] 
             message = item[2]
-            date = item[4]
+            date = item[3]
 
             frame_reply = QtWidgets.QFrame()
             frame_reply.setFixedSize(700, 200)
@@ -537,6 +534,8 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # Le programme récupère la date d'aujoud'hui        
         date_recording = self.date_recording_subjet()
+        print(date_recording)
+
         d = {
             "subjet": subjet,
             "title": title,
@@ -577,12 +576,28 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def date_recording_subjet(self):
         MONTHS = {
-            1: "Janvier", 2: "Février", 3: "Mars", 
-            4: "Avril", 5: "Mai", 6: "Juin",
-            7: "Juillet", 8: "Août", 9: "Septembre",
-            10: "Octobre", 11: "Nomvembre", 12: "Décembre" 
+            1: "Janvier", 
+            2: "Février", 
+            3: "Mars", 
+            4: "Avril", 
+            5: "Mai", 
+            6: "Juin",
+            7: "Juillet", 
+            8: "Août", 
+            9: "Septembre",
+            10: "Octobre", 
+            11: "Nomvembre", 
+            12: "Décembre" 
         }
-        day = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Ventredi", "Samedi", "Dimanche"]
+        day = [
+            "Lundi",
+            "Mardi", 
+            "Mercredi", 
+            "Jeudi", 
+            "Ventredi", 
+            "Samedi", 
+            "Dimanche"
+        ]
 
         today = datetime.now()
         week_day = today.weekday()
@@ -590,8 +605,7 @@ class MainWindow(QtWidgets.QMainWindow):
         year = today.year
         month = today.month
         day = day[week_day]
-
-        time = today.time()
+        time = str(today.time())
 
         for key, value in MONTHS.items():
             if key == month:
