@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from itertools import count
 import os
 import sqlite3
 import sys
@@ -7,8 +8,6 @@ import smtplib
 from random import choice
 from functools import partial
 from datetime import datetime
-import time
-#from pprint import pprint
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 
@@ -28,7 +27,7 @@ class Frame(QtWidgets.QFrame):
 
 
 class MainWindow(QtWidgets.QMainWindow):
-    
+    count = 1
     def __init__(self):
         super().__init__()
         self.setupUi(self)
@@ -243,7 +242,7 @@ class MainWindow(QtWidgets.QMainWindow):
         conn.close()
         
         for item in discuss:    
-            name = item[1] 
+            name = item[1]
             message = item[2]
             date = item[3]
 
@@ -254,8 +253,26 @@ class MainWindow(QtWidgets.QMainWindow):
                 QFrame#frame_reply{
                     margin-top: 20px;
                     margin-bottom: 20px;
-                    
                 }""")
+            
+            if MainWindow.count % 2 == 0:
+                frame_reply.setStyleSheet("""
+                QFrame#frame_reply{
+                    background-color: #ececec;
+                }
+                QFrame#frame_reply::hover{
+                    background-color: #C0C0C0;
+                }""")
+            else:
+                 frame_reply.setStyleSheet("""
+                QFrame#frame_reply::hover{
+                    background-color: white;
+                }
+                
+                QFrame#frame_reply::hover{
+                    background-color: #C0C0C0;
+                }""")
+            MainWindow.count += 1
             
             label_picture_user = QtWidgets.QLabel(frame_reply)
             #label_picture_user.setStyleSheet("border: 1px solid black;")
@@ -313,6 +330,10 @@ class MainWindow(QtWidgets.QMainWindow):
                 margin-left: 10px; 
                 margin-bottom: 10px; 
                 padding: 5px;
+            }
+            
+            QTextEdit#enter_message:focus {
+                border-color: blue;
             }
             """)
         
@@ -846,19 +867,18 @@ class MainWindow(QtWidgets.QMainWindow):
         self.bnt_connection.setFont(font)
         self.bnt_connection.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.bnt_connection.setStyleSheet("QPushButton#bnt_connection{"
-"background-color: white;"
-"color: rgb(64, 40, 200);"
-"padding: 5px;"
-"border: 2px solid rgb(64, 40, 200);"
-"border-radius: 5px;"
-"}"
-""
-""
-"QPushButton#bnt_connection::hover{"
-"background-color: rgb(64, 40, 200);"
-"color: white;"
-"}"
-"")
+        "background-color: white;"
+        "color: rgb(64, 40, 200);"
+        "padding: 5px;"
+        "border: 2px solid rgb(64, 40, 200);"
+        "border-radius: 5px;"
+        "}"
+
+        "QPushButton#bnt_connection::hover{"
+        "background-color: rgb(64, 40, 200);"
+        "color: white;"
+        "}"
+        "")
         self.bnt_connection.setObjectName("bnt_connection")
         self.lien_subscription = QtWidgets.QPushButton(self.frame_connection)
         self.lien_subscription.clicked.connect(self.window_subscription)
