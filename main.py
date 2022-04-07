@@ -575,44 +575,9 @@ class MainWindow(QtWidgets.QMainWindow):
         else: QMessageBox.about(self, "Imposible d'ajouter le sujet", "Une erreur est survenue lors de l'ajout du sujet, Veuillez vérifier les données les données que vous avez saisit")
 
     def date_recording_subjet(self):
-        MONTHS = {
-            1: "Janvier", 
-            2: "Février", 
-            3: "Mars", 
-            4: "Avril", 
-            5: "Mai", 
-            6: "Juin",
-            7: "Juillet", 
-            8: "Août", 
-            9: "Septembre",
-            10: "Octobre", 
-            11: "Nomvembre", 
-            12: "Décembre" 
-        }
-        day = [
-            "Lundi",
-            "Mardi", 
-            "Mercredi", 
-            "Jeudi", 
-            "Ventredi", 
-            "Samedi", 
-            "Dimanche"
-        ]
-
-        today = datetime.now()
-        week_day = today.weekday()
-        day_of_month = today.day
-        year = today.year
-        month = today.month
-        day = day[week_day]
-        time = str(today.time())
-
-        for key, value in MONTHS.items():
-            if key == month:
-                month = value
-                break
-        day = f"{day} {day_of_month} {month} {year} à {time}"
-
+        today = datetime.now()        
+        day = datetime.strftime(today, "%A %d %B %Y %H:%M:%S")
+        time = datetime.strftime(today, "H:%M:%S")
         return {"day": day, "time": time}
 
     def setupUi(self, MainWindow):
