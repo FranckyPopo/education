@@ -170,15 +170,15 @@ class MainWindow(QtWidgets.QMainWindow):
         description = subject[0][2]
 
         frame_main = QtWidgets.QFrame()
-        frame_main.setFixedSize(700, 400)
+        frame_main.setFixedSize(700, 200)
         frame_main.setObjectName("frame_main")
+        frame_main.setStyleSheet("QFrame#frame_main::hover {background-color: #C0C0C0;}")
         
         title_subjet = subject[0][1]
         label_title = QtWidgets.QLabel(title_subjet)
         label_title.setFixedSize(700, 80)
         label_title.move(50, 0)
         
-        #label_title.setStyleSheet("border: 1px solid black")
         label_title.setObjectName("label_title")
         font_title = QtGui.QFont()
         font_title.setFamily("Arial")
@@ -187,16 +187,14 @@ class MainWindow(QtWidgets.QMainWindow):
         label_title.setFont(font_title)
         
         label_picture_user = QtWidgets.QLabel(frame_main)
-        #label_picture_user.setStyleSheet("border: 1px solid black;")
         label_picture_user.move(20, 30)
-        picture_modify = QtGui.QPixmap(folder_img + "/" + "people.png")
+        picture_modify = QtGui.QPixmap(os.path.join(folder_img, "avatar_defaut.png"))
         picture_modify =  picture_modify.scaled(100, 100)
         label_picture_user.setPixmap(picture_modify)
 
         label_name_user = QtWidgets.QLabel(author, frame_main)
         label_name_user.move(20, 0)
         label_name_user.setObjectName("label_name_user")
-        #label_name_user.setStyleSheet("border: 1px solid black; margin-bottom: 50px;")
         
         label_name_user.setFixedWidth(100)
         label_name_user.adjustSize()
@@ -253,7 +251,8 @@ class MainWindow(QtWidgets.QMainWindow):
                 QFrame#frame_reply{
                     margin-top: 20px;
                     margin-bottom: 20px;
-                }""")
+                }
+            """)
             
             if MainWindow.count % 2 == 0:
                 frame_reply.setStyleSheet("""
@@ -679,9 +678,11 @@ class MainWindow(QtWidgets.QMainWindow):
         
         self.enter_subjet = QtWidgets.QComboBox(self.frame_creat_subjet)
         self.enter_subjet.setGeometry(20, 90, 400, 35)
+        self.enter_subjet.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.enter_subjet.setObjectName("enter_subjet")
         self.enter_subjet.setStyleSheet("""
             QComboBox#enter_subjet {
+                color: black;
                 border-left: 0px; 
                 border-top: 0px; 
                 border-right: 0px;
@@ -721,7 +722,6 @@ class MainWindow(QtWidgets.QMainWindow):
             
             QLineEdit#enter_title_subjet::hover {
                 border-bottom-color: rgb(64, 40, 200);
-            
             }""")
         
         self.enter_description = QtWidgets.QTextEdit(self.frame_creat_subjet)
@@ -731,6 +731,10 @@ class MainWindow(QtWidgets.QMainWindow):
             QTextEdit#enter_description {
                 border: 1px solid rgb(86, 84, 84); 
                 border-radius: 3px;
+            }
+            
+             QTextEdit#enter_description:focus {
+                border-color: rgb(2, 171, 0);
             }
         """)
         
@@ -829,7 +833,7 @@ class MainWindow(QtWidgets.QMainWindow):
 "}")
         self.enter_email_connection.setObjectName("enter_email_connection")
         self.label_connection_2 = QtWidgets.QLabel(self.frame_connection)
-        self.label_connection_2.setGeometry(QtCore.QRect(300, 210, 181, 61))
+        self.label_connection_2.setGeometry(QtCore.QRect(320, 210, 181, 61))
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(24)
@@ -860,32 +864,33 @@ class MainWindow(QtWidgets.QMainWindow):
         self.enter_password_connection.setObjectName("enter_password_connection")
         self.bnt_connection = QtWidgets.QPushButton(self.frame_connection)
         self.bnt_connection.clicked.connect(self.connection_user)
-        self.bnt_connection.setGeometry(QtCore.QRect(298, 400, 211, 31))
+        self.bnt_connection.setGeometry(QtCore.QRect(280, 400, 211, 31))
         font = QtGui.QFont()
         font.setFamily("Verdana")
         font.setPointSize(14)
         self.bnt_connection.setFont(font)
         self.bnt_connection.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.bnt_connection.setStyleSheet("QPushButton#bnt_connection{"
-        "background-color: white;"
-        "color: rgb(64, 40, 200);"
-        "padding: 5px;"
-        "border: 2px solid rgb(64, 40, 200);"
-        "border-radius: 5px;"
-        "}"
+        self.bnt_connection.setStyleSheet("""
+            QPushButton#bnt_connection{
+            background-color: white;
+            color: rgb(64, 40, 200);
+            padding: 5px;
+            border: 2px solid rgb(64, 40, 200);
+            border-radius: 5px;
+            }
 
-        "QPushButton#bnt_connection::hover{"
-        "background-color: rgb(64, 40, 200);"
-        "color: white;"
-        "}"
-        "")
+            QPushButton#bnt_connection::hover{
+            background-color: rgb(64, 40, 200);
+            color: white;
+            }
+        """)
         self.bnt_connection.setObjectName("bnt_connection")
         self.lien_subscription = QtWidgets.QPushButton(self.frame_connection)
         self.lien_subscription.clicked.connect(self.window_subscription)
         self.lien_subscription.setGeometry(QtCore.QRect(420, 450, 151, 31))
         font = QtGui.QFont()
         font.setFamily("Verdana")
-        font.setPointSize(11)
+        font.setPointSize(14)
         font.setBold(False)
         font.setWeight(50)
         self.lien_subscription.setFont(font)
@@ -901,10 +906,10 @@ class MainWindow(QtWidgets.QMainWindow):
 "}")
         self.lien_subscription.setObjectName("lien_subscription")
         self.label_unitile = QtWidgets.QLabel(self.frame_connection)
-        self.label_unitile.setGeometry(QtCore.QRect(230, 458, 201, 16))
+        self.label_unitile.setGeometry(QtCore.QRect(235, 458, 201, 16))
         font = QtGui.QFont()
         font.setFamily("Arial")
-        font.setPointSize(11)
+        font.setPointSize(14)
         self.label_unitile.setFont(font)
         self.label_unitile.setObjectName("label_unitile")
         self.stackedWidget.addWidget(self.page_connection)
@@ -1033,59 +1038,66 @@ class MainWindow(QtWidgets.QMainWindow):
         font.setFamily("Times New Roman")
         font.setPointSize(14)
         self.enter_password_1.setFont(font)
-        self.enter_password_1.setStyleSheet("QLineEdit#enter_password_1{\n"
-"background-color: rgb(236, 236, 236);\n"
-"border-radius: 3px;\n"
-"padding: 5px;\n"
-"border: 1px solid rgb(160, 161, 182);\n"
-"border-left: 0px;\n"
-"border-right: 0px;\n"
-"border-top: 0px;\n"
-"}\n"
-"\n"
-"QLineEdit#enter_password_1::hover {\n"
-"border-bottom-color:  rgb(64, 40, 200);\n"
-"\n"
-"}")
+        self.enter_password_1.setStyleSheet("""
+            QLineEdit#enter_password_1{
+                background-color: rgb(236, 236, 236);
+                border-radius: 3px;
+                padding: 5px;
+                border: 1px solid rgb(160, 161, 182);
+                border-left: 0px;
+                border-right: 0px;
+                border-top: 0px;
+            }
+
+            QLineEdit#enter_password_1::hover {
+                border-bottom-color:  rgb(64, 40, 200);
+            }
+        """)
         self.enter_password_1.setObjectName("enter_password_1")
         self.enter_gender = QtWidgets.QComboBox(self.frame_subscribtion)
         self.enter_gender.addItem("Homme")
         self.enter_gender.addItem("Femme")
         self.enter_gender.setGeometry(QtCore.QRect(226, 324, 331, 24))
-        self.enter_gender.setStyleSheet("QComboBox#enter_gender {\n"
-"border-left: 0px; \n"
-"border-top: 0px; \n"
-"border-right: 0px;\n"
-"border-radius: 3px; \n"
-"border-bottom: 1px solid rgb(204, 204, 204); \n"
-"background-color: rgb(236, 236, 236);\n"
-"}\n"
-"\n"
-"QComboBox#enter_gender::hover {\n"
-"border-bottom-color: rgb(160, 161, 182);\n"
-"}\n"
-"")
+        self.enter_gender.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.enter_gender.setStyleSheet("""
+            QComboBox#enter_gender {
+                border-left: 0px; 
+                border-top: 0px; 
+                border-right: 0px;
+                border-radius: 3px; 
+                border-bottom: 1px solid rgb(204, 204, 204); 
+                background-color: rgb(236, 236, 236);
+                color: black;
+            }
+            
+            QComboBox#enter_gender::hover {
+                border-bottom-color: rgb(160, 161, 182);
+            }
+        """)
         self.enter_gender.setObjectName("enter_gender")
         self.enter_class = QtWidgets.QComboBox(self.frame_subscribtion)
         list_class = ["6éme", "5éme", "4éme", "3éme", "2nd", "1ère", "Terminal"]
         for item in list_class: self.enter_class.addItem(item)
         self.enter_class.setGeometry(QtCore.QRect(226, 366, 331, 24))
-        self.enter_class.setStyleSheet("QComboBox#enter_class {\n"
-"border-left: 0px; \n"
-"border-top: 0px; \n"
-"border-radius: 3px;\n"
-"border-right: 0px;\n"
-"border-bottom: 1px solid rgb(204, 204, 204); \n"
-"background-color: rgb(236, 236, 236);\n"
-"}\n"
-"\n"
-"QComboBox#enter_classr::hover {\n"
-"border-bottom-color: rgb(160, 161, 182);\n"
-"}\n"
-"")
+        self.enter_class.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.enter_class.setStyleSheet("""
+            QComboBox#enter_class {
+                border-left: 0px; 
+                border-top: 0px; 
+                border-radius: 3px;
+                border-right: 0px;
+                border-bottom: 1px solid rgb(204, 204, 204); 
+                background-color: rgb(236, 236, 236);
+                color: black;
+            }
+
+            QComboBox#enter_classr::hover {
+                border-bottom-color: rgb(160, 161, 182);
+            }
+        """)
         self.enter_class.setObjectName("enter_class")
         self.label_subscription = QtWidgets.QLabel(self.frame_subscribtion)
-        self.label_subscription.setGeometry(QtCore.QRect(300, 84, 171, 61))
+        self.label_subscription.setGeometry(QtCore.QRect(315, 84, 171, 61))
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(24)
@@ -1096,10 +1108,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.label_subscription.setObjectName("label_subscription")
         self.lien_connection = QtWidgets.QPushButton(self.frame_subscribtion)
         self.lien_connection.clicked.connect(self.window_connection)
-        self.lien_connection.setGeometry(QtCore.QRect(422, 562, 151, 31))
+        self.lien_connection.setGeometry(QtCore.QRect(410, 562, 151, 31))
         font = QtGui.QFont()
         font.setFamily("Verdana")
-        font.setPointSize(11)
+        font.setPointSize(14)
         font.setBold(False)
         font.setWeight(50)
         self.lien_connection.setFont(font)
@@ -1118,7 +1130,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.label_unitile_2.setGeometry(QtCore.QRect(229, 570, 201, 16))
         font = QtGui.QFont()
         font.setFamily("Arial")
-        font.setPointSize(11)
+        font.setPointSize(14)
         self.label_unitile_2.setFont(font)
         self.label_unitile_2.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
         self.label_unitile_2.setStyleSheet("")
@@ -1138,9 +1150,15 @@ class MainWindow(QtWidgets.QMainWindow):
         self.frame_conne_1.clicked.connect(self.window_connection)
         self.frame_conne_1.setGeometry(QtCore.QRect(10, 572, 311, 80))
         self.frame_conne_1.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.frame_conne_1.setStyleSheet("QFrame#frame_conne_1::hover{\n"
-"background-color: rgb(204, 204, 204);\n"
-"}")
+        self.frame_conne_1.setStyleSheet("""
+            QFrame#frame_conne_1::hover{
+                background-color: rgb(204, 204, 204);
+            }
+            
+            QFrame#frame_conne_1{
+                border: 0px;
+            }
+        """)
         self.frame_conne_1.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_conne_1.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_conne_1.setObjectName("frame_conne_1")
@@ -1201,7 +1219,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.label_9.setObjectName("label_9")
         self.logo_6 = QtWidgets.QLabel(self.frame_category_4)
         self.logo_6.setGeometry(QtCore.QRect(30, 10, 61, 51))
-        self.logo_6.setText("")
         self.logo_6.setPixmap(QtGui.QPixmap(os.path.join(folder_img, "question.png")))
         self.logo_6.setScaledContents(True)
         self.logo_6.setObjectName("logo_6")
@@ -1272,7 +1289,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.label_7.setObjectName("label_7")
         self.logo_2 = QtWidgets.QLabel(self.frame_category_2)
         self.logo_2.setGeometry(QtCore.QRect(30, 2, 61, 51))
-        self.logo_2.setText("")
         self.logo_2.setPixmap(QtGui.QPixmap(os.path.join(folder_img, "new_chimie.png")))
         self.logo_2.setScaledContents(True)
         self.logo_2.setObjectName("logo_2")
@@ -1286,7 +1302,7 @@ class MainWindow(QtWidgets.QMainWindow):
             }
             
             QFrame#frame_category_3{
-                border; 0px;
+                border: 0px;
             }
             """)
         self.frame_category_3.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -1337,7 +1353,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.label_11.setObjectName("label_11")
         self.logo_4 = QtWidgets.QLabel(self.frame_category_6)
         self.logo_4.setGeometry(QtCore.QRect(30, 10, 61, 51))
-        self.logo_4.setText("")
         self.logo_4.setPixmap(QtGui.QPixmap(os.path.join(folder_img, "eng.png")))
         self.logo_4.setScaledContents(True)
         self.logo_4.setObjectName("logo_4")
@@ -1363,7 +1378,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.enter_password_connection.setPlaceholderText(_translate("MainWindow", "Mot de passe"))
         self.bnt_connection.setText(_translate("MainWindow", "Se connecter"))
         self.lien_subscription.setText(_translate("MainWindow", "Inscrivez-vous ici"))
-        self.label_unitile.setText(_translate("MainWindow", "Vous n\'avez pas de compte ?"))
+        self.label_unitile.setText(_translate("MainWindow", "Vous n'avez pas de compte ?"))
         self.enter_email.setPlaceholderText(_translate("MainWindow", "Addresse email"))
         self.bnt_subcription.setText(_translate("MainWindow", "Inscription"))
         self.enter_last_name.setPlaceholderText(_translate("MainWindow", "Nom"))
@@ -1373,7 +1388,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.enter_title_subjet.setPlaceholderText(_translate("MainWindow", "Entrer le titre du subjet"))
         self.label_subscription.setText(_translate("MainWindow", "Inscription"))
         self.lien_connection.setText(_translate("MainWindow", "Connecter vous ici"))
-        self.label_unitile_2.setText(_translate("MainWindow", "Vous avez déha un compte ?"))
+        self.label_unitile_2.setText(_translate("MainWindow", "Vous avez déja un compte ?"))
         self.label_connection.setText(_translate("MainWindow", "Connection"))
         self.label.setText(_translate("MainWindow", "Forums"))
         self.label_matire_scientifique.setText(_translate("MainWindow", "Matiére scientifique"))
