@@ -554,7 +554,6 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # Le programme récupère la date d'aujoud'hui        
         date_recording = self.date_recording_subjet()
-        print(date_recording)
 
         d = {
             "subjet": subjet,
@@ -589,10 +588,11 @@ class MainWindow(QtWidgets.QMainWindow):
             :id_subjet)""", d)
             conn.commit()
             conn.close()        
-            QMessageBox.about(self, "Sujet", "Vôtre sujet vient d'être publié")  
+            QMessageBox.about(self, "Sujet", "Vôtre sujet vient d'être publié")
+            self.window_discuss(id_subjet)
             self.enter_title_subjet.clear()  
             self.enter_description.clear()
-        else: QMessageBox.about(self, "Imposible d'ajouter le sujet", "Une erreur est survenue lors de l'ajout du sujet, Veuillez vérifier les données les données que vous avez saisit")
+        else: QMessageBox.about(self, "Imposible d'ajouter le sujet", "Une erreur est survenue lors de l'ajout du sujet, Veuillez vérifier les données que vous avez saisit")
 
     def date_recording_subjet(self):
         today = datetime.now()        
