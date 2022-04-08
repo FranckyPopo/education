@@ -731,6 +731,7 @@ class MainWindow(QtWidgets.QMainWindow):
             QTextEdit#enter_description {
                 border: 1px solid rgb(86, 84, 84); 
                 border-radius: 3px;
+                font-size: 14px;
             }
             
              QTextEdit#enter_description:focus {
