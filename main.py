@@ -1180,9 +1180,15 @@ class MainWindow(QtWidgets.QMainWindow):
         self.frame_category_4.clicked.connect(partial(self.window_subjets, "philosophie"))
         self.frame_category_4.setGeometry(QtCore.QRect(10, 370, 311, 71))
         self.frame_category_4.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.frame_category_4.setStyleSheet("QFrame#frame_category_4::hover{\n"
-"background-color: rgb(204, 204, 204);\n"
-"}")
+        self.frame_category_4.setStyleSheet("""
+            QFrame#frame_category_4::hover{
+                background-color: rgb(204, 204, 204);
+            }
+            
+            QFrame#frame_category_4{
+                border: 0px;
+            }
+            """)
         self.frame_category_4.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_category_4.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_category_4.setObjectName("frame_category_4")
@@ -1245,9 +1251,15 @@ class MainWindow(QtWidgets.QMainWindow):
         self.frame_category_2.clicked.connect(partial(self.window_subjets, "physique"))
         self.frame_category_2.setGeometry(QtCore.QRect(5, 171, 311, 61))
         self.frame_category_2.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.frame_category_2.setStyleSheet("QFrame#frame_category_2::hover{\n"
-"background-color: rgb(204, 204, 204);\n"
-"}")
+        self.frame_category_2.setStyleSheet("""
+            QFrame#frame_category_2::hover{
+                background-color: rgb(204, 204, 204);
+            }
+            
+            QFrame#frame_category_2{
+                border: 0px;
+            }
+            """)
         self.frame_category_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_category_2.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_category_2.setObjectName("frame_category_2")
@@ -1268,9 +1280,15 @@ class MainWindow(QtWidgets.QMainWindow):
         self.frame_category_3.clicked.connect(partial(self.window_subjets, "svt"))
         self.frame_category_3.setGeometry(QtCore.QRect(5, 102, 311, 61))
         self.frame_category_3.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.frame_category_3.setStyleSheet("QFrame#frame_category_3::hover{\n"
-"background-color: rgb(204, 204, 204);\n"
-"}")
+        self.frame_category_3.setStyleSheet("""
+            QFrame#frame_category_3::hover{
+                background-color: rgb(204, 204, 204);
+            }
+            
+            QFrame#frame_category_3{
+                border; 0px;
+            }
+            """)
         self.frame_category_3.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_category_3.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_category_3.setObjectName("frame_category_3")
@@ -1301,7 +1319,12 @@ class MainWindow(QtWidgets.QMainWindow):
         self.frame_category_6.setStyleSheet("""
             QFrame#frame_category_6::hover{
                 background-color: rgb(204, 204, 204);
-            }""")
+            }
+            
+            QFrame#frame_category_6{
+                border: 0px;
+            }
+            """)
         self.frame_category_6.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_category_6.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_category_6.setObjectName("frame_category_6")
