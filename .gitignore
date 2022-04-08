@@ -1,4 +1,5 @@
 .DS_Store
 env/
-data
 app.py
+UI/pdf.ui
+__pycache__/
