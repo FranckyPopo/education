@@ -277,7 +277,7 @@ class MainWindow(QtWidgets.QMainWindow):
             label_picture_user = QtWidgets.QLabel(frame_reply)
             #label_picture_user.setStyleSheet("border: 1px solid black;")
             label_picture_user.move(20, 30)
-            picture_modify = QtGui.QPixmap(folder_img + "/" + "people.png")
+            picture_modify = QtGui.QPixmap(os.path.join(folder_img, "avatar_defaut.png"))
             picture_modify =  picture_modify.scaled(100, 100)
             label_picture_user.setPixmap(picture_modify)
             
@@ -1196,7 +1196,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.logo_6 = QtWidgets.QLabel(self.frame_category_4)
         self.logo_6.setGeometry(QtCore.QRect(30, 10, 61, 51))
         self.logo_6.setText("")
-        self.logo_6.setPixmap(QtGui.QPixmap("UI\\../img/philosophie.png"))
+        self.logo_6.setPixmap(QtGui.QPixmap(os.path.join(folder_img, "question.png")))
         self.logo_6.setScaledContents(True)
         self.logo_6.setObjectName("logo_6")
         
@@ -1205,9 +1205,15 @@ class MainWindow(QtWidgets.QMainWindow):
         self.frame_reply.clicked.connect(self.window_creat_subjet)
         self.frame_reply.setGeometry(QtCore.QRect(10, 450, 311, 80))
         self.frame_reply.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.frame_reply.setStyleSheet("QFrame#frame_reply::hover{\n"
-"background-color: rgb(204, 204, 204);\n"
-"}")
+        self.frame_reply.setStyleSheet("""
+            QFrame#frame_reply::hover{
+                background-color: rgb(204, 204, 204);
+            }
+            
+            QFrame#frame_reply{
+                border: 0px;
+            }
+            """)
         self.frame_reply.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_reply.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_reply.setObjectName("frame_reply")
@@ -1221,7 +1227,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.label_subjet.setObjectName("label_subjet")
         self.label_img_subjet = QtWidgets.QLabel(self.frame_reply)
         self.label_img_subjet.setGeometry(QtCore.QRect(16, 10, 71, 70))
-        self.label_img_subjet.setPixmap(QtGui.QPixmap("D:\Programmation\Documents\Projet_Nan\education\img\groupe-de-discussion.png"))
+        self.label_img_subjet.setPixmap(QtGui.QPixmap(os.path.join(folder_img, "people.png")))
         self.label_img_subjet.setScaledContents(True)
         self.label_img_subjet.setObjectName("label_img_subjet")
         self.label = QtWidgets.QLabel(self.bar_nav)
@@ -1255,7 +1261,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.logo_2 = QtWidgets.QLabel(self.frame_category_2)
         self.logo_2.setGeometry(QtCore.QRect(30, 2, 61, 51))
         self.logo_2.setText("")
-        self.logo_2.setPixmap(QtGui.QPixmap("UI\\../img/physique.png"))
+        self.logo_2.setPixmap(QtGui.QPixmap(os.path.join(folder_img, "new_chimie.png")))
         self.logo_2.setScaledContents(True)
         self.logo_2.setObjectName("logo_2")
         self.frame_category_3 = Frame(self.bar_nav)
@@ -1277,7 +1283,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.label_8.setObjectName("label_8")
         self.logo = QtWidgets.QLabel(self.frame_category_3)
         self.logo.setGeometry(QtCore.QRect(30, 5, 61, 51))
-        self.logo.setPixmap(QtGui.QPixmap("UI\\../img/planète-terre.png"))
+        self.logo.setPixmap(QtGui.QPixmap(os.path.join(folder_img, "planete-terre")))
         self.logo.setScaledContents(True)
         self.logo.setObjectName("logo")
         self.label_matiere_litraire = QtWidgets.QLabel(self.bar_nav)
@@ -1309,7 +1315,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.logo_4 = QtWidgets.QLabel(self.frame_category_6)
         self.logo_4.setGeometry(QtCore.QRect(30, 10, 61, 51))
         self.logo_4.setText("")
-        self.logo_4.setPixmap(QtGui.QPixmap("UI\\../img/traduction.png"))
+        self.logo_4.setPixmap(QtGui.QPixmap(os.path.join(folder_img, "eng.png")))
         self.logo_4.setScaledContents(True)
         self.logo_4.setObjectName("logo_4")
         self.scrollArea.setWidget(self.bar_nav)
